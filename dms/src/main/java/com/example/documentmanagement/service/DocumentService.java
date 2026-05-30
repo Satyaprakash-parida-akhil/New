@@ -17,7 +17,11 @@ public interface DocumentService {
 
     List<DocumentResponse> getAllDocuments();
 
-    PagedResponse<DocumentResponse> getPagedDocuments(int page, int size, List<String> statuses);
+    PagedResponse<DocumentResponse> getPagedDocuments(int page, int size, List<String> statuses, Long reviewerId);
 
     Resource downloadDocument(Long id);
+
+    void softDeleteDocument(Long id);
+
+    void restoreDocument(Long id);
 }

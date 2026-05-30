@@ -4,5 +4,6 @@ public enum DocumentStatus {
     UPLOADED,
     IN_REVIEW,
     APPROVED,
-    REJECTED
+    REJECTED,
+    SOFT_DELETED
 }

@@ -39,4 +39,15 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!localStorage.getItem('access_token');
   }
+
+  getUserProfile(): any {
+    const token = localStorage.getItem('access_token');
+    if (!token) return null;
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      console.error('Error decoding token', e);
+      return null;
+    }
+  }
 }

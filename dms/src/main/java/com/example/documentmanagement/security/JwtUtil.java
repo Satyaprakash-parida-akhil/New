@@ -54,8 +54,10 @@ public class JwtUtil {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        // Add roles to claims
-        claims.put("roles", userDetails.getAuthorities());
+        // Add roles to claims as a list of strings
+        claims.put("roles", userDetails.getAuthorities().stream()
+                .map(org.springframework.security.core.GrantedAuthority::getAuthority)
+                .toList());
         return createToken(claims, userDetails.getUsername());
     }
 

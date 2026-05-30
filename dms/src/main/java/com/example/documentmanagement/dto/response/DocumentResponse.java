@@ -18,6 +18,9 @@ public class DocumentResponse {
     private String fileType;
     private String status;
     private String uploaderUsername;
+    private Long reviewerId;
+    private String reviewerUsername;
+    private String comments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

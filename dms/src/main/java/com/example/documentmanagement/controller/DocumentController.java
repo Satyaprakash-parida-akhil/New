@@ -75,11 +75,13 @@ public class DocumentController {
     public ResponseEntity<ApiResponse<PagedResponse<DocumentResponse>>> getAllDocuments(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) List<String> statuses) {
+            @RequestParam(required = false) List<String> statuses,
+            @RequestParam(required = false) Long reviewerId) {
         String successMessage = messageSource.getMessage(MessageConstants.DOCUMENTS_RETRIEVED_SUCCESS, null,
                 "Documents retrieved successfully", LocaleContextHolder.getLocale());
         return ResponseEntity
-                .ok(ApiResponse.success(successMessage, documentService.getPagedDocuments(page, size, statuses)));
+                .ok(ApiResponse.success(successMessage,
+                        documentService.getPagedDocuments(page, size, statuses, reviewerId)));
     }
 
     @GetMapping("/{id}/download")
@@ -88,21 +90,38 @@ public class DocumentController {
     public ResponseEntity<Resource> downloadDocument(
             @PathVariable Long id,
             @RequestParam(value = "token", required = false) String token) throws IOException {
-        
-        // Note: Spring Security will already have validated the token if provided in header
-        // This @RequestParam is just to allow it to be passed via URL for mobile browsers
-        
+
         Resource resource = documentService.downloadDocument(id);
         String contentType = "application/octet-stream";
         try {
             contentType = Files.probeContentType(Paths.get(resource.getURI()));
         } catch (Exception ex) {
-            // Default to application/octet-stream if content type cannot be determined
+            // Default to application/octet-stream
         }
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Soft delete a document (Admin only)")
+    public ResponseEntity<ApiResponse<Void>> deleteDocument(@PathVariable Long id) {
+        documentService.softDeleteDocument(id);
+        String msg = messageSource.getMessage("msg.document.delete.success", null,
+                "Document soft deleted successfully", LocaleContextHolder.getLocale());
+        return ResponseEntity.ok(ApiResponse.success(msg, null));
+    }
+
+    @PostMapping("/{id}/restore")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Restore a soft-deleted document (Admin only)")
+    public ResponseEntity<ApiResponse<Void>> restoreDocument(@PathVariable Long id) {
+        documentService.restoreDocument(id);
+        String msg = messageSource.getMessage("msg.document.restore.success", null,
+                "Document restored successfully", LocaleContextHolder.getLocale());
+        return ResponseEntity.ok(ApiResponse.success(msg, null));
     }
 }

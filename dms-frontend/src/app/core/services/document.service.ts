@@ -22,10 +22,13 @@ export class DocumentService {
         return this.http.get<ApiResponse<DocumentResponse[]>>(this.apiUrl);
     }
 
-    getPagedDocuments(page: number = 0, size: number = 10, statuses?: string[]): Observable<ApiResponse<PagedResponse<DocumentResponse>>> {
+    getPagedDocuments(page: number = 0, size: number = 10, statuses?: string[], reviewerId?: number): Observable<ApiResponse<PagedResponse<DocumentResponse>>> {
         let url = `${this.apiUrl}/paged?page=${page}&size=${size}`;
         if (statuses && statuses.length > 0) {
             url += `&statuses=${statuses.join(',')}`;
+        }
+        if (reviewerId) {
+            url += `&reviewerId=${reviewerId}`;
         }
         return this.http.get<ApiResponse<PagedResponse<DocumentResponse>>>(url);
     }
@@ -36,5 +39,13 @@ export class DocumentService {
 
     downloadDocument(id: number): Observable<Blob> {
         return this.http.get(`${this.apiUrl}/${id}/download`, { responseType: 'blob' });
+    }
+
+    deleteDocument(id: number): Observable<ApiResponse<void>> {
+        return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`);
+    }
+
+    restoreDocument(id: number): Observable<ApiResponse<void>> {
+        return this.http.post<ApiResponse<void>>(`${this.apiUrl}/${id}/restore`, {});
     }
 }

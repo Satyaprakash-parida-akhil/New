@@ -23,12 +23,15 @@ export class DataTableComponent {
     @Input() pageSizeOptions = [5, 10, 30];
 
     @Input() selectable = false;
+    @Input() isAdmin = false;
     @Input() selectedItems: any[] = [];
     @Output() selectionChange = new EventEmitter<any[]>();
 
     @Output() pageChange = new EventEmitter<number>();
     @Output() pageSizeChange = new EventEmitter<number>();
     @Output() rowClick = new EventEmitter<any>();
+    @Output() delete = new EventEmitter<any>();
+    @Output() restore = new EventEmitter<any>();
 
     readonly text = this.config.text;
 
@@ -63,22 +66,29 @@ export class DataTableComponent {
     getStatusClasses(status: string) {
         switch (status) {
             case 'IN_REVIEW':
-            case 'IN_REVIEW_PROCESS':
-                return 'bg-amber-50 text-amber-600 border-amber-100';
+                return 'bg-amber-50 text-amber-700 border-amber-200 shadow-amber-50/50';
             case 'APPROVED':
-                return 'bg-emerald-50 text-emerald-600 border-emerald-100';
+                return 'bg-emerald-50 text-emerald-700 border-emerald-200 shadow-emerald-50/50';
             case 'REJECTED':
-                return 'bg-rose-50 text-rose-600 border-rose-100';
-            case 'WAITING_FOR_REVIEW':
-                return 'bg-indigo-50 text-indigo-600 border-indigo-100';
+                return 'bg-rose-50 text-rose-700 border-rose-200 shadow-rose-50/50';
+            case 'UPLOADED':
+                return 'bg-indigo-50 text-indigo-700 border-indigo-200 shadow-indigo-50/50';
+            case 'SOFT_DELETED':
+                return 'bg-slate-50 text-slate-500 border-slate-200 border-dashed';
             default:
-                return 'bg-slate-50 text-slate-600 border-slate-100';
+                return 'bg-slate-50 text-slate-700 border-slate-200';
         }
     }
 
     formatStatus(status: string) {
         if (!status) return '';
-        return status.replaceAll('_', ' ');
+        switch (status) {
+            case 'IN_REVIEW': return 'Under Review';
+            case 'UPLOADED': return 'Pending';
+            case 'APPROVED': return 'Approved';
+            case 'REJECTED': return 'Rejected';
+            default: return status.replaceAll('_', ' ');
+        }
     }
 
     onPrevPage() {

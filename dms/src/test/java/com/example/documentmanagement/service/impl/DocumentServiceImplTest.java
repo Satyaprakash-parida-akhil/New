@@ -8,6 +8,7 @@ import com.example.documentmanagement.mapper.DocumentMapper;
 import com.example.documentmanagement.repository.DocumentRepository;
 import com.example.documentmanagement.repository.UserRepository;
 import com.example.documentmanagement.service.AuditService;
+import com.example.documentmanagement.repository.ReviewRepository;
 import com.example.documentmanagement.util.MessageConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,6 +51,9 @@ class DocumentServiceImplTest {
 
     @Mock
     private MessageSource messageSource;
+
+    @Mock
+    private ReviewRepository reviewRepository;
 
     @InjectMocks
     private DocumentServiceImpl documentService;

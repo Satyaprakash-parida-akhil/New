@@ -47,6 +47,13 @@ public class Document {
     @JoinColumn(name = "uploader_id", nullable = false)
     private User uploader;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reviewer_id")
+    private User reviewer;
+
+    @Column(columnDefinition = "TEXT")
+    private String reviewerComments;
+
     @Version
     @Builder.Default
     private Long version = 0L;

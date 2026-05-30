@@ -22,14 +22,26 @@ export class DashboardComponent implements OnInit {
   readonly text = this.config.text;
   selectedDocForView: DocumentResponse | null = null;
   showViewer = false;
+  activeTab: 'ACTIVE' | 'INACTIVE' = 'ACTIVE';
+  isAdmin = false;
 
   // Table Config
-  tableHeaders = [
+  tableHeaders: any[] = [];
+
+  readonly activeHeaders = [
     { label: 'ID', key: 'id', type: 'id' },
     { label: 'Document Title', key: 'title' },
     { label: 'Status', key: 'status', type: 'status' },
     { label: 'Owner', key: 'uploaderUsername', type: 'user' },
-    { label: 'Action', key: 'actions', type: 'action', btnLabel: 'Open Doc' }
+    { label: 'Action', key: 'actions', type: 'action' }
+  ];
+
+  readonly inactiveHeaders = [
+    { label: 'ID', key: 'id', type: 'id' },
+    { label: 'Document Title', key: 'title' },
+    { label: 'Status', key: 'status', type: 'status' },
+    { label: 'Owner', key: 'uploaderUsername', type: 'user' },
+    { label: 'Action', key: 'actions', type: 'inactive_action' }
   ];
 
   // Pagination properties
@@ -47,6 +59,17 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.extractUserProfile();
+    this.updateHeaders();
+    this.loadDocuments(0);
+  }
+
+  updateHeaders() {
+    this.tableHeaders = this.activeTab === 'ACTIVE' ? this.activeHeaders : this.inactiveHeaders;
+  }
+
+  setTab(tab: 'ACTIVE' | 'INACTIVE') {
+    this.activeTab = tab;
+    this.updateHeaders();
     this.loadDocuments(0);
   }
 
@@ -57,7 +80,8 @@ export class DashboardComponent implements OnInit {
         const payload = JSON.parse(atob(token.split('.')[1]));
         this.userProfile.username = payload.sub || 'Unknown User';
         if (payload.roles && payload.roles.length > 0) {
-          const role = payload.roles[0].authority;
+          const role = payload.roles[0].authority || payload.roles[0];
+          this.isAdmin = role === 'ROLE_ADMIN';
           if (role === 'ROLE_ADMIN') this.userProfile.role = 'Administrator';
           else if (role === 'ROLE_REVIEWER') this.userProfile.role = 'Reviewer';
           else if (role === 'ROLE_UPLOADER') this.userProfile.role = 'Uploader';
@@ -84,7 +108,8 @@ export class DashboardComponent implements OnInit {
   loadDocuments(page: number = 0) {
     this.isLoading = true;
     this.currentPage = page;
-    this.documentService.getPagedDocuments(page, this.pageSize).subscribe({
+    const statuses = this.activeTab === 'INACTIVE' ? ['SOFT_DELETED'] : undefined;
+    this.documentService.getPagedDocuments(page, this.pageSize, statuses).subscribe({
       next: (res: ApiResponse<PagedResponse<DocumentResponse>>) => {
         if (res.success && res.data) {
           this.documents = res.data.content;
@@ -109,7 +134,30 @@ export class DashboardComponent implements OnInit {
       case 'APPROVED': return 'Approved';
       case 'REJECTED': return 'Rejected';
       case 'UPLOADED': return 'Recently Uploaded';
+      case 'SOFT_DELETED': return 'Inactive/Deleted';
       default: return status;
     }
+  }
+
+  deleteDocument(id: number) {
+    if (confirm('Are you sure you want to move this document to inactive?')) {
+      this.documentService.deleteDocument(id).subscribe({
+        next: (res) => {
+          this.toast.showSuccess(res.message);
+          this.loadDocuments(this.currentPage);
+        },
+        error: (err) => this.toast.showError('Failed to delete document')
+      });
+    }
+  }
+
+  restoreDocument(id: number) {
+    this.documentService.restoreDocument(id).subscribe({
+      next: (res) => {
+        this.toast.showSuccess(res.message);
+        this.loadDocuments(this.currentPage);
+      },
+      error: (err) => this.toast.showError('Failed to restore document')
+    });
   }
 }

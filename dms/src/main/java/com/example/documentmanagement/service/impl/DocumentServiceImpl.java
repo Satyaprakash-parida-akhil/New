@@ -8,6 +8,7 @@ import com.example.documentmanagement.entity.User;
 import com.example.documentmanagement.exception.ResourceNotFoundException;
 import com.example.documentmanagement.mapper.DocumentMapper;
 import com.example.documentmanagement.repository.DocumentRepository;
+import com.example.documentmanagement.repository.ReviewRepository;
 import com.example.documentmanagement.repository.UserRepository;
 import com.example.documentmanagement.service.AuditService;
 import com.example.documentmanagement.service.DocumentService;
@@ -44,17 +45,20 @@ public class DocumentServiceImpl implements DocumentService {
     private final AuditService auditService;
     private final DocumentMapper documentMapper;
     private final MessageSource messageSource;
+    private final ReviewRepository reviewRepository;
 
     @Value("${app.file.storage.location}")
     private String uploadDir;
 
     public DocumentServiceImpl(DocumentRepository documentRepository, UserRepository userRepository,
-            AuditService auditService, DocumentMapper documentMapper, MessageSource messageSource) {
+            AuditService auditService, DocumentMapper documentMapper, MessageSource messageSource,
+            ReviewRepository reviewRepository) {
         this.documentRepository = documentRepository;
         this.userRepository = userRepository;
         this.auditService = auditService;
         this.documentMapper = documentMapper;
         this.messageSource = messageSource;
+        this.reviewRepository = reviewRepository;
     }
 
     @Override
@@ -117,21 +121,37 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional(readOnly = true)
-    public PagedResponse<DocumentResponse> getPagedDocuments(int page, int size, List<String> statuses) {
+    public PagedResponse<DocumentResponse> getPagedDocuments(int page, int size, List<String> statuses,
+            Long reviewerId) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Document> documentPage;
 
-        if (statuses != null && !statuses.isEmpty()) {
-            List<DocumentStatus> enumStatuses = statuses.stream()
-                    .map(DocumentStatus::valueOf)
-                    .toList();
+        List<DocumentStatus> enumStatuses = (statuses != null && !statuses.isEmpty())
+                ? statuses.stream().map(DocumentStatus::valueOf).toList()
+                : null;
+
+        if (enumStatuses != null && reviewerId != null) {
+            documentPage = documentRepository.findByStatusInAndReviewerId(enumStatuses, reviewerId, pageable);
+        } else if (enumStatuses != null) {
             documentPage = documentRepository.findByStatusIn(enumStatuses, pageable);
         } else {
-            documentPage = documentRepository.findAll(pageable);
+            // Default: Exclude SOFT_DELETED
+            List<DocumentStatus> activeStatuses = List.of(
+                    DocumentStatus.UPLOADED,
+                    DocumentStatus.IN_REVIEW,
+                    DocumentStatus.APPROVED,
+                    DocumentStatus.REJECTED);
+            documentPage = documentRepository.findByStatusIn(activeStatuses, pageable);
         }
 
         List<DocumentResponse> content = documentPage.getContent().stream()
-                .map(documentMapper::toResponse)
+                .map(doc -> {
+                    if (doc.getReviewer() == null && doc.getStatus() == DocumentStatus.IN_REVIEW) {
+                        reviewRepository.findFirstByDocumentIdOrderByCreatedAtDesc(doc.getId())
+                                .ifPresent(r -> doc.setReviewer(r.getReviewer()));
+                    }
+                    return documentMapper.toResponse(doc);
+                })
                 .toList();
 
         return PagedResponse.<DocumentResponse>builder()
@@ -163,6 +183,28 @@ public class DocumentServiceImpl implements DocumentService {
             }
         } catch (IOException e) {
             throw new ResourceNotFoundException("Error reading file: " + doc.getFilePath());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void softDeleteDocument(Long id) {
+        Document doc = documentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Document not found"));
+        doc.setStatus(DocumentStatus.SOFT_DELETED);
+        documentRepository.save(doc);
+        auditService.logAction("DELETE_DOCUMENT", "DOCUMENT", id, "Soft deleted document: " + doc.getTitle());
+    }
+
+    @Override
+    @Transactional
+    public void restoreDocument(Long id) {
+        Document doc = documentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Document not found"));
+        if (doc.getStatus() == DocumentStatus.SOFT_DELETED) {
+            doc.setStatus(DocumentStatus.UPLOADED); // Back to pending/uploaded
+            documentRepository.save(doc);
+            auditService.logAction("RESTORE_DOCUMENT", "DOCUMENT", id, "Restored document: " + doc.getTitle());
         }
     }
 

@@ -20,6 +20,7 @@ export class AssignmentComponent implements OnInit {
     documents: DocumentResponse[] = [];
     reviewers: UserResponse[] = [];
     isLoading = false;
+    selectedDocs: DocumentResponse[] = [];
     selectedDoc: DocumentResponse | null = null;
     selectedReviewerId: number | null = null;
     readonly text = this.config.text;
@@ -87,24 +88,61 @@ export class AssignmentComponent implements OnInit {
         });
     }
 
+    onSelectionChange(selected: DocumentResponse[]) {
+        this.selectedDocs = selected;
+        if (selected.length > 0) {
+            this.selectedDoc = selected.at(-1) || null;
+        } else {
+            this.selectedDoc = null;
+        }
+    }
+
     selectDocument(doc: DocumentResponse) {
-        this.selectedDoc = doc;
-        this.selectedReviewerId = null;
+        const index = this.selectedDocs.findIndex(s => s.id === doc.id);
+        if (index > -1) {
+            // Toggle off
+            this.selectedDocs.splice(index, 1);
+        } else {
+            // Toggle on
+            this.selectedDocs.push(doc);
+        }
+        this.selectedDocs = [...this.selectedDocs];
+        this.onSelectionChange(this.selectedDocs);
     }
 
     assignDocument() {
-        if (!this.selectedDoc || !this.selectedReviewerId) return;
+        if (this.selectedDocs.length === 0 || !this.selectedReviewerId) return;
 
-        this.reviewService.assignReviewer(this.selectedDoc.id, this.selectedReviewerId).subscribe({
-            next: (res) => {
-                this.toast.showSuccess(this.config.get('messages.assign_success'));
-                this.selectedDoc = null;
-                this.loadData();
-            },
-            error: (err) => {
-                this.toast.showError(err.error?.message || this.config.get('messages.assign_error'));
-            }
+        this.isLoading = true;
+        const requests = this.selectedDocs.map(doc =>
+            this.reviewService.assignReviewer(doc.id, this.selectedReviewerId!)
+        );
+
+        let completed = 0;
+        let successCount = 0;
+
+        requests.forEach(req => {
+            req.subscribe({
+                next: () => {
+                    successCount++;
+                    completed++;
+                    if (completed === requests.length) this.onAssignmentFinished(successCount);
+                },
+                error: () => {
+                    completed++;
+                    if (completed === requests.length) this.onAssignmentFinished(successCount);
+                }
+            });
         });
+    }
+
+    private onAssignmentFinished(successCount: number) {
+        this.isLoading = false;
+        this.toast.showSuccess(`Successfully assigned ${successCount} documents.`);
+        this.selectedDocs = [];
+        this.selectedDoc = null;
+        this.selectedReviewerId = null;
+        this.loadData();
     }
 
     formatStatus(status: string): string {

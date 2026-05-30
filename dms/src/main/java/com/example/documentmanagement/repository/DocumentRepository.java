@@ -16,7 +16,12 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 
     Page<Document> findByStatusIn(List<DocumentStatus> statuses, Pageable pageable);
 
+    Page<Document> findByStatusInAndReviewerId(List<DocumentStatus> statuses, Long reviewerId, Pageable pageable);
+
     List<Document> findByUploaderId(Long uploaderId);
 
     Optional<Document> findByChecksum(String checksum);
+
+    @org.springframework.data.jpa.repository.Query("SELECT d FROM Document d WHERE d.id = :id AND d.status <> 'SOFT_DELETED'")
+    Optional<Document> findActiveById(Long id);
 }

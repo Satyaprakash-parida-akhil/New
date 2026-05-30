@@ -33,7 +33,7 @@
                 <tbody class="divide-y divide-gray-50">
                     <tr *ngFor="let item of data"
                         [ngClass]="isSelected(item) ? 'bg-indigo-50/30' : 'hover:bg-gray-50/50'"
-                        class="transition-all cursor-pointer group outline-none relative-row focus-within:bg-indigo-50/50">
+                        class="transition-all group outline-none relative-row focus-within:bg-indigo-50/50">
 
                         <td *ngIf="selectable" class="pl-8 py-5 relative z-20">
                             <label class="flex items-center cursor-pointer" aria-label="Select record">
@@ -52,8 +52,10 @@
                         </td>
 
                         <td *ngFor="let h of headers; let first = first" class="px-8 py-5">
-                            <!-- Stretched button for row interaction accessibility -->
-                            <button *ngIf="first" type="button" (click)="onRowClick(item); $event.stopPropagation()"
+                            <!-- Stretched button for row interaction accessibility (only if not using explicit action buttons) -->
+                            <button
+                                *ngIf="first && h.type !== 'action' && h.type !== 'restore' && h.type !== 'inactive_action'"
+                                type="button" (click)="onRowClick(item); $event.stopPropagation()"
                                 class="stretched-button"
                                 [attr.aria-label]="'View details for ' + (item.title || item.name || 'this item')">
                                 <span class="sr-only">View Details</span>
@@ -67,7 +69,7 @@
                                 class="font-mono text-xs font-bold text-gray-400 tracking-tighter">#DMS-{{ item[h.key]
                                 }}</span>
                             <span *ngIf="h.type === 'status'" [ngClass]="getStatusClasses(item[h.key])"
-                                class="px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest border shadow-sm">
+                                class="px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border shadow-sm whitespace-nowrap inline-block min-w-[100px] text-center">
                                 {{ formatStatus(item[h.key]) }}
                             </span>
                             <div *ngIf="h.type === 'user'" class="flex items-center gap-3">
@@ -76,9 +78,33 @@
                                     {{ (item[h.key] || '').substring(0,2) }}</div>
                                 <span class="text-xs font-bold text-gray-600 tracking-tight">{{ item[h.key] }}</span>
                             </div>
-                            <button *ngIf="h.type === 'action'" (click)="onRowClick(item); $event.stopPropagation()"
-                                class="px-4 py-2 bg-white border border-gray-200 rounded-xl text-[10px] font-black uppercase text-gray-600 hover:bg-slate-900 hover:text-white transition-all shadow-sm">
-                                {{ h.btnLabel || 'View' }}
+                            <div *ngIf="h.type === 'action'" class="flex items-center gap-2 relative z-20">
+                                <button (click)="onRowClick(item); $event.stopPropagation()"
+                                    class="px-4 py-2 bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-xl text-[10px] font-black uppercase hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+                                    Open
+                                </button>
+                                <button *ngIf="isAdmin" (click)="delete.emit(item); $event.stopPropagation()"
+                                    class="px-4 py-2 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-[10px] font-black uppercase hover:bg-rose-600 hover:text-white transition-all shadow-sm">
+                                    Delete
+                                </button>
+                            </div>
+
+                            <div *ngIf="h.type === 'inactive_action' && isAdmin"
+                                class="flex items-center gap-2 relative z-20">
+                                <button (click)="onRowClick(item); $event.stopPropagation()"
+                                    class="px-4 py-2 bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-xl text-[10px] font-black uppercase hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+                                    Open
+                                </button>
+                                <button (click)="restore.emit(item); $event.stopPropagation()"
+                                    class="px-4 py-2 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-xl text-[10px] font-black uppercase hover:bg-emerald-600 hover:text-white transition-all shadow-sm">
+                                    Restore
+                                </button>
+                            </div>
+
+                            <button *ngIf="h.type === 'restore' && isAdmin"
+                                (click)="restore.emit(item); $event.stopPropagation()"
+                                class="relative z-20 px-4 py-2 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-xl text-[10px] font-black uppercase hover:bg-emerald-600 hover:text-white transition-all shadow-sm">
+                                Restore
                             </button>
                         </td>
                     </tr>
@@ -116,47 +142,108 @@
                 </svg>
             </label>
 
-            <button type="button" (click)="onRowClick(item)" [class.selected-card]="isSelected(item)"
-                class="w-full text-left bg-white rounded-[2rem] p-6 border-2 transition-all duration-300 flex flex-col gap-5 overflow-hidden active:scale-95 cursor-pointer outline-none focus:border-indigo-600 focus:bg-indigo-50/10"
+            <div [class.selected-card]="isSelected(item)"
+                class="w-full bg-white rounded-[2rem] p-6 border-2 transition-all duration-300 flex flex-col gap-5 overflow-hidden"
                 [ngClass]="isSelected(item) ? 'border-indigo-600 bg-indigo-50/20 shadow-xl' : 'border-gray-100 shadow-sm'"
-                aria-label="View document details" title="View document details">
+                aria-label="Document card">
 
-                <div class="flex justify-between items-start w-full">
-                    <div class="pr-8 text-left">
-                        <span class="text-[8px] font-bold text-gray-300 uppercase tracking-widest block mb-1">ID:
-                            #DMS-{{
-                            item.id }}</span>
-                        <h3 class="text-sm font-black text-gray-900 leading-tight line-clamp-1">{{ item.title ||
-                            item.name
-                            || 'Untitled Artifact' }}</h3>
-                    </div>
-                    <span *ngIf="item.status && !selectable" [ngClass]="getStatusClasses(item.status)"
-                        class="px-2 py-1 rounded-lg text-[7px] font-black uppercase tracking-widest border shrink-0">
-                        {{ formatStatus(item.status) }}
-                    </span>
-                </div>
-
-                <div class="flex items-center justify-between w-full pointer-events-none">
-                    <div class="flex items-center gap-2">
-                        <div
-                            class="w-6 h-6 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[8px] font-black text-slate-400 uppercase animate-spin-slow">
-                            {{ (item.uploaderUsername || item.username || '').substring(0,2) }}
+                <!-- Enhanced Mobile UI with Icons & Fields -->
+                <div class="space-y-4">
+                    <!-- Title Section -->
+                    <div class="flex items-center justify-between pb-3 border-b border-gray-50">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-indigo-50 rounded-lg animate-float">
+                                <svg class="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-sm font-black text-gray-900 line-clamp-1 uppercase tracking-tight">{{
+                                item.title || 'Artifact' }}</h3>
                         </div>
-                        <span class="text-[9px] font-bold text-gray-500 uppercase tracking-tight">{{
-                            item.uploaderUsername
-                            || item.username }}</span>
+                        <span [ngClass]="getStatusClasses(item.status)"
+                            class="px-3 py-1 rounded-lg text-[8px] font-black uppercase tracking-widest border shrink-0 animate-pulse-soft">
+                            {{ formatStatus(item.status) }}
+                        </span>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span
-                            class="text-[8px] font-black text-indigo-400 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100/50 uppercase tracking-tighter">
-                            {{ item.fileType }}
-                        </span>
-                        <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest">
-                            {{ item.fileSize ? (item.fileSize / 1024).toFixed(1) + ' KB' : 'N/A' }}
-                        </span>
+
+                    <!-- Side-by-Side Data Grid -->
+                    <div class="grid grid-cols-1 gap-3">
+                        <div class="flex items-center justify-between group/field">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Tracking
+                                ID</span>
+                            <div class="flex items-center gap-2">
+                                <svg class="w-3 h-3 text-slate-300" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 7h.01M7 11h.01M7 15h.01M13 7h.01M13 11h.01M13 15h.01M17 7h.01M17 11h.01M17 15h.01" />
+                                </svg>
+                                <span class="text-[10px] font-bold text-gray-700 font-mono">#DMS-{{ item.id }}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between group/field">
+                            <span
+                                class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Originator</span>
+                            <div class="flex items-center gap-2">
+                                <div
+                                    class="w-5 h-5 rounded-md bg-emerald-50 flex items-center justify-center text-[7px] font-black text-emerald-600 border border-emerald-100 group-hover/field:rotate-12 transition-transform">
+                                    {{ (item.uploaderUsername || '').substring(0,2).toUpperCase() }}
+                                </div>
+                                <span class="text-[10px] font-bold text-gray-700">{{ item.uploaderUsername }}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between group/field">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Format</span>
+                            <div class="flex items-center gap-2">
+                                <svg class="w-3 h-3 text-indigo-400 animate-pulse-soft" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <span
+                                    class="text-[10px] font-bold text-indigo-600 lowercase bg-indigo-50 px-2 py-0.5 rounded">{{
+                                    item.fileType }}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between group/field">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Capacity</span>
+                            <div class="flex items-center gap-2">
+                                <svg class="w-3 h-3 text-slate-300" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                                </svg>
+                                <span class="text-[10px] font-bold text-gray-700">{{ (item.fileSize / 1024).toFixed(1)
+                                    }} KB</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </button>
+
+                <!-- Mobile Action Buttons -->
+                <div class="flex items-center gap-3 mt-2">
+                    <ng-container *ngIf="item.status !== 'SOFT_DELETED'">
+                        <button (click)="onRowClick(item)"
+                            class="flex-1 py-3 bg-indigo-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-100 active:scale-95 transition-all">
+                            Open View
+                        </button>
+                        <button *ngIf="isAdmin" (click)="delete.emit(item)"
+                            class="px-4 py-3 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-[10px] font-black uppercase active:scale-95 transition-all">
+                            Delete
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="item.status === 'SOFT_DELETED' && isAdmin">
+                        <button (click)="restore.emit(item)"
+                            class="flex-1 py-3 bg-emerald-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-100 active:scale-95 transition-all">
+                            Restore to Active
+                        </button>
+                    </ng-container>
+                </div>
+            </div>
         </div>
     </div>
 

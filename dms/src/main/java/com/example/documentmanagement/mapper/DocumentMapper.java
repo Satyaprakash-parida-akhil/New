@@ -23,6 +23,9 @@ public class DocumentMapper {
                 .fileType(document.getFileType())
                 .status(document.getStatus() != null ? document.getStatus().name() : null)
                 .uploaderUsername(document.getUploader() != null ? document.getUploader().getUsername() : null)
+                .reviewerId(document.getReviewer() != null ? document.getReviewer().getId() : null)
+                .reviewerUsername(document.getReviewer() != null ? document.getReviewer().getUsername() : null)
+                .comments(document.getReviewerComments())
                 .createdAt(document.getCreatedAt())
                 .updatedAt(document.getUpdatedAt())
                 .build();

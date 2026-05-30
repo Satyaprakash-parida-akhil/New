@@ -59,7 +59,7 @@ class DocumentControllerTest {
                                 .last(true)
                                 .build();
 
-                when(documentService.getPagedDocuments(anyInt(), anyInt(), any())).thenReturn(pagedResponse);
+                when(documentService.getPagedDocuments(anyInt(), anyInt(), any(), any())).thenReturn(pagedResponse);
                 when(messageSource.getMessage(any(), any(), any(), any())).thenReturn("Success");
 
                 mockMvc.perform(get("/api/documents/paged")

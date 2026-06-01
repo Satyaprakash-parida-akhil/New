@@ -95,35 +95,5 @@ jobs:
           name: mobile-apk
           path: dms-frontend/android/app/build/outputs/apk/debug/app-debug.apk
 
-  deploy:
-    name: Deploy to Server
-    needs: [backend-build, frontend-build]
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
-        with:
-          path: deploy
-          
-      - name: Deploy to Server via SSH
-        uses: appleboy/scp-action@a6e43c3aaf4e8e6b0b15bf34e19d71118f6b1ca7
-        continue-on-error: true
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "deploy/*"
-          target: "/var/www/dms"
-          strip_components: 1
-
-      - name: Post-Deployment Execution
-        uses: appleboy/ssh-action@1530429296e979861824d74fb800013190b5dee0
-        continue-on-error: true
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/dms
-            # Add command to restart services
+  # (Deployment hidden temporarily to bypass strict repository security policies)
+  # Once you allow 'appleboy' actions in GitHub Settings, we can re-enable this.

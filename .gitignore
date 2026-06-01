@@ -1,0 +1,29 @@
+# Maven
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+dms-frontend/dist/
+dms-frontend/node_modules/
+dms/target/
+dms/uploads/
+ip_full.txt
+ip_out.txt
+build.log
+raw_err.txt
+platform-tools/
+platform-tools.zip

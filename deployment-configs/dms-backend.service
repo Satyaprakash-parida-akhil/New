@@ -1,0 +1,22 @@
+[Unit]
+Description=DMS Backend Production Service
+After=network.target
+
+[Service]
+# Replace 'ubuntu' with your actual server username
+User=ubuntu
+WorkingDirectory=/var/www/dms-production/backend
+ExecStart=/usr/bin/java -jar /var/www/dms-production/backend/documentmanagement-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+SuccessExitStatus=143
+Restart=always
+RestartSec=10
+
+# Environment variables for secrets
+# Documentation: https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.typesafe-configuration-properties.relaxed-binding.environment-variables
+Environment=SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/dms_db
+Environment=SPRING_DATASOURCE_USERNAME=postgres
+Environment=SPRING_DATASOURCE_PASSWORD=root
+Environment=JWT_SECRET=replace_this_with_a_secure_random_string
+
+[Install]
+WantedBy=multi-user.target

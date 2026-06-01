@@ -28,7 +28,7 @@ env:
 
 jobs:
   backend-build:
-    name: Build Backend (${{ github.ref_name }})
+    name: Build Backend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
           path: dms/target/*.jar
 
   frontend-build:
-    name: Build Frontend (${{ github.ref_name }})
+    name: Build Frontend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -86,7 +86,7 @@ jobs:
           path: dms-frontend/dist/dms-frontend/browser
 
   mobile-build:
-    name: Build Mobile APK (${{ env.ENVIRONMENT }})
+    name: Build Mobile APK
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     steps:
@@ -131,7 +131,7 @@ jobs:
           path: dms-frontend/android/app/build/outputs/apk/debug/app-debug.apk
 
   deploy:
-    name: Deploy to ${{ env.ENVIRONMENT }}
+    name: Deploy to Server
     needs: [backend-build, frontend-build]
     if: github.event_name == 'push' && secrets.SERVER_HOST != ''
     runs-on: ubuntu-latest

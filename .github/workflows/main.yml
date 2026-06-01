@@ -135,7 +135,6 @@ jobs:
     needs: [backend-build, frontend-build]
     if: github.event_name == 'push' && secrets.SERVER_HOST != ''
     runs-on: ubuntu-latest
-    environment: ${{ env.ENVIRONMENT }}
     steps:
       - name: Download Backend Artifact
         uses: actions/download-artifact@v4

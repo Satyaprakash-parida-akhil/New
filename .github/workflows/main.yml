@@ -133,7 +133,7 @@ jobs:
   deploy:
     name: Deploy to ${{ env.ENVIRONMENT }}
     needs: [backend-build, frontend-build]
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && secrets.SERVER_HOST != ''
     runs-on: ubuntu-latest
     environment: ${{ env.ENVIRONMENT }}
     steps:

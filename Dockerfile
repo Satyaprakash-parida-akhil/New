@@ -27,6 +27,7 @@ EXPOSE 8080
 
 # Run with Production Profile
 # Run with Production Profile and robust URL fix
-ENTRYPOINT ["sh", "-c", "JDBC_URL=$(echo $SPRING_DATASOURCE_URL | sed 's/^postgres:/jdbc:postgresql:/'); java -jar app.jar --spring.profiles.active=prod --spring.datasource.url=\"$JDBC_URL\""]
+ENTRYPOINT ["sh", "-c", "JDBC_URL=$(echo $SPRING_DATASOURCE_URL | sed 's/^postgresql:/jdbc:postgresql:/' | sed 's/^postgres:/jdbc:postgresql:/'); java -jar app.jar --spring.profiles.active=prod --spring.datasource.url=\"$JDBC_URL\""]
+
 
 

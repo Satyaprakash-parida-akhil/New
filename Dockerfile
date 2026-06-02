@@ -22,5 +22,5 @@ COPY --from=backend-build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-# DB config is handled purely by application-prod.properties using env vars from render.yaml
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]
+# Convert postgres:// or postgresql:// to jdbc:postgresql:// inline - no shell script needed
+ENTRYPOINT ["sh", "-c", "exec java -jar app.jar --spring.profiles.active=prod --spring.datasource.url=$(echo $DATABASE_URL | sed 's|^postgresql://|jdbc:postgresql://|' | sed 's|^postgres://|jdbc:postgresql://|')"]

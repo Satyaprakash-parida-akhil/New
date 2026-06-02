@@ -14,22 +14,10 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: DB_HOST
+      - key: DATABASE_URL
         fromDatabase:
           name: dms-db-prod-2026
-          property: host
-      - key: DB_PORT
-        fromDatabase:
-          name: dms-db-prod-2026
-          property: port
-      - key: DB_NAME
-        fromDatabase:
-          name: dms-db-prod-2026
-          property: database
-      - key: DB_USER
-        value: postgres
-      - key: DB_PASS
-        value: root
+          property: connectionString
       - key: JWT_SECRET
         generateValue: true
       - key: ADMIN_PASSWORD

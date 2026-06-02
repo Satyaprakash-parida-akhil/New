@@ -18,7 +18,7 @@ services:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
           name: dms-db-prod-2026
-          property: connectionString
+          property: externalConnectionString
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
           name: dms-db-prod-2026

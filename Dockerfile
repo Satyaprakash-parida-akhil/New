@@ -22,6 +22,5 @@ COPY --from=backend-build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-# THE FIX: Convert postgresql:// -> jdbc:postgresql:// via command-line arg
-# Command-line args have highest priority in Spring Boot - beats SPRING_DATASOURCE_URL env var
+
 ENTRYPOINT ["sh", "-c", "exec java -Xmx256m -Xms64m -jar app.jar --spring.profiles.active=prod --spring.datasource.url=$(echo $SPRING_DATASOURCE_URL | sed 's|^postgresql://|jdbc:postgresql://|')"]

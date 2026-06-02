@@ -1,15 +1,15 @@
-# Document Management System (DMS) 🚀
+# DMS - Document Management System
 
-![CI/CD Status](https://github.com/satyaprakash-anayasmi/New/actions/workflows/main.yml/badge.svg)
+## 🚀 Fully Automated Deployment
 
-| Branch | Status | Environment |
-| :--- | :--- | :--- |
-| **Main** | ![Main](https://github.com/satyaprakash-anayasmi/New/actions/workflows/main.yml/badge.svg?branch=main) | Production (Google-level) |
-| **UAT** | ![UAT](https://github.com/satyaprakash-anayasmi/New/actions/workflows/main.yml/badge.svg?branch=uat) | Final Review |
-| **Develop** | ![Develop](https://github.com/satyaprakash-anayasmi/New/actions/workflows/main.yml/badge.svg?branch=develop) | Testing Area |
+I have configured this project for zero-config deployment on Render.
 
-## 📱 Mobile Access
-Download the latest APK from the [Actions Summary](https://github.com/satyaprakash-anayasmi/New/actions) under "Artifacts".
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/satyaprakash-anayasmi/New)
 
----
-*Last updated for CI/CD trigger: June 1, 2026*
+### 📱 Mobile App Access
+The mobile app is pre-configured to talk to the Render backend at:
+`https://dms-unified.onrender.com/api`
+
+### 🔑 Default Credentials
+- **Username:** `admin`
+- **Password:** `admin_Sec#2026`

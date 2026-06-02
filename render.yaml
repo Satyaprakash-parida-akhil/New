@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: dms-unified
+    env: docker
+    plan: free
+    region: ohio
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: API_URL
+        sync: false # This will be used as a build-arg in the Dockerfile
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_PASSWORD
+        value: admin_Sec#2026
+      - key: REVIEWER_PASSWORD
+        value: reviewer_Sec#2026
+      - key: UPLOADER_PASSWORD
+        value: uploader_Sec#2026

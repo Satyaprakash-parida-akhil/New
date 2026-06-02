@@ -16,15 +16,23 @@ services:
         value: prod
       - key: API_URL
         sync: false # Set this to your live URL after the first build
-      - key: SPRING_DATASOURCE_URL
+      - key: DB_HOST
         fromDatabase:
           name: dms-db-prod-2026
-          property: connectionString
-      - key: SPRING_DATASOURCE_USERNAME
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: dms-db-prod-2026
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: dms-db-prod-2026
+          property: database
+      - key: DB_USER
         fromDatabase:
           name: dms-db-prod-2026
           property: user
-      - key: SPRING_DATASOURCE_PASSWORD
+      - key: DB_PASS
         fromDatabase:
           name: dms-db-prod-2026
           property: password

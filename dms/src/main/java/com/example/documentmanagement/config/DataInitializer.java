@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-@Component
+// @Component
 @RequiredArgsConstructor
 @Slf4j
 public class DataInitializer implements CommandLineRunner {
@@ -42,7 +42,8 @@ public class DataInitializer implements CommandLineRunner {
         User admin = userRepository.findByUsername("admin").orElseGet(User::new);
         admin.setUsername("admin");
         admin.setPassword(passwordEncoder.encode(adminPassword));
-        if (admin.getEmail() == null) admin.setEmail("admin@example.com");
+        if (admin.getEmail() == null)
+            admin.setEmail("admin@example.com");
         admin.setActive(true);
         admin.setRoles(Set.of(adminRole, reviewerRole, uploaderRole));
         userRepository.save(admin);
@@ -52,7 +53,8 @@ public class DataInitializer implements CommandLineRunner {
         User reviewer = userRepository.findByUsername("reviewer").orElseGet(User::new);
         reviewer.setUsername("reviewer");
         reviewer.setPassword(passwordEncoder.encode(reviewerPassword));
-        if (reviewer.getEmail() == null) reviewer.setEmail("reviewer@example.com");
+        if (reviewer.getEmail() == null)
+            reviewer.setEmail("reviewer@example.com");
         reviewer.setActive(true);
         reviewer.setRoles(Set.of(reviewerRole));
         userRepository.save(reviewer);
@@ -62,7 +64,8 @@ public class DataInitializer implements CommandLineRunner {
         User uploader = userRepository.findByUsername("uploader").orElseGet(User::new);
         uploader.setUsername("uploader");
         uploader.setPassword(passwordEncoder.encode(uploaderPassword));
-        if (uploader.getEmail() == null) uploader.setEmail("uploader@example.com");
+        if (uploader.getEmail() == null)
+            uploader.setEmail("uploader@example.com");
         uploader.setActive(true);
         uploader.setRoles(Set.of(uploaderRole));
         userRepository.save(uploader);

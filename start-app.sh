@@ -14,5 +14,10 @@ FIXED_URL="jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?user=${DB_USER}&pa
 # Masked log for safety
 echo "Forcing JDBC URL to Internal Host: ${DB_HOST} (Port: ${DB_PORT})"
 
-# Run the app
-exec java -jar app.jar --spring.profiles.active=prod --spring.datasource.url="$FIXED_URL"
+# Run the app with explicit credentials to leave no doubt
+exec java \
+  -jar app.jar \
+  --spring.profiles.active=prod \
+  --spring.datasource.url="$FIXED_URL" \
+  --spring.datasource.username="$DB_USER" \
+  --spring.datasource.password="$DB_PASS"

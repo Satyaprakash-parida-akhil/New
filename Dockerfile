@@ -5,7 +5,7 @@ COPY dms-frontend/package*.json ./
 RUN npm install --legacy-peer-deps
 COPY dms-frontend/ ./
 # Inject the Production Railway URL into the frontend build
-RUN sed -i "s|http://15.206.x.x:8080/api|https://new-production-7d1f.up.railway.app/api|g" src/environments/environment.prod.ts
+RUN sed -i "s|https://api.example.com/api|https://new-production-7d1f.up.railway.app/api|g" src/environments/environment.prod.ts
 RUN npm run build -- --configuration=production
 
 # Stage 2: Build Spring Boot Backend with Integrated Frontend

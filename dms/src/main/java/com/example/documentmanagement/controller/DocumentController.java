@@ -91,13 +91,14 @@ public class DocumentController {
             @PathVariable Long id,
             @RequestParam(value = "token", required = false) String token) throws IOException {
 
+        DocumentResponse docInfo = documentService.getDocumentById(id);
         Resource resource = documentService.downloadDocument(id);
-        String contentType = "application/octet-stream";
-        try {
-            contentType = Files.probeContentType(Paths.get(resource.getURI()));
-        } catch (Exception ex) {
-            // Default to application/octet-stream
+
+        String contentType = docInfo.getFileType();
+        if (contentType == null || contentType.isEmpty()) {
+            contentType = "application/octet-stream";
         }
+
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION,

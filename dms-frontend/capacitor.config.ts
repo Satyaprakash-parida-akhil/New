@@ -5,9 +5,9 @@ const config: CapacitorConfig = {
     appName: 'DmsFrontend',
     webDir: 'dist/dms-frontend/browser',
     server: {
-        androidScheme: 'http',
+        androidScheme: 'https',
         cleartext: true,
-        allowNavigation: ['192.168.31.152']
+        allowNavigation: ['192.168.31.152', 'new-production-7d1f.up.railway.app']
     }
 };
 

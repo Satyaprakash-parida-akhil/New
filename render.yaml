@@ -19,7 +19,7 @@ services:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
           name: dms-db
-          property: connectionString
+          property: internalConnectionString
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
           name: dms-db

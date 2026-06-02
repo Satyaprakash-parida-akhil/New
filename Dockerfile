@@ -22,5 +22,5 @@ COPY --from=backend-build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-# DB config is hardcoded in application-prod.properties (PTSI-style)
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]
+# Memory tuned for Render free tier (512MB RAM): heap=256MB, leaving 256MB for JVM overhead
+ENTRYPOINT ["java", "-Xmx256m", "-Xms64m", "-XX:+UseContainerSupport", "-jar", "app.jar", "--spring.profiles.active=prod"]

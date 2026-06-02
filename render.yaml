@@ -1,10 +1,10 @@
 databases:
-  - name: dms-db
+  - name: dms-db-prod-2026
     plan: free
 
 services:
   - type: web
-    name: dms-unified
+    name: dms-unified-prod-2026
     env: docker
     plan: free
     region: ohio
@@ -18,15 +18,15 @@ services:
         sync: false # Set this to your live URL after the first build
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
-          name: dms-db
+          name: dms-db-prod-2026
           property: internalConnectionString
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
-          name: dms-db
+          name: dms-db-prod-2026
           property: user
       - key: SPRING_DATASOURCE_PASSWORD
         fromDatabase:
-          name: dms-db
+          name: dms-db-prod-2026
           property: password
       - key: JWT_SECRET
         generateValue: true

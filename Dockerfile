@@ -26,8 +26,12 @@ COPY --from=backend-build /app/target/*.jar app.jar
 EXPOSE 8080
 
 # Run with Production Profile
-# Run with Production Profile and robust URL fix
-ENTRYPOINT ["sh", "-c", "JDBC_URL=$(echo $SPRING_DATASOURCE_URL | sed 's/^postgresql:/jdbc:postgresql:/' | sed 's/^postgres:/jdbc:postgresql:/'); java -jar app.jar --spring.profiles.active=prod --spring.datasource.url=\"$JDBC_URL\""]
+# Copy startup script and set permissions
+COPY start-app.sh .
+RUN chmod +x start-app.sh
+
+# Run using the robust startup script
+ENTRYPOINT ["./start-app.sh"]
 
 
 

@@ -22,5 +22,5 @@ COPY --from=backend-build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-# Clean startup - all URL logic is now inside Java (Application.java)
-ENTRYPOINT ["java", "-Xmx300m", "-Xms128m", "-jar", "app.jar", "--spring.profiles.active=prod", "--spring.datasource.username=${RENDER_DB_USER}", "--spring.datasource.password=${RENDER_DB_PASS}"]
+# The app handles all config internally (Application.java)
+ENTRYPOINT ["java", "-Xmx300m", "-Xms128m", "-jar", "app.jar", "--spring.profiles.active=prod"]

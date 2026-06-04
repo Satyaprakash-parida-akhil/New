@@ -7,20 +7,29 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 
     public static void main(String[] args) {
-        // Automatic JDBC URL conversion for Cloud Environments (Render)
+        // Programmatic environment adaptation for Render/Cloud
         String dbUrl = System.getenv("RENDER_DB_URL");
-        if (dbUrl != null && (dbUrl.startsWith("postgresql://") || dbUrl.startsWith("postgres://"))) {
-            // Convert to jdbc:postgresql:// and strip embedded credentials
+        String dbUser = System.getenv("RENDER_DB_USER");
+        String dbPass = System.getenv("RENDER_DB_PASS");
+
+        if (dbUrl != null) {
             String jdbcUrl = dbUrl.replaceFirst("postgres(ql)?://", "jdbc:postgresql://")
                     .replaceAll("//.*@", "//");
 
-            // Append SSL mode if not present
             if (!jdbcUrl.contains("sslmode=")) {
                 jdbcUrl += (jdbcUrl.contains("?") ? "&" : "?") + "sslmode=require";
             }
 
             System.setProperty("spring.datasource.url", jdbcUrl);
             System.out.println("Adapted JDBC URL: " + jdbcUrl.split("@")[0] + "@***");
+        }
+
+        if (dbUser != null) {
+            System.setProperty("spring.datasource.username", dbUser);
+        }
+
+        if (dbPass != null) {
+            System.setProperty("spring.datasource.password", dbPass);
         }
 
         SpringApplication.run(Application.class, args);

@@ -22,5 +22,5 @@ COPY --from=backend-build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-# The app handles all config internally (Application.java)
-ENTRYPOINT ["java", "-Xmx300m", "-Xms128m", "-jar", "app.jar", "--spring.profiles.active=prod"]
+# Ultra-Lean profile for Render Free Tier (512MB Total)
+ENTRYPOINT ["java", "-Xmx200m", "-Xms128m", "-jar", "app.jar", "--spring.profiles.active=prod"]

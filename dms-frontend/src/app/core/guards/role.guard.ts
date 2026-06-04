@@ -30,7 +30,7 @@ export class RoleGuard implements CanActivate {
             }
 
             if (expectedRoles && !expectedRoles.some(role => userRoles.includes(role))) {
-                this.router.navigate(['/dashboard']);
+                this.router.navigate(['/home']);
                 return false;
             }
             return true;

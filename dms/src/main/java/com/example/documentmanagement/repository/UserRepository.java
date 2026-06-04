@@ -17,4 +17,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
+
+    org.springframework.data.domain.Page<User> findByRegistrationStatus(String status,
+            org.springframework.data.domain.Pageable pageable);
+
+    org.springframework.data.domain.Page<User> findByRegistrationStatusIn(java.util.List<String> statuses,
+            org.springframework.data.domain.Pageable pageable);
 }

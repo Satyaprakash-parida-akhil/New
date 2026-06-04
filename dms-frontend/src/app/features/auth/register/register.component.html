@@ -1,0 +1,161 @@
+<div class="min-h-screen flex items-center justify-center relative overflow-hidden bg-slate-950 font-['Outfit']">
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 pointer-events-none"></div>
+
+    <div class="relative w-full max-w-lg px-6 py-12 z-10">
+        <div
+            class="w-full bg-white/[0.03] backdrop-blur-2xl p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-white/10 relative overflow-hidden">
+            <!-- Header -->
+            <div class="relative text-center mb-10">
+                <div
+                    class="inline-flex items-center justify-center p-4 bg-gradient-to-tr from-indigo-500 to-fuchsia-500 rounded-3xl shadow-xl mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                </div>
+                <h2 class="text-4xl font-bold text-white tracking-tight mb-2">{{ 'AUTH.REGISTER.TITLE' | translate }}
+                </h2>
+                <p class="text-slate-400 font-medium">{{ 'AUTH.REGISTER.SUBTITLE' | translate }}</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="flex items-center justify-between mb-8 px-4">
+                <div class="flex flex-col items-center">
+                    <div
+                        [class]="'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ' + (step === 'EMAIL' ? 'bg-indigo-500 text-white' : 'bg-emerald-500 text-white')">
+                        <svg *ngIf="step !== 'EMAIL'" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span *ngIf="step === 'EMAIL'">1</span>
+                    </div>
+                </div>
+                <div class="flex-1 h-[2px] mx-2 bg-white/10 relative">
+                    <div
+                        [class]="'absolute inset-0 bg-indigo-500 transition-all duration-500 ' + (step !== 'EMAIL' ? 'w-full' : 'w-0')">
+                    </div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div
+                        [class]="'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ' + (step === 'OTP' ? 'bg-indigo-500 text-white' : step === 'DETAILS' ? 'bg-emerald-500 text-white' : 'bg-white/5 text-slate-500')">
+                        <svg *ngIf="step === 'DETAILS'" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span *ngIf="step !== 'DETAILS'">2</span>
+                    </div>
+                </div>
+                <div class="flex-1 h-[2px] mx-2 bg-white/10 relative">
+                    <div
+                        [class]="'absolute inset-0 bg-indigo-500 transition-all duration-500 ' + (step === 'DETAILS' ? 'w-full' : 'w-0')">
+                    </div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div
+                        [class]="'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ' + (step === 'DETAILS' ? 'bg-indigo-500 text-white' : 'bg-white/5 text-slate-500')">
+                        3</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Email -->
+            <div *ngIf="step === 'EMAIL'" class="space-y-6 animate-fade-in">
+                <div class="space-y-2">
+                    <label for="registerEmail" class="block ml-1 text-sm font-medium text-slate-300">{{
+                        'AUTH.REGISTER.EMAIL_LABEL' |
+                        translate }}</label>
+                    <input id="registerEmail" type="email" [(ngModel)]="userData.email"
+                        class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white focus:ring-2 focus:ring-indigo-500 transition-all"
+                        [placeholder]="'AUTH.REGISTER.EMAIL_PLACEHOLDER' | translate">
+                </div>
+                <button (click)="sendOtp()" [disabled]="isLoading"
+                    class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2">
+                    <span *ngIf="isLoading"
+                        class="animate-spin rounded-full h-4 w-4 border-2 border-white/20 border-t-white"></span>
+                    {{ 'AUTH.REGISTER.BTN_SEND_OTP' | translate }}
+                </button>
+            </div>
+
+            <!-- Step 2: OTP -->
+            <div *ngIf="step === 'OTP'" class="space-y-6 animate-fade-in">
+                <div class="text-center mb-6">
+                    <h3 class="text-xl font-bold text-white mb-1">{{ 'AUTH.REGISTER.OTP_TITLE' | translate }}</h3>
+                    <p class="text-slate-400 text-sm">{{ 'AUTH.REGISTER.OTP_SUBTITLE' | translate }}</p>
+                </div>
+                <div class="space-y-2">
+                    <input id="registerOtp" type="text" [(ngModel)]="userData.otpCode" maxlength="6"
+                        aria-label="OTP verification code"
+                        class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-center text-2xl tracking-[0.5em] font-mono focus:ring-2 focus:ring-indigo-500 transition-all"
+                        placeholder="000000">
+                </div>
+                <button (click)="verifyOtp()" [disabled]="isLoading"
+                    class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2">
+                    <span *ngIf="isLoading"
+                        class="animate-spin rounded-full h-4 w-4 border-2 border-white/20 border-t-white"></span>
+                    {{ 'AUTH.REGISTER.BTN_VERIFY' | translate }}
+                </button>
+                <button (click)="step = 'EMAIL'" class="w-full text-sm text-slate-500 hover:text-slate-300">{{
+                    'COMMON.CANCEL' | translate }}</button>
+            </div>
+
+            <!-- Step 3: Registration Details -->
+            <form *ngIf="step === 'DETAILS'" (ngSubmit)="onSubmit()" #registerForm="ngForm"
+                class="space-y-5 animate-fade-in">
+                <div class="space-y-2">
+                    <label for="registerUsername" class="block ml-1 text-sm font-medium text-slate-300">{{
+                        'AUTH.REGISTER.USERNAME_LABEL' |
+                        translate }}</label>
+                    <input id="registerUsername" type="text" [(ngModel)]="userData.username" name="username" required
+                        class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white focus:ring-2 focus:ring-indigo-500 transition-all"
+                        [placeholder]="'AUTH.REGISTER.USERNAME_PLACEHOLDER' | translate">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label for="registerPassword" class="block ml-1 text-sm font-medium text-slate-300">{{
+                            'AUTH.REGISTER.PASSWORD_LABEL' |
+                            translate }}</label>
+                        <input id="registerPassword" [type]="showPassword ? 'text' : 'password'"
+                            [(ngModel)]="userData.password" name="password" required
+                            class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white focus:ring-2 focus:ring-indigo-500 transition-all"
+                            [placeholder]="'AUTH.REGISTER.PASSWORD_PLACEHOLDER' | translate">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="registerConfirmPassword"
+                            class="block ml-1 text-sm font-medium text-slate-300">Confirm</label>
+                        <input id="registerConfirmPassword" [type]="showPassword ? 'text' : 'password'"
+                            [(ngModel)]="userData.confirmPassword" name="confirmPassword" required
+                            class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white focus:ring-2 focus:ring-indigo-500 transition-all"
+                            placeholder="Confirm">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="registerRole" class="block ml-1 text-sm font-medium text-slate-300">{{
+                        'AUTH.REGISTER.ROLE_LABEL' |
+                        translate }}</label>
+                    <select id="registerRole" [(ngModel)]="userData.requestedRole" name="requestedRole"
+                        class="w-full px-5 py-4 bg-slate-900 border border-white/10 rounded-2xl text-white focus:ring-2 focus:ring-indigo-500 transition-all appearance-none cursor-pointer">
+                        <option value="ROLE_UPLOADER">Uploader</option>
+                        <option value="ROLE_REVIEWER">Reviewer</option>
+                    </select>
+                </div>
+
+                <button type="submit" [disabled]="isLoading"
+                    class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-indigo-500/20 active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <span *ngIf="isLoading"
+                        class="animate-spin rounded-full h-4 w-4 border-2 border-white/20 border-t-white"></span>
+                    {{ 'AUTH.REGISTER.BTN_REGISTER' | translate }}
+                </button>
+            </form>
+
+            <div class="mt-8 text-center" *ngIf="step === 'EMAIL'">
+                <p class="text-slate-500 text-sm">
+                    {{ 'AUTH.REGISTER.ALREADY_HAS_ACCOUNT' | translate }}
+                    <a routerLink="/login" class="text-indigo-400 font-bold hover:text-indigo-300">{{
+                        'AUTH.REGISTER.BTN_LOGIN' | translate }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

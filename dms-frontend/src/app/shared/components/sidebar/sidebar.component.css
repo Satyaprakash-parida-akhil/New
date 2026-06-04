@@ -1,3 +1,221 @@
-:host {
-    display: block;
+.sidebar-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 50;
+}
+
+/* Brand Section Styling */
+.brand-section {
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(2, 6, 23, 0.8);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.logo-box {
+    padding: 0.6rem;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+/* Navigation Styling */
+.nav-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem 1rem;
+}
+
+.nav-section-label {
+    padding: 0 1rem;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #475569;
+    margin-bottom: 1.25rem;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Menu Item Styling */
+.nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: #94a3b8;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+.active-menu-item {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Active Indicators */
+.active-beam {
+    position: absolute;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: #6366f1;
+    border-radius: 0 4px 4px 0;
+    transition: all 0.4s ease;
+    box-shadow: 4px 0 12px rgba(99, 102, 241, 0.6);
+}
+
+.active-menu-item .active-beam {
+    height: 1.5rem;
+}
+
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.active-menu-item .icon-wrapper {
+    background: rgba(99, 102, 241, 0.15);
+}
+
+.label-text {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* Hover Effects */
+.hover-glow {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+    transition: all 0.5s ease;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+.nav-link:hover .hover-glow {
+    width: 15rem;
+    height: 5rem;
+}
+
+/* Footer Styling */
+.sidebar-footer {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(2, 6, 23, 0.5);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.875rem;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    position: relative;
+}
+
+.pulse-dot::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #10b981;
+    border-radius: 50%;
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+
+    75%,
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+.status-text {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Mobile Responsiveness Improvements */
+@media (max-width: 768px) {
+    .sidebar-container {
+        border-right: none;
+    }
+
+    .nav-link {
+        padding: 1rem 1.25rem;
+        gap: 1.25rem;
+    }
+
+    .label-text {
+        font-size: 1rem;
+    }
 }

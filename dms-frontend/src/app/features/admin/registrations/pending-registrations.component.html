@@ -1,0 +1,65 @@
+<div class="min-h-screen bg-[#060818] p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-8">
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-2">
+                <h1 class="text-4xl font-black text-white tracking-tight flex items-center gap-4">
+                    Registration Requests
+                </h1>
+                <p class="text-slate-400 font-medium">Review and approve new user accounts</p>
+            </div>
+
+            <!-- Stats Summary -->
+            <div class="bg-indigo-600/10 border border-indigo-500/20 rounded-2xl px-6 py-4 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center">
+                    <span class="text-xl font-black text-indigo-400">{{ requests.length }}</span>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest leading-none">Pending
+                        Approvals</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation (Consistent with Dashboard Design) -->
+        <div class="flex items-center gap-4 mb-8">
+            <button (click)="setTab('active')"
+                [class]="currentTab === 'active' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white text-gray-500 hover:bg-gray-50'"
+                class="px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
+                Active Requests
+            </button>
+            <button (click)="setTab('inactive')"
+                [class]="currentTab === 'inactive' ? 'bg-slate-900 text-white shadow-lg shadow-slate-200' : 'bg-white text-gray-500 hover:bg-gray-50'"
+                class="px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
+                Inactive / Rejected
+            </button>
+        </div>
+
+        <!-- Universal Data Table Integration -->
+        <div class="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <app-data-table [title]="'User Registration Ledger'" [headers]="headers" [data]="requests"
+                [totalElements]="totalElements" [totalPages]="totalPages" [currentPage]="currentPage"
+                [pageSize]="pageSize" [isLast]="isLast" [isLoading]="isLoading" [isAdmin]="true"
+                (pageChange)="loadRequests($event)" (pageSizeChange)="onPageSizeChange($event)"
+                (approve)="onApprove($event)" (reject)="onReject($event)" (archive)="onArchive($event)"
+                (restore)="onRestore($event)">
+            </app-data-table>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="!isLoading && requests.length === 0"
+            class="bg-slate-900/40 border-2 border-dashed border-slate-800 rounded-[2.5rem] py-20 flex flex-col items-center justify-center text-center space-y-6">
+            <div
+                class="w-20 h-20 rounded-3xl bg-slate-800/50 flex items-center justify-center text-slate-600 animate-pulse">
+                <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </div>
+            <div>
+                <h3 class="text-xl font-black text-white uppercase tracking-tight">No Requests Found</h3>
+                <p class="text-slate-500 text-sm mt-2">The digital ledger is clear for this category.</p>
+            </div>
+        </div>
+    </div>
+</div>

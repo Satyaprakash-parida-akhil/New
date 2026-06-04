@@ -26,6 +26,12 @@ public class GlobalExceptionHandler {
         this.messageSource = messageSource;
     }
 
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBusinessException(BusinessException ex) {
+        log.warn("Business rule violation: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.error(ex.getMessage()));
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse<Void>> handleResourceNotFoundException(ResourceNotFoundException ex) {
         log.warn("Resource not found: {}", ex.getMessage());
@@ -71,26 +77,23 @@ public class GlobalExceptionHandler {
         String msg = messageSource.getMessage(MessageConstants.VALIDATION_ERROR, null, "Validation failed",
                 LocaleContextHolder.getLocale());
 
-        ApiResponse<Map<String, String>> response = ApiResponse.<Map<String, String>>builder()
-                .success(false)
-                .message(msg)
-                .data(errors)
-                .build();
+        ApiResponse<Map<String, String>> response = new ApiResponse<>(false, msg, errors);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse<Void>> handleRuntimeException(RuntimeException ex) {
+        log.error("Business error caught: {}", ex.getMessage(), ex);
+        String msg = ex.getMessage() != null ? ex.getMessage() : "An unexpected business error occurred";
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.error(msg));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGenericException(Exception ex) {
-        log.error("An unexpected error occurred: {}", ex.getMessage(), ex);
-
-        // Robust debugging message
-        String detail = ex.getMessage();
-        if (ex.getCause() != null) {
-            detail += " | Cause: " + ex.getCause().getMessage();
-        }
-
-        String detailedMsg = "Internal Error: " + detail;
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(detailedMsg));
+        log.error("CRITICAL ERROR: Unhandled exception caught: {}", ex.getMessage(), ex);
+        String msg = messageSource.getMessage("error.internal.server", null,
+                "An unexpected system error occurred. Please contact support.", LocaleContextHolder.getLocale());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(msg));
     }
 }

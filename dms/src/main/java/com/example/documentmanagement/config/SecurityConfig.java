@@ -43,6 +43,9 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers("/actuator/**").permitAll()
 
+                        // Protect all admin endpoints specifically (redundant but explicit)
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                         // ULTIMATE SPA FIX: Permit all routes that are NOT APIs.
                         // This allows Angular to handle all visual navigation routes like /dashboard,
                         // /login, etc.

@@ -29,14 +29,21 @@ public class User {
 
     @Column(name = "is_active", nullable = false)
     @Builder.Default
-    private boolean isActive = true;
+    private boolean isActive = false;
+
+    @Column(name = "requested_role", length = 50)
+    private String requestedRole;
+
+    @Column(name = "registration_status", nullable = true, length = 20)
+    @Builder.Default
+    private String registrationStatus = "PENDING";
+
+    @Column(name = "created_at", nullable = true, updatable = false)
+    @Builder.Default
+    private java.time.LocalDateTime createdAt = java.time.LocalDateTime.now();
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     @Builder.Default
     private Set<Role> roles = new HashSet<>();
 }

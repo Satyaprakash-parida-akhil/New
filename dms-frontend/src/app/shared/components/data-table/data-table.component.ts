@@ -32,6 +32,9 @@ export class DataTableComponent {
     @Output() rowClick = new EventEmitter<any>();
     @Output() delete = new EventEmitter<any>();
     @Output() restore = new EventEmitter<any>();
+    @Output() approve = new EventEmitter<any>();
+    @Output() reject = new EventEmitter<any>();
+    @Output() archive = new EventEmitter<any>();
 
     readonly text = this.config.text;
 
@@ -64,16 +67,23 @@ export class DataTableComponent {
     }
 
     getStatusClasses(status: string) {
-        switch (status) {
+        if (!status) return 'bg-slate-50 text-slate-700 border-slate-200';
+        const s = status.toUpperCase();
+        switch (s) {
+            case 'PENDING':
             case 'IN_REVIEW':
                 return 'bg-amber-50 text-amber-700 border-amber-200 shadow-amber-50/50';
             case 'APPROVED':
+            case 'ACTIVE':
                 return 'bg-emerald-50 text-emerald-700 border-emerald-200 shadow-emerald-50/50';
             case 'REJECTED':
+            case 'INACTIVE':
                 return 'bg-rose-50 text-rose-700 border-rose-200 shadow-rose-50/50';
             case 'UPLOADED':
                 return 'bg-indigo-50 text-indigo-700 border-indigo-200 shadow-indigo-50/50';
             case 'SOFT_DELETED':
+            case 'ARCHIVED':
+            case 'DELETED':
                 return 'bg-slate-50 text-slate-500 border-slate-200 border-dashed';
             default:
                 return 'bg-slate-50 text-slate-700 border-slate-200';
@@ -125,5 +135,10 @@ export class DataTableComponent {
             pages.push(i);
         }
         return pages;
+    }
+
+    getDataValue(item: any, key: string | undefined): any {
+        if (!key) return '';
+        return item[key];
     }
 }

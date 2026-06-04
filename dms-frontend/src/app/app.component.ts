@@ -4,12 +4,14 @@ import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { AuthService } from './core/auth/auth.service';
 import { ToastComponent } from './shared/components/toast/toast.component';
+import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 import { filter } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, SidebarComponent, ToastComponent],
+  imports: [CommonModule, RouterOutlet, SidebarComponent, ToastComponent, BreadcrumbComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -19,7 +21,14 @@ export class AppComponent implements OnInit {
   roleDisplay = '';
   sidebarOpen = false;
 
-  constructor(private readonly authService: AuthService, private readonly router: Router) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    public readonly translate: TranslateService
+  ) {
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+
     // Automatically close sidebar on mobile when navigation ends
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -33,7 +42,8 @@ export class AppComponent implements OnInit {
   }
 
   get isLoginPage(): boolean {
-    return this.router.url === '/login' || this.router.url === '/';
+    const publicRoutes = ['/login', '/', '/register', '/forgot-password', '/reset-password'];
+    return publicRoutes.includes(this.router.url.split('?')[0]);
   }
 
   ngOnInit() {

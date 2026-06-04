@@ -11,10 +11,13 @@ import { RouterModule } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
   menus = [
-    { label: 'Dashboard', path: '/dashboard', roles: ['ROLE_ADMIN', 'ROLE_UPLOADER', 'ROLE_REVIEWER'] },
-    { label: 'Upload Document', path: '/docs/upload', roles: ['ROLE_ADMIN', 'ROLE_UPLOADER'] },
-    { label: 'Review Queue', path: '/reviews/pending', roles: ['ROLE_ADMIN', 'ROLE_REVIEWER'] },
-    { label: 'Assign Document', path: '/admin/assign', roles: ['ROLE_ADMIN'] }
+    { label: 'Home', path: '/home', roles: ['ROLE_ADMIN', 'ROLE_UPLOADER', 'ROLE_REVIEWER'], icon: 'home' },
+    { label: 'Dashboard', path: '/dashboard', roles: ['ROLE_ADMIN', 'ROLE_UPLOADER', 'ROLE_REVIEWER'], icon: 'grid' },
+    { label: 'Upload Document', path: '/docs/upload', roles: ['ROLE_ADMIN', 'ROLE_UPLOADER'], icon: 'upload' },
+    { label: 'Review Queue', path: '/reviews/pending', roles: ['ROLE_ADMIN', 'ROLE_REVIEWER'], icon: 'check-square' },
+    { label: 'Assign Document', path: '/admin/assign', roles: ['ROLE_ADMIN'], icon: 'user-plus' },
+    { label: 'User Requests', path: '/admin/registrations', roles: ['ROLE_ADMIN'], icon: 'users' },
+    { label: 'Approved Users', path: '/admin/users', roles: ['ROLE_ADMIN'], icon: 'user-check' }
   ];
 
   allowedMenus: any[] = [];
@@ -29,14 +32,13 @@ export class SidebarComponent implements OnInit {
     if (token) {
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
-        if (payload.roles && Array.isArray(payload.roles)) {
+        if (payload && payload.roles && Array.isArray(payload.roles)) {
           userRoles = payload.roles.map((r: any) => r.authority || r);
         }
       } catch (error) {
         console.error('Error parsing token in sidebar:', error);
       }
     }
-    // If no roles, we can show an empty menu, or we check if userRoles has any overlapping roles
     this.allowedMenus = this.menus.filter(m => m.roles.some(role => userRoles.includes(role)));
   }
 }

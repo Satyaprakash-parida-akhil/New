@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../core/auth/auth.service';
@@ -9,10 +9,12 @@ import { AuthService } from '../../../core/auth/auth.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { ConfigService } from '../../../core/services/config.service';
 
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -20,13 +22,12 @@ export class LoginComponent {
   credentials = { username: '', password: '' };
   isLoading = false;
   showPassword = false;
-  readonly text = this.config.text;
 
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
     private readonly toast: ToastService,
-    private readonly config: ConfigService,
+    private readonly translate: TranslateService,
     private readonly http: HttpClient
   ) { }
 
@@ -56,8 +57,9 @@ export class LoginComponent {
       next: (res) => {
         this.isLoading = false;
         if (res.success) {
-          this.toast.showSuccess(this.config.get('messages.login_success'));
-          this.router.navigate(['/dashboard']).then(() => {
+          const successMsg = this.translate.instant('MESSAGES.LOGIN_SUCCESS');
+          this.toast.showSuccess(successMsg);
+          this.router.navigate(['/home']).then(() => {
             globalThis.location.reload();
           });
         }
@@ -65,16 +67,7 @@ export class LoginComponent {
       error: (err) => {
         this.isLoading = false;
         console.error('Login error detail:', err);
-
-        if (err.status === 0) {
-          this.toast.showError('Cannot connect to server. Status: 0. URL: ' + environment.apiUrl, 'Network Error');
-        } else if (err.status === 401) {
-          this.toast.showError(this.config.get('messages.login_error'), 'Login Failed');
-        } else {
-          // Show technical details for 500/502/503 errors
-          const technicalMsg = `Status: ${err.status}. Message: ${err.error?.message || err.message || 'Unexpected'}`;
-          this.toast.showError(technicalMsg, 'Server Error');
-        }
+        // Error is now handled by GlobalErrorInterceptor
       }
     });
   }

@@ -44,8 +44,9 @@ public class DataInitializer implements CommandLineRunner {
         admin.setPassword(passwordEncoder.encode(adminPassword));
         if (admin.getEmail() == null)
             admin.setEmail("admin@example.com");
-        admin.setActive(true);
         admin.setRoles(Set.of(adminRole, reviewerRole, uploaderRole));
+        admin.setActive(true);
+        admin.setRegistrationStatus("APPROVED");
         userRepository.save(admin);
         log.info("Default Admin user ensured: admin");
 
@@ -55,8 +56,9 @@ public class DataInitializer implements CommandLineRunner {
         reviewer.setPassword(passwordEncoder.encode(reviewerPassword));
         if (reviewer.getEmail() == null)
             reviewer.setEmail("reviewer@example.com");
-        reviewer.setActive(true);
         reviewer.setRoles(Set.of(reviewerRole));
+        reviewer.setActive(true);
+        reviewer.setRegistrationStatus("APPROVED");
         userRepository.save(reviewer);
         log.info("Default Reviewer user ensured: reviewer");
 
@@ -66,8 +68,9 @@ public class DataInitializer implements CommandLineRunner {
         uploader.setPassword(passwordEncoder.encode(uploaderPassword));
         if (uploader.getEmail() == null)
             uploader.setEmail("uploader@example.com");
-        uploader.setActive(true);
         uploader.setRoles(Set.of(uploaderRole));
+        uploader.setActive(true);
+        uploader.setRegistrationStatus("APPROVED");
         userRepository.save(uploader);
         log.info("Default Uploader user ensured: uploader");
     }

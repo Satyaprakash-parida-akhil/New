@@ -50,4 +50,58 @@ export class AuthService {
       return null;
     }
   }
+
+  register(userData: any): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/register`, userData);
+  }
+
+  sendRegisterOtp(email: string): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/register/otp?email=${email}`, {});
+  }
+
+  verifyRegisterOtp(email: string, otp: string): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/register/verify?email=${email}&otp=${otp}`, {});
+  }
+
+  forgotPassword(email: string): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  verifyForgotPasswordOtp(email: string, otp: string): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/forgot-password/verify?email=${email}&otp=${otp}`, {});
+  }
+
+  resetPassword(data: any): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/reset-password`, data);
+  }
+
+  // Admin Registration Management
+  getPendingRegistrations(page: number = 0, size: number = 5): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(`${environment.apiUrl}/admin/registrations/pending?page=${page}&size=${size}`);
+  }
+
+  getInactiveRegistrations(page: number = 0, size: number = 5): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(`${environment.apiUrl}/admin/registrations/inactive?page=${page}&size=${size}`);
+  }
+
+  getApprovedUsers(page: number = 0, size: number = 5): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(`${environment.apiUrl}/admin/registrations/approved?page=${page}&size=${size}`);
+  }
+
+  approveRegistration(userId: number, role: string): Observable<ApiResponse<any>> {
+    return this.http.put<ApiResponse<any>>(`${environment.apiUrl}/admin/registrations/approve/${userId}?role=${role}`, {});
+  }
+
+  rejectRegistration(userId: number): Observable<ApiResponse<any>> {
+    return this.http.put<ApiResponse<any>>(`${environment.apiUrl}/admin/registrations/reject/${userId}`, {});
+  }
+
+  softDeleteRegistration(userId: number): Observable<ApiResponse<any>> {
+    return this.http.put<ApiResponse<any>>(`${environment.apiUrl}/admin/registrations/soft-delete/${userId}`, {});
+  }
+
+  restoreRegistration(userId: number): Observable<ApiResponse<any>> {
+    return this.http.put<ApiResponse<any>>(`${environment.apiUrl}/admin/registrations/restore/${userId}`, {});
+  }
 }
+

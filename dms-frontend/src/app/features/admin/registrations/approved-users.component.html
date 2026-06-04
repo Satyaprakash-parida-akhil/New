@@ -1,0 +1,32 @@
+<div class="pending-container fade-in">
+    <!-- Header Section -->
+    <div class="header-section">
+        <div class="header-content">
+            <h1 class="header-title">{{ 'ADMIN.APPROVED_USERS.TITLE' | translate }}</h1>
+            <p class="header-subtitle">{{ 'ADMIN.APPROVED_USERS.SUBTITLE' | translate }}</p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge">
+                <span class="stat-value">{{ totalElements }}</span>
+                <span class="stat-label">ACTIVE USERS</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="ledger-card">
+        <div class="card-header">
+            <div class="card-title-group">
+                <h2 class="card-title">System User Access Ledger</h2>
+                <span class="card-subtitle">CENTRALIZED IDENTITY CONTROL</span>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <app-data-table [headers]="headers" [data]="users" [isLoading]="isLoading" [totalElements]="totalElements"
+                [totalPages]="totalPages" [currentPage]="currentPage" [pageSize]="pageSize"
+                (pageChange)="loadUsers($event)" (pageSizeChange)="onPageSizeChange($event)">
+            </app-data-table>
+        </div>
+    </div>
+</div>

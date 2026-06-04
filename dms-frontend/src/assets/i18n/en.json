@@ -1,10 +1,157 @@
 {
+  "COMMON": {
+    "APP_NAME": "DMS Portal",
+    "ENTERPRISE": "Enterprise Document Management",
+    "LOGOUT": "Logout",
+    "SYSTEM_ONLINE": "System Online",
+    "SUBMIT": "Submit",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "LOADING": "Loading...",
+    "CONFIRM": "Confirm",
+    "ACTION": "Action",
+    "STATUS": "Status",
+    "NOT_FOUND": "No entries found."
+  },
+  "BREADCRUMB": {
+    "HOME": "Home"
+  },
+  "NAV": {
+    "HOME": "Home",
+    "DASHBOARD": "Dashboard",
+    "UPLOAD": "Upload Document",
+    "REVIEW_QUEUE": "Review Queue",
+    "USER_REQUESTS": "User Requests",
+    "APPROVED_USERS": "Approved Users",
+    "ASSIGN_DOC": "Assign Documents"
+  },
+  "HEADERS": {
+    "DASHBOARD": "Document Dashboard",
+    "UPLOAD": "Upload New Document",
+    "REVIEW": "Review Queue",
+    "ASSIGNMENT": "Review Assignment",
+    "LOGIN": "Welcome Back"
+  },
+  "AUTH": {
+    "LOGIN": {
+      "TITLE": "Welcome Back",
+      "SUBTITLE": "Enterprise Document Management",
+      "USERNAME_LABEL": "Username",
+      "PASSWORD_LABEL": "Password",
+      "USERNAME_PLACEHOLDER": "Enter your username",
+      "PASSWORD_PLACEHOLDER": "••••••••",
+      "BTN_LOGIN": "Log In",
+      "BTN_REGISTER": "Sign Up",
+      "FORGOT_PASSWORD": "Forgot Password?",
+      "REMEMBER_ME": "Remember me",
+      "NO_ACCOUNT": "Don't have an account?",
+      "MOBILE_ACCESS": "Access your documents on the go"
+    },
+    "REGISTER": {
+      "TITLE": "Create Account",
+      "SUBTITLE": "Join our secure platform",
+      "USERNAME_LABEL": "Username",
+      "EMAIL_LABEL": "Gmail Address",
+      "PASSWORD_LABEL": "Password",
+      "ROLE_LABEL": "Request Role",
+      "USERNAME_PLACEHOLDER": "Choose a unique username",
+      "EMAIL_PLACEHOLDER": "example@gmail.com",
+      "PASSWORD_PLACEHOLDER": "Min 6 characters",
+      "BTN_REGISTER": "Register",
+      "BTN_LOGIN": "Back to Login",
+      "OTP_TITLE": "Verify OTP",
+      "OTP_SUBTITLE": "Enter the 6-digit code sent to your email",
+      "BTN_VERIFY": "Verify & Create",
+      "BTN_SEND_OTP": "Send OTP",
+      "ALREADY_HAS_ACCOUNT": "Already have an account?"
+    },
+    "FORGOT_PASSWORD": {
+      "TITLE": "Forgot Password",
+      "SUBTITLE": "Reset your access securely",
+      "EMAIL_LABEL": "Gmail Address",
+      "EMAIL_PLACEHOLDER": "Enter your registered email",
+      "BTN_SEND_OTP": "Send Reset Code",
+      "OTP_LABEL": "OTP Code",
+      "NEW_PASSWORD_LABEL": "New Password",
+      "BTN_RESET": "Reset Password",
+      "BACK_TO_LOGIN": "Back to Login"
+    }
+  },
+  "LABELS": {
+    "TITLE": "Document Title",
+    "FILE": "Select File",
+    "REVIEWER": "Assign To Reviewer",
+    "COMMENTS": "Comments / Notes"
+  },
+  "PLACEHOLDERS": {
+    "TITLE": "e.g. Annual Report 2024",
+    "COMMENTS": "Add your review notes here...",
+    "REVIEWER": "Select a reviewer..."
+  },
+  "MESSAGES": {
+    "LOGIN_SUCCESS": "Welcome back! Login successful.",
+    "LOGIN_ERROR": "Invalid credentials. Please try again.",
+    "UPLOAD_SUCCESS": "Document has been uploaded successfully.",
+    "UPLOAD_ERROR": "Failed to upload document.",
+    "ASSIGN_SUCCESS": "Document assigned to reviewer successfully.",
+    "ASSIGN_ERROR": "Assignment failed. Please try again.",
+    "REVIEW_SUCCESS": "Your review has been submitted.",
+    "REVIEW_ERROR": "Could not submit review.",
+    "FILE_REQUIRED": "Please select a file to upload.",
+    "TITLE_REQUIRED": "Document title is required.",
+    "LOAD_ERROR": "Error loading documents list.",
+    "REGISTRATION_SUCCESS": "Registration successful. Please wait for admin approval.",
+    "OTP_SENT": "OTP has been sent to your email.",
+    "OTP_VERIFIED": "OTP verified successfully.",
+    "PASSWORD_RESET": "Your password has been reset successfully."
+  },
   "VALIDATION": {
     "REQUIRED_USERNAME": "Username is required.",
+    "REQUIRED_PASSWORD": "Password is required.",
+    "REQUIRED_EMAIL": "Email is required.",
+    "INVALID_EMAIL": "Please enter a valid Gmail address.",
     "REQUIRED_DOC": "Please attach a document."
   },
   "API_ERROR": {
     "msg.error.bad.credentials": "Invalid username or password.",
     "msg.document.not.found": "The requested document does not exist."
+  },
+  "ADMIN": {
+    "REGISTRATION": {
+      "TITLE": "Registration Requests",
+      "SUBTITLE": "Review and approve new user accounts",
+      "PENDING_COUNT": "Pending Approvals",
+      "NO_REQUESTS": "No pending requests",
+      "NO_REQUESTS_DESC": "All registration requests have been processed.",
+      "TABLE": {
+        "USER_DETAILS": "User Details",
+        "REQUESTED_ROLE": "Requested Role",
+        "APPLIED_ON": "Applied On",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "APPROVE": "Approve",
+        "REJECT": "Reject",
+        "CONFIRM_REJECT": "Are you sure you want to reject this registration request?"
+      },
+      "MESSAGES": {
+        "APPROVE_SUCCESS": "User approved successfully",
+        "REJECT_SUCCESS": "User request rejected",
+        "LOAD_ERROR": "Failed to load pending requests"
+      }
+    },
+    "APPROVED_USERS": {
+      "TITLE": "Approved System Users",
+      "SUBTITLE": "Manage all active users in the system",
+      "TABLE": {
+        "USER_DETAILS": "User Name",
+        "EMAIL": "Email Address",
+        "ROLE": "Active Role",
+        "JOINED": "Account Created"
+      }
+    }
   }
 }

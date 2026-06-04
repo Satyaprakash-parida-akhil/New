@@ -1,0 +1,100 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.example:documentmanagement >-------------------
+[INFO] Building dms 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.5:run (default-cli) > test-compile @ documentmanagement >>>
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (default) @ documentmanagement ---
+[INFO] argLine set to "-javaagent:C:\\Users\\DELL\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.12\\org.jacoco.agent-0.8.12-runtime.jar=destfile=C:\\Users\\DELL\\OneDrive - ARYAN INFO SERVICES\\My Workplace\\New\\dms\\target\\jacoco.exec"
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ documentmanagement ---
+[INFO] Copying 3 resources from src\main\resources to target\classes
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ documentmanagement ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 55 source files with javac [debug release 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ documentmanagement ---
+[INFO] skip non existing resourceDirectory C:\Users\DELL\OneDrive - ARYAN INFO SERVICES\My Workplace\New\dms\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ documentmanagement ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 5 source files with javac [debug release 21] to target\test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] <<< spring-boot:3.2.5:run (default-cli) < test-compile @ documentmanagement <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.5:run (default-cli) @ documentmanagement ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-06-04T12:04:09.941+05:30  INFO 19272 --- [dms] [           main] c.e.documentmanagement.Application       : Starting Application using Java 21.0.10 with PID 19272 (C:\Users\DELL\OneDrive - ARYAN INFO SERVICES\My Workplace\New\dms\target\classes started by DELL in C:\Users\DELL\OneDrive - ARYAN INFO SERVICES\My Workplace\New\dms)
+2026-06-04T12:04:09.944+05:30  INFO 19272 --- [dms] [           main] c.e.documentmanagement.Application       : The following 1 profile is active: "dev"
+2026-06-04T12:04:10.902+05:30  INFO 19272 --- [dms] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-04T12:04:10.967+05:30  INFO 19272 --- [dms] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 6 JPA repository interfaces.
+2026-06-04T12:04:11.622+05:30  INFO 19272 --- [dms] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-04T12:04:11.633+05:30  INFO 19272 --- [dms] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-04T12:04:11.633+05:30  INFO 19272 --- [dms] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-06-04T12:04:11.687+05:30  INFO 19272 --- [dms] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-04T12:04:11.688+05:30  INFO 19272 --- [dms] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1700 ms
+2026-06-04T12:04:11.879+05:30  INFO 19272 --- [dms] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-04T12:04:12.039+05:30  INFO 19272 --- [dms] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5fd18419
+2026-06-04T12:04:12.041+05:30  INFO 19272 --- [dms] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-04T12:04:12.120+05:30  INFO 19272 --- [dms] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-04T12:04:12.170+05:30  INFO 19272 --- [dms] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-06-04T12:04:12.245+05:30  INFO 19272 --- [dms] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-04T12:04:12.533+05:30  INFO 19272 --- [dms] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-04T12:04:12.587+05:30  WARN 19272 --- [dms] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-04T12:04:13.518+05:30  INFO 19272 --- [dms] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: alter table if exists users add column created_at timestamp(6)
+Hibernate: alter table if exists users add column registration_status varchar(20)
+2026-06-04T12:04:13.654+05:30  INFO 19272 --- [dms] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-04T12:04:14.163+05:30  INFO 19272 --- [dms] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-04T12:04:14.642+05:30  WARN 19272 --- [dms] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-04T12:04:15.024+05:30  INFO 19272 --- [dms] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-06-04T12:04:15.103+05:30  INFO 19272 --- [dms] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@27165978, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1cd97ebe, org.springframework.security.web.context.SecurityContextHolderFilter@794ffe22, org.springframework.security.web.header.HeaderWriterFilter@1ff359b7, org.springframework.web.filter.CorsFilter@6431ab21, org.springframework.security.web.authentication.logout.LogoutFilter@19e3ce9a, com.example.documentmanagement.security.JwtFilter@63f819a6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@71d94ab, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@59e938a4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5d8b5cf6, org.springframework.security.web.session.SessionManagementFilter@6ca1c156, org.springframework.security.web.access.ExceptionTranslationFilter@4d542218, org.springframework.security.web.access.intercept.AuthorizationFilter@39a6c7a6]
+2026-06-04T12:04:15.562+05:30  INFO 19272 --- [dms] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-06-04T12:04:15.573+05:30  INFO 19272 --- [dms] [           main] c.e.documentmanagement.Application       : Started Application in 5.931 seconds (process running for 6.224)
+Hibernate: select r1_0.id,r1_0.name from roles r1_0 where r1_0.name=?
+Hibernate: select r1_0.id,r1_0.name from roles r1_0 where r1_0.name=?
+Hibernate: select r1_0.id,r1_0.name from roles r1_0 where r1_0.name=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.is_active,u1_0.password,u1_0.registration_status,u1_0.requested_role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select r1_0.user_id,r1_1.id,r1_1.name from user_roles r1_0 join roles r1_1 on r1_1.id=r1_0.role_id where r1_0.user_id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.is_active,u1_0.password,u1_0.registration_status,u1_0.requested_role,r1_0.user_id,r1_1.id,r1_1.name,u1_0.username from users u1_0 left join user_roles r1_0 on u1_0.id=r1_0.user_id left join roles r1_1 on r1_1.id=r1_0.role_id where u1_0.id=?
+Hibernate: update users set email=?,is_active=?,password=?,registration_status=?,requested_role=?,username=? where id=?
+2026-06-04T12:04:15.877+05:30  INFO 19272 --- [dms] [           main] c.e.d.config.DataInitializer             : Default Admin user ensured: admin
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.is_active,u1_0.password,u1_0.registration_status,u1_0.requested_role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select r1_0.user_id,r1_1.id,r1_1.name from user_roles r1_0 join roles r1_1 on r1_1.id=r1_0.role_id where r1_0.user_id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.is_active,u1_0.password,u1_0.registration_status,u1_0.requested_role,r1_0.user_id,r1_1.id,r1_1.name,u1_0.username from users u1_0 left join user_roles r1_0 on u1_0.id=r1_0.user_id left join roles r1_1 on r1_1.id=r1_0.role_id where u1_0.id=?
+Hibernate: update users set email=?,is_active=?,password=?,registration_status=?,requested_role=?,username=? where id=?
+2026-06-04T12:04:15.968+05:30  INFO 19272 --- [dms] [           main] c.e.d.config.DataInitializer             : Default Reviewer user ensured: reviewer
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.is_active,u1_0.password,u1_0.registration_status,u1_0.requested_role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select r1_0.user_id,r1_1.id,r1_1.name from user_roles r1_0 join roles r1_1 on r1_1.id=r1_0.role_id where r1_0.user_id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.is_active,u1_0.password,u1_0.registration_status,u1_0.requested_role,r1_0.user_id,r1_1.id,r1_1.name,u1_0.username from users u1_0 left join user_roles r1_0 on u1_0.id=r1_0.user_id left join roles r1_1 on r1_1.id=r1_0.role_id where u1_0.id=?
+Hibernate: update users set email=?,is_active=?,password=?,registration_status=?,requested_role=?,username=? where id=?
+2026-06-04T12:04:16.051+05:30  INFO 19272 --- [dms] [           main] c.e.d.config.DataInitializer             : Default Uploader user ensured: uploader

@@ -83,11 +83,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGenericException(Exception ex) {
         log.error("An unexpected error occurred: {}", ex.getMessage(), ex);
-        String msg = messageSource.getMessage(MessageConstants.ERROR_UNEXPECTED, null,
-                "An unexpected error occurred", LocaleContextHolder.getLocale());
 
-        // Append exception message for debugging
-        String detailedMsg = msg + " (Details: " + ex.getMessage() + ")";
+        // Robust debugging message
+        String detail = ex.getMessage();
+        if (ex.getCause() != null) {
+            detail += " | Cause: " + ex.getCause().getMessage();
+        }
+
+        String detailedMsg = "Internal Error: " + detail;
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(detailedMsg));
     }
 }

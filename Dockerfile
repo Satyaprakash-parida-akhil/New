@@ -22,5 +22,6 @@ COPY --from=backend-build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-
-ENTRYPOINT ["sh", "-c", "exec java -Xmx256m -Xms64m -jar app.jar --spring.profiles.active=prod --spring.datasource.url=$(echo $SPRING_DATASOURCE_URL | sed 's|^postgresql://|jdbc:postgresql://|')"]
+# RENDER_DB_URL is NOT a Spring magic name, so it won't auto-override.
+# We convert postgresql:// -> jdbc:postgresql:// and pass it as the ONLY datasource.url
+ENTRYPOINT ["sh", "-c", "JDBC=$(echo $RENDER_DB_URL | sed 's|^postgresql://|jdbc:postgresql://|;s|^postgres://|jdbc:postgresql://|') && echo \"JDBC URL: ${JDBC%%@*}@***\" && exec java -Xmx256m -Xms64m -jar app.jar --spring.profiles.active=prod --spring.datasource.url=$JDBC --spring.datasource.username=$RENDER_DB_USER --spring.datasource.password=$RENDER_DB_PASS"]

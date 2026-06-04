@@ -15,15 +15,15 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: SPRING_DATASOURCE_URL
+      - key: RENDER_DB_URL
         fromDatabase:
           name: dms-db-prod-2026
           property: externalConnectionString
-      - key: SPRING_DATASOURCE_USERNAME
+      - key: RENDER_DB_USER
         fromDatabase:
           name: dms-db-prod-2026
           property: user
-      - key: SPRING_DATASOURCE_PASSWORD
+      - key: RENDER_DB_PASS
         fromDatabase:
           name: dms-db-prod-2026
           property: password

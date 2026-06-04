@@ -24,4 +24,4 @@ EXPOSE 8080
 
 # RENDER_DB_URL is NOT a Spring magic name, so it won't auto-override.
 # We convert postgresql:// -> jdbc:postgresql:// and pass it as the ONLY datasource.url
-ENTRYPOINT ["sh", "-c", "JDBC=$(echo $RENDER_DB_URL | sed 's|^postgresql://|jdbc:postgresql://|;s|^postgres://|jdbc:postgresql://|' | sed 's|//.*@|//|') && exec java -Xmx256m -Xms64m -jar app.jar --spring.profiles.active=prod --spring.datasource.url=$JDBC --spring.datasource.username=$RENDER_DB_USER --spring.datasource.password=$RENDER_DB_PASS"]
+ENTRYPOINT ["sh", "-c", "JDBC=$(echo $RENDER_DB_URL | sed 's|^postgresql://|jdbc:postgresql://|;s|^postgres://|jdbc:postgresql://|' | sed 's|//.*@|//|') && exec java -Xmx256m -Xms64m -jar app.jar --spring.profiles.active=prod \"--spring.datasource.url=${JDBC}?sslmode=require\" --spring.datasource.username=$RENDER_DB_USER --spring.datasource.password=$RENDER_DB_PASS"]

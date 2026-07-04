@@ -29,6 +29,9 @@ export class DealerAssignmentComponent implements OnInit {
   products: any[] = [];
   dealerOptions: any[] = [];
   productOptions: any[] = [];
+  dealerSearchOptions: any[] = [];
+  productSearchOptions: any[] = [];
+  areaSearchOptions: any[] = [];
   states: any[] = [];
   districts: any[] = [];
   blocks: any[] = [];
@@ -142,12 +145,25 @@ export class DealerAssignmentComponent implements OnInit {
       if (res.success) {
         this.dealers = res.data.content;
         this.dealerOptions = this.dealers.map(d => ({ id: d.id, name: `${d.username} (${d.email})` }));
+        this.dealerSearchOptions = [
+          { id: '', name: 'All Dealers' },
+          ...this.dealers.map(d => ({ id: d.username, name: `${d.username} (${d.email})` }))
+        ];
+        const uniqueAreas = Array.from(new Set(this.dealers.map(d => d.area).filter((a: any) => a && String(a).trim())));
+        this.areaSearchOptions = [
+          { id: '', name: 'All Areas' },
+          ...uniqueAreas.map((a: any) => ({ id: a, name: a }))
+        ];
       }
     });
     this.api.getAllDealerProducts({ page: 0, size: 1000 }).subscribe(res => {
       if (res.success) {
         this.products = res.data.content;
         this.productOptions = this.products.map(p => ({ id: p.id, name: `${p.name} (${p.category})` }));
+        this.productSearchOptions = [
+          { id: '', name: 'All Products' },
+          ...this.products.map(p => ({ id: p.name, name: `${p.name} (${p.category})` }))
+        ];
       }
     });
     this.api.getStates().subscribe(res => {

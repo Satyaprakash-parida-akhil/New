@@ -225,6 +225,9 @@
     "msg.document.not.found": "కోరిన డాక్యుమెంట్ ఉనికిలో లేదు."
   },
   "ADMIN": {
+    "COMMON": {
+      "ALL": "అన్ని"
+    },
     "REGISTRATION": {
       "TITLE": "నమోదు అభ్యర్థనలు",
       "SUBTITLE": "కొత్త వినియోగదారు ఖాతాలను సమీక్షించి ఆమోదించండి",
@@ -685,8 +688,6 @@
     "MODAL_TITLE_NEW": "Add Product",
     "PLACEHOLDER_NAME": "e.g. A4 Paper Bundle",
     "PLACEHOLDER_CATEGORY": "e.g. Stationery",
-    "BASE_PRICE": "Base Price (INR)",
-    "PLACEHOLDER_PRICE": "Base Price...",
     "DESCRIPTION": "Description",
     "PLACEHOLDER_DESCRIPTION": "Enter product description...",
     "IS_ACTIVE": "Is Active",

@@ -276,6 +276,18 @@ export class ApiService {
     return this.http.put<ApiResponse<any>>(`${this.baseUrl}/dealers/admin/${id}/area`, payload);
   }
 
+  deleteDealerArea(id: number): Observable<ApiResponse<any>> {
+    return this.http.delete<ApiResponse<any>>(`${this.baseUrl}/dealers/admin/${id}/area`);
+  }
+
+  recoverDealerArea(id: number): Observable<ApiResponse<any>> {
+    return this.http.put<ApiResponse<any>>(`${this.baseUrl}/dealers/admin/${id}/area/recover`, {});
+  }
+
+  permanentDeleteDealerArea(id: number): Observable<ApiResponse<any>> {
+    return this.http.delete<ApiResponse<any>>(`${this.baseUrl}/dealers/admin/${id}/area/permanent`);
+  }
+
   getDealerDashboardMetrics(): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(`${this.baseUrl}/dealers/dashboard`);
   }

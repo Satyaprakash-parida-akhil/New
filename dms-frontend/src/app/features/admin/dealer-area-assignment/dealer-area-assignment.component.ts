@@ -49,7 +49,8 @@ export class DealerAreaAssignmentComponent implements OnInit {
     { key: 'area', label: 'Area' },
     { key: 'state', label: 'State' },
     { key: 'district', label: 'District' },
-    { key: 'actions', label: 'Actions', type: 'actions' }
+    { key: 'active', label: 'Status', type: 'boolean_status' },
+    { key: 'actions', label: 'Actions', type: 'dealer_area_actions' }
   ];
 
   constructor(private api: ApiService, private toast: ToastService, private translate: TranslateService) {
@@ -64,7 +65,8 @@ export class DealerAreaAssignmentComponent implements OnInit {
         { key: 'area', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.AREA') },
         { key: 'state', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.STATE') },
         { key: 'district', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.DISTRICT') },
-        { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'actions' }
+        { key: 'active', label: 'Status', type: 'boolean_status' },
+        { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'dealer_area_actions' }
       ];
     });
   }
@@ -76,7 +78,8 @@ export class DealerAreaAssignmentComponent implements OnInit {
       { key: 'area', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.AREA') },
       { key: 'state', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.STATE') },
       { key: 'district', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.DISTRICT') },
-      { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'actions' }
+      { key: 'active', label: 'Status', type: 'boolean_status' },
+      { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'dealer_area_actions' }
     ];
 
     this.loadDealers();
@@ -169,5 +172,53 @@ export class DealerAreaAssignmentComponent implements OnInit {
 
   onEdit(row: any): void {
     this.openEditModal(row);
+  }
+
+  onDelete(row: any): void {
+    if (confirm(`Are you sure you want to deactivate the area assignment for dealer ${row.username}?`)) {
+      this.api.deleteDealerArea(row.id).subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.toast.showSuccess('Area assignment deactivated successfully');
+            this.loadDealers();
+          } else {
+            this.toast.showError('Failed to deactivate area');
+          }
+        },
+        error: () => this.toast.showError('Error deactivating area')
+      });
+    }
+  }
+
+  onRecover(row: any): void {
+    if (confirm(`Are you sure you want to recover the area assignment for dealer ${row.username}?`)) {
+      this.api.recoverDealerArea(row.id).subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.toast.showSuccess('Area assignment recovered successfully');
+            this.loadDealers();
+          } else {
+            this.toast.showError('Failed to recover area');
+          }
+        },
+        error: () => this.toast.showError('Error recovering area')
+      });
+    }
+  }
+
+  onPermanentDelete(row: any): void {
+    if (confirm(`Are you sure you want to PERMANENTLY clear the area assignment for dealer ${row.username}? This cannot be undone.`)) {
+      this.api.permanentDeleteDealerArea(row.id).subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.toast.showSuccess('Area assignment cleared permanently');
+            this.loadDealers();
+          } else {
+            this.toast.showError('Failed to clear area permanently');
+          }
+        },
+        error: () => this.toast.showError('Error clearing area permanently')
+      });
+    }
   }
 }

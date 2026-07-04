@@ -225,6 +225,9 @@
     "msg.document.not.found": "ଅନୁରୋଧିତ ଡକ୍ୟୁମେଣ୍ଟ ଉପଲବ୍ଧ ନାହିଁ।"
   },
   "ADMIN": {
+    "COMMON": {
+      "ALL": "ସମସ୍ତ"
+    },
     "REGISTRATION": {
       "TITLE": "ପଞ୍ଜୀକରଣ ଅନୁରୋଧ",
       "SUBTITLE": "ନୂଆ ବ୍ୟବହାରକାରୀ ଖାତା ସମୀକ୍ଷା ଓ ଅନୁମୋଦନ",
@@ -685,8 +688,6 @@
     "MODAL_TITLE_NEW": "Add Product",
     "PLACEHOLDER_NAME": "e.g. A4 Paper Bundle",
     "PLACEHOLDER_CATEGORY": "e.g. Stationery",
-    "BASE_PRICE": "Base Price (INR)",
-    "PLACEHOLDER_PRICE": "Base Price...",
     "DESCRIPTION": "Description",
     "PLACEHOLDER_DESCRIPTION": "Enter product description...",
     "IS_ACTIVE": "Is Active",

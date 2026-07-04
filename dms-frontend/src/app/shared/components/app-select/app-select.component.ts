@@ -86,33 +86,31 @@ export class AppSelectComponent implements OnDestroy, OnChanges {
   openDropdown() {
     this.isOpen = true;
     this.searchTerm = '';
-    this.updatePosition();
+    this.cdr.detectChanges();
 
-    setTimeout(() => {
-      const dropdownEl = this.elementRef.nativeElement.querySelector('.app-select-dropdown') as HTMLElement;
-      if (dropdownEl) {
-        document.body.appendChild(dropdownEl);
-        this.dropdownEl = dropdownEl;
-        this.updatePosition();
+    const dropdownEl = this.elementRef.nativeElement.querySelector('.app-select-dropdown') as HTMLElement;
+    if (dropdownEl) {
+      document.body.appendChild(dropdownEl);
+      this.dropdownEl = dropdownEl;
+      this.updatePosition();
+    }
+
+    this.clickListener = (event: MouseEvent) => {
+      const triggerEl = this.elementRef.nativeElement.querySelector('.app-select-trigger');
+      const clickedTrigger = triggerEl && triggerEl.contains(event.target as Node);
+      const clickedDropdown = this.dropdownEl && this.dropdownEl.contains(event.target as Node);
+
+      if (!clickedTrigger && !clickedDropdown) {
+        this.closeDropdown();
+        this.cdr.detectChanges();
       }
+    };
+    this.resizeListener = () => { this.updatePosition(); this.cdr.detectChanges(); };
+    this.scrollListener = () => { this.updatePosition(); this.cdr.detectChanges(); };
 
-      this.clickListener = (event: MouseEvent) => {
-        const triggerEl = this.elementRef.nativeElement.querySelector('.app-select-trigger');
-        const clickedTrigger = triggerEl && triggerEl.contains(event.target as Node);
-        const clickedDropdown = this.dropdownEl && this.dropdownEl.contains(event.target as Node);
-
-        if (!clickedTrigger && !clickedDropdown) {
-          this.closeDropdown();
-          this.cdr.detectChanges();
-        }
-      };
-      this.resizeListener = () => { this.updatePosition(); this.cdr.detectChanges(); };
-      this.scrollListener = () => { this.updatePosition(); this.cdr.detectChanges(); };
-
-      document.addEventListener('click', this.clickListener);
-      window.addEventListener('resize', this.resizeListener);
-      window.addEventListener('scroll', this.scrollListener, true);
-    });
+    document.addEventListener('click', this.clickListener);
+    window.addEventListener('resize', this.resizeListener);
+    window.addEventListener('scroll', this.scrollListener, true);
 
     // Focus search after open
     setTimeout(() => {
@@ -145,11 +143,8 @@ export class AppSelectComponent implements OnDestroy, OnChanges {
     if (!triggerEl) return;
     const rect = triggerEl.getBoundingClientRect();
 
-    const minDropdownWidth = this.searchable ? 220 : Math.max(rect.width, 80);
-    this.dropdownWidth = Math.max(rect.width, minDropdownWidth);
-
-    // Constrain horizontal position so it stays inside viewport
-    this.dropdownLeft = Math.max(8, Math.min(rect.left, window.innerWidth - this.dropdownWidth - 8)) + window.scrollX;
+    this.dropdownWidth = rect.width;
+    this.dropdownLeft = rect.left + window.scrollX;
 
     // User requested to always open dropdowns downward
     this.dropdownOpenAbove = false;
@@ -160,7 +155,7 @@ export class AppSelectComponent implements OnDestroy, OnChanges {
       this.dropdownEl.style.zIndex = '999999';
       this.dropdownEl.style.left = this.dropdownLeft + 'px';
       this.dropdownEl.style.width = this.dropdownWidth + 'px';
-      this.dropdownEl.style.minWidth = minDropdownWidth + 'px';
+      this.dropdownEl.style.minWidth = this.dropdownWidth + 'px';
 
       const optionsContainer = this.dropdownEl.querySelector('.app-select-options') as HTMLElement;
 

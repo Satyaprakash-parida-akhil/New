@@ -82,6 +82,30 @@ public class DealerController {
         return ResponseEntity.ok(ApiResponse.success(MessageConstants.Success.DEALER_AREA_UPDATED, response));
     }
 
+    @DeleteMapping("/admin/{id}/area")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Soft delete dealer area mapping")
+    public ResponseEntity<ApiResponse<DealerProfileResponse>> deleteDealerArea(@PathVariable Long id) {
+        DealerProfileResponse response = dealerService.deleteDealerArea(id);
+        return ResponseEntity.ok(ApiResponse.success("Area assignment soft deleted successfully", response));
+    }
+
+    @PutMapping("/admin/{id}/area/recover")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Recover dealer area mapping")
+    public ResponseEntity<ApiResponse<DealerProfileResponse>> recoverDealerArea(@PathVariable Long id) {
+        DealerProfileResponse response = dealerService.recoverDealerArea(id);
+        return ResponseEntity.ok(ApiResponse.success("Area assignment recovered successfully", response));
+    }
+
+    @DeleteMapping("/admin/{id}/area/permanent")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Permanently clear/delete dealer area mapping")
+    public ResponseEntity<ApiResponse<DealerProfileResponse>> permanentDeleteDealerArea(@PathVariable Long id) {
+        DealerProfileResponse response = dealerService.permanentDeleteDealerArea(id);
+        return ResponseEntity.ok(ApiResponse.success("Area assignment cleared permanently", response));
+    }
+
     // --- Dealer Products ---
     
     @PostMapping("/admin/products")

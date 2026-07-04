@@ -56,7 +56,10 @@
       [backendFiltering]="true"
       (pageChange)="onPageChange($event)"
       (pageSizeChange)="onPageSizeChange($event)"
-      (edit)="onEdit($event)">
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
+      (recover)="onRecover($event)"
+      (permanentDelete)="onPermanentDelete($event)">
     </app-data-table>
   </div>
 

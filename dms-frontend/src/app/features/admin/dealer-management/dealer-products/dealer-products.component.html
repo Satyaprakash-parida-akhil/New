@@ -73,7 +73,7 @@
     <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" (click)="closeModal()"></div>
     
     <!-- Modal Content -->
-    <div class="relative bg-slate-900 border border-white/10 rounded-2xl w-full max-w-lg shadow-2xl animate-fade-in overflow-hidden">
+    <div class="relative bg-slate-900 border border-white/10 rounded-2xl w-full max-w-lg shadow-2xl animate-fade-in flex flex-col max-h-[90vh] overflow-hidden">
       
       <!-- Header -->
       <div class="flex items-center justify-between p-6 border-b border-white/5 bg-slate-800/50">
@@ -86,7 +86,7 @@
       </div>
 
       <!-- Body -->
-      <div class="p-6 space-y-4">
+      <div class="p-6 space-y-4 overflow-y-auto flex-1">
         <div>
           <label class="block text-sm font-medium text-slate-300 mb-1">{{ 'ADMIN.DEALER_MGMT.COL_PRODUCT_NAME' | translate }}</label>
           <input type="text" [(ngModel)]="productForm.name" class="w-full bg-slate-950 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 transition-colors" [placeholder]="'DEALER_PRODUCTS.PLACEHOLDER_NAME' | translate">

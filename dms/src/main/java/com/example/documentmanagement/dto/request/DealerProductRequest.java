@@ -18,4 +18,6 @@ public class DealerProductRequest {
     private String category;
     
     private String imageUrl;
+
+
 }

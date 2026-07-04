@@ -1,1 +1,4 @@
 /* admin-payments.component.css */
+.status-filters-container {
+  margin-bottom: 2rem !important;
+}

@@ -48,9 +48,8 @@ export class DealerProductsComponent implements OnInit {
   headers: any[] = [
     { key: 'name', label: 'Product Name' },
     { key: 'category', label: 'Category' },
-    { key: 'basePrice', label: 'Base Price' },
-    { key: 'active', label: 'Status', type: 'status' },
-    { key: 'actions', label: 'Actions', type: 'actions' }
+    { key: 'status', label: 'Status', type: 'status' },
+    { key: 'actions', label: 'Actions', type: 'master_detail_actions' }
   ];
 
   constructor(
@@ -67,9 +66,8 @@ export class DealerProductsComponent implements OnInit {
       this.headers = [
         { key: 'name', label: this.translate.instant('ADMIN.DEALER_MGMT.COL_PRODUCT_NAME') },
         { key: 'category', label: this.translate.instant('ADMIN.DEALER_MGMT.COL_CATEGORY') },
-        { key: 'basePrice', label: this.translate.instant('DEALER_PRODUCTS.BASE_PRICE') },
-        { key: 'active', label: this.translate.instant('COMMON.STATUS'), type: 'status' },
-        { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'actions' }
+        { key: 'status', label: this.translate.instant('COMMON.STATUS'), type: 'status' },
+        { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'master_detail_actions' }
       ];
     });
   }
@@ -80,9 +78,8 @@ export class DealerProductsComponent implements OnInit {
     this.headers = [
       { key: 'name', label: this.translate.instant('ADMIN.DEALER_MGMT.COL_PRODUCT_NAME') },
       { key: 'category', label: this.translate.instant('ADMIN.DEALER_MGMT.COL_CATEGORY') },
-      { key: 'basePrice', label: this.translate.instant('DEALER_PRODUCTS.BASE_PRICE') },
-      { key: 'active', label: this.translate.instant('COMMON.STATUS'), type: 'status' },
-      { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'actions' }
+      { key: 'status', label: this.translate.instant('COMMON.STATUS'), type: 'status' },
+      { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'master_detail_actions' }
     ];
 
     const userProfile = this.auth.getUserProfile();

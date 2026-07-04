@@ -225,6 +225,9 @@
     "msg.document.not.found": "अनुरोधित दस्तावेज़ मौजूद नहीं है।"
   },
   "ADMIN": {
+    "COMMON": {
+      "ALL": "सभी"
+    },
     "REGISTRATION": {
       "TITLE": "पंजीकरण अनुरोध",
       "SUBTITLE": "नए उपयोगकर्ता खातों की समीक्षा और अनुमोदन करें",
@@ -685,8 +688,6 @@
     "MODAL_TITLE_NEW": "Add Product",
     "PLACEHOLDER_NAME": "e.g. A4 Paper Bundle",
     "PLACEHOLDER_CATEGORY": "e.g. Stationery",
-    "BASE_PRICE": "Base Price (INR)",
-    "PLACEHOLDER_PRICE": "Base Price...",
     "DESCRIPTION": "Description",
     "PLACEHOLDER_DESCRIPTION": "Enter product description...",
     "IS_ACTIVE": "Is Active",

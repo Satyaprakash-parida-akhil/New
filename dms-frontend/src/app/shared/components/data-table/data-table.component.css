@@ -1,38 +1,38 @@
 /* ── Search Card ─────────────────────────────────────────────────────────── */
 .dt-search-card {
-  background: #ffffff;
+  background: rgba(30, 41, 59, 0.3) !important;
   border-radius: 2rem;
-  border: 1.5px solid #e8e8f0;
-  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.06), 0 1px 4px rgba(0,0,0,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
   padding: 0.875rem 1.25rem;
-  transition: box-shadow 0.25s;
+  transition: all 0.25s ease;
 }
 
 .dt-search-card:focus-within {
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14), 0 4px 24px rgba(99, 102, 241, 0.1);
-  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15), 0 4px 24px rgba(0, 0, 0, 0.3);
+  border-color: #6366f1 !important;
 }
 
 /* --- High Contrast Search & Filter Panel --- */
 .dt-search-card .border-b {
-  border-bottom-color: #e2e8f0 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .dt-search-card .border-t {
-  border-top-color: #e2e8f0 !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .dt-search-card label {
-  color: #475569 !important;
+  color: #94a3b8 !important;
   font-size: 0.65rem !important;
   font-weight: 800 !important;
   letter-spacing: 0.05em !important;
 }
 
 .dt-search-card input:not(.dt-search-input) {
-  background: #f8fafc !important;
-  border: 1.5px solid #e2e8f0 !important;
-  color: #0f172a !important;
+  background: rgba(15, 23, 42, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
   height: 42px !important;
   padding-top: 0px !important;
   padding-bottom: 0px !important;
@@ -47,18 +47,18 @@
 }
 
 .dt-search-card input:not(.dt-search-input):hover {
-  background: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
+  background: rgba(15, 23, 42, 0.7) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .dt-search-card input:not(.dt-search-input):focus {
-  background: #ffffff !important;
+  background: rgba(15, 23, 42, 0.9) !important;
   border-color: #6366f1 !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
 }
 
 .dt-search-card .absolute.right-3\.5 {
-  color: #64748b !important;
+  color: #94a3b8 !important;
 }
 
 .dt-search-card button {
@@ -69,14 +69,14 @@
 }
 
 .dt-search-card button[type="button"] {
-  background: #f1f5f9 !important;
-  border: 1.5px solid #e2e8f0 !important;
-  color: #475569 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #cbd5e1 !important;
 }
 
 .dt-search-card button[type="button"]:hover {
-  background: #e2e8f0 !important;
-  color: #0f172a !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
 }
 
 .dt-search-inner {
@@ -105,13 +105,13 @@
   background: transparent;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #1e1b4b;
+  color: #ffffff;
   letter-spacing: 0.01em;
   min-width: 0;
 }
 
 .dt-search-input::placeholder {
-  color: #a5b4fc;
+  color: #94a3b8;
   font-weight: 500;
 }
 

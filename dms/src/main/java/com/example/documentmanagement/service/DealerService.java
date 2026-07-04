@@ -10,6 +10,9 @@ public interface DealerService {
     Page<DealerProfileResponse> getAllDealers(String status, String searchTerm, int page, int size, String sortBy, String sortDir);
     DealerProfileResponse verifyDealer(Long id, boolean approve);
     com.example.documentmanagement.dto.response.DealerProfileResponse updateDealerArea(Long id, com.example.documentmanagement.dto.request.DealerAreaAssignmentRequest request);
+    com.example.documentmanagement.dto.response.DealerProfileResponse deleteDealerArea(Long id);
+    com.example.documentmanagement.dto.response.DealerProfileResponse recoverDealerArea(Long id);
+    com.example.documentmanagement.dto.response.DealerProfileResponse permanentDeleteDealerArea(Long id);
 
     // Products
     com.example.documentmanagement.dto.response.DealerProductResponse createProduct(com.example.documentmanagement.dto.request.DealerProductRequest request);

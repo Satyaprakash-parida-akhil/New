@@ -115,6 +115,37 @@ public class DealerServiceImpl implements DealerService {
         return mapToResponse(dealerProfileRepository.save(profile));
     }
 
+    @Override
+    @Transactional
+    public DealerProfileResponse deleteDealerArea(Long id) {
+        DealerProfile profile = dealerProfileRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstants.Error.DEALER_NOT_FOUND));
+        profile.setActive(false);
+        return mapToResponse(dealerProfileRepository.save(profile));
+    }
+
+    @Override
+    @Transactional
+    public DealerProfileResponse recoverDealerArea(Long id) {
+        DealerProfile profile = dealerProfileRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstants.Error.DEALER_NOT_FOUND));
+        profile.setActive(true);
+        return mapToResponse(dealerProfileRepository.save(profile));
+    }
+
+    @Override
+    @Transactional
+    public DealerProfileResponse permanentDeleteDealerArea(Long id) {
+        DealerProfile profile = dealerProfileRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstants.Error.DEALER_NOT_FOUND));
+        profile.setState(null);
+        profile.setDistrict(null);
+        profile.setArea(null);
+        profile.setPinCode(null);
+        profile.setActive(true);
+        return mapToResponse(dealerProfileRepository.save(profile));
+    }
+
     private DealerProfileResponse mapToResponse(DealerProfile profile) {
         return DealerProfileResponse.builder()
                 .id(profile.getId())
@@ -123,11 +154,11 @@ public class DealerServiceImpl implements DealerService {
                 .photoUrl(profile.getPhotoUrl())
                 .aadhaarNumber(profile.getAadhaarNumber())
                 .panNumber(profile.getPanNumber())
-                .area(profile.getArea())
-                .state(profile.getState())
-                .district(profile.getDistrict())
-                .pinCode(profile.getPinCode())
-                .address(profile.getAddress())
+                .area(profile.getArea() != null ? profile.getArea() : profile.getUser().getBlock())
+                .state(profile.getState() != null ? profile.getState() : profile.getUser().getState())
+                .district(profile.getDistrict() != null ? profile.getDistrict() : profile.getUser().getDistrict())
+                .pinCode(profile.getPinCode() != null ? profile.getPinCode() : profile.getUser().getPinCode())
+                .address(profile.getAddress() != null ? profile.getAddress() : profile.getUser().getAddress())
                 .verified(profile.isVerified())
                 .verificationStatus(profile.getVerificationStatus())
                 .active(profile.isActive())

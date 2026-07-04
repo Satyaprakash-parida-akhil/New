@@ -172,6 +172,7 @@ export class DataTableComponent implements OnChanges, OnDestroy {
     isFilterable(h: any): boolean {
         return h.key &&
                h.type !== 'action' &&
+               h.type !== 'actions' &&
                h.type !== 'registration_actions' &&
                h.type !== 'archived_actions' &&
                h.type !== 'inactive_action' &&

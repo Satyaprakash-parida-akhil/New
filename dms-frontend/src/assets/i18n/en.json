@@ -225,6 +225,9 @@
     "msg.document.not.found": "The requested document does not exist."
   },
   "ADMIN": {
+    "COMMON": {
+      "ALL": "All"
+    },
     "REGISTRATION": {
       "TITLE": "Registration Requests",
       "SUBTITLE": "Review and approve new user accounts",
@@ -685,8 +688,6 @@
     "MODAL_TITLE_NEW": "Add Product",
     "PLACEHOLDER_NAME": "e.g. A4 Paper Bundle",
     "PLACEHOLDER_CATEGORY": "e.g. Stationery",
-    "BASE_PRICE": "Base Price (INR)",
-    "PLACEHOLDER_PRICE": "Base Price...",
     "DESCRIPTION": "Description",
     "PLACEHOLDER_DESCRIPTION": "Enter product description...",
     "IS_ACTIVE": "Is Active",
@@ -791,7 +792,6 @@
     "SEARCH": "Search",
     "APPLY": "Apply Filters",
     "RESET": "Reset",
-    "BASE_PRICE": "Base Price",
     "TABLE_TITLE": "Products",
     "PRODUCTS_TABLE_TITLE": "Product Catalog",
     "ADD_PRODUCT": "Add Product",
@@ -864,6 +864,9 @@
     "PLACEHOLDER_DETAILS": "Enter details of distribution..."
   },
   "ADMIN": {
+    "COMMON": {
+      "ALL": "All"
+    },
     "APPROVED_USERS": {
       "TITLE": "Approved System Users",
       "SUBTITLE": "Manage all active and inactive users in the system.",
@@ -894,6 +897,9 @@
       "SEARCH": "Search by name",
       "STATUS_LABEL": "Status",
       "COL_DEALER": "Dealer",
+      "SELECT_DEALER": "Select a Dealer",
+      "COL_PRODUCT": "Product",
+      "SELECT_PRODUCT": "Select a Product",
       "COL_PRODUCT_NAME": "Product Name",
       "COL_CATEGORY": "Category",
       "COL_DESCRIPTION": "Description",
@@ -903,6 +909,13 @@
         "ASSIGNMENT": "3. Area Assignment",
         "DISTRIBUTION": "4. Distribution Verify"
       }
+    },
+    "DEALER_AREA": {
+      "TITLE": "Dealer Area Assignment",
+      "SUBTITLE": "Assign states, districts, and local areas to dealers for hierarchy mapping.",
+      "SEARCH": "Search",
+      "ASSIGN_TITLE": "Assign Area",
+      "ASSIGN_DEALER_LABEL": "Dealer"
     },
     "SCREEN_ASSIGNMENT": {
       "TITLE": "Screen Assignment",

@@ -20,7 +20,7 @@
     </div>
 
     <!-- ── Status Filter Tabs ──────────────────────────────── -->
-    <div class="flex items-center gap-3 flex-wrap">
+    <div class="flex items-center gap-4 flex-wrap status-filters-container">
       <button *ngFor="let f of filters"
         (click)="setFilter(f.value)"
         [class]="activeFilter === f.value

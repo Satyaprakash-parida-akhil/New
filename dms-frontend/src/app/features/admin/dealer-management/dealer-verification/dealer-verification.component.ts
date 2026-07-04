@@ -8,6 +8,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { DataTableComponent } from '../../../../shared/components/data-table/data-table.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppSelectComponent } from '../../../../shared/components/app-select/app-select.component';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-dealer-verification',
@@ -48,7 +49,7 @@ export class DealerVerificationComponent implements OnInit {
     { key: 'email', label: 'Email' },
     { key: 'state', label: 'State' },
     { key: 'district', label: 'District' },
-    { key: 'status', label: 'Status', type: 'status' },
+    { key: 'verificationStatus', label: 'Status', type: 'status' },
     { key: 'actions', label: 'Actions', type: 'actions' }
   ];
 
@@ -68,7 +69,7 @@ export class DealerVerificationComponent implements OnInit {
         { key: 'email', label: this.translate.instant('AUTH.REGISTER.EMAIL_LABEL') },
         { key: 'state', label: this.translate.instant('DEALER_VERIFICATION.STATE') },
         { key: 'district', label: this.translate.instant('DEALER_VERIFICATION.DISTRICT') },
-        { key: 'status', label: this.translate.instant('DEALER_VERIFICATION.SELECT_STATUS'), type: 'status' },
+        { key: 'verificationStatus', label: this.translate.instant('DEALER_VERIFICATION.SELECT_STATUS'), type: 'status' },
         { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'actions' }
       ];
     });
@@ -151,7 +152,7 @@ export class DealerVerificationComponent implements OnInit {
       { key: 'email', label: this.translate.instant('AUTH.REGISTER.EMAIL_LABEL') },
       { key: 'state', label: this.translate.instant('DEALER_VERIFICATION.STATE') },
       { key: 'district', label: this.translate.instant('DEALER_VERIFICATION.DISTRICT') },
-      { key: 'status', label: this.translate.instant('DEALER_VERIFICATION.SELECT_STATUS'), type: 'status' },
+      { key: 'verificationStatus', label: this.translate.instant('DEALER_VERIFICATION.SELECT_STATUS'), type: 'status' },
       { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'actions' }
     ];
 
@@ -453,5 +454,14 @@ export class DealerVerificationComponent implements OnInit {
         error: () => this.toast.showError('Verification error')
       });
     }
+  }
+
+  getFileUrl(url: string): string {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    const baseUrl = environment.apiUrl.replace(/\/api$/, '');
+    return `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
   }
 }

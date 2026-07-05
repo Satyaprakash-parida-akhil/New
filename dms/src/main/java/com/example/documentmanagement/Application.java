@@ -70,9 +70,13 @@ public class Application {
                     portStr = hostPort.substring(colonIndex); // e.g. ":5432"
                 }
                 
-                // If host is internal and we are running locally, append Ohio Render suffix
-                if (host.contains("dpg-") && !host.contains(".render.com") && System.getenv("RENDER") == null) {
-                    host += ".ohio-postgres.render.com";
+                // If host is internal (contains "dpg-") and missing the ".render.com" suffix, append it
+                if (host.contains("dpg-") && !host.contains(".render.com")) {
+                    String region = System.getenv("RENDER_REGION");
+                    if (region == null || region.isEmpty()) {
+                        region = "ohio"; // Default fallback
+                    }
+                    host += "." + region + "-postgres.render.com";
                 }
                 
                 String jdbcUrl = "jdbc:postgresql://" + host + portStr + path;

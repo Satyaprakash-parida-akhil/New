@@ -7,43 +7,54 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 
     public static void main(String[] args) {
-        // Universal Cloud Database Adapter
         String dbUrl = System.getenv("RENDER_DB_URL");
-        if (dbUrl == null)
-            dbUrl = System.getenv("DATABASE_URL"); // Fallback for other platforms
-
-        String dbUser = System.getenv("RENDER_DB_USER");
-        if (dbUser == null)
-            dbUser = System.getenv("DATABASE_USER");
-
-        String dbPass = System.getenv("RENDER_DB_PASS");
-        if (dbPass == null)
-            dbPass = System.getenv("DATABASE_PASSWORD");
-
-        if (dbUrl != null) {
-            // 1. Convert prefix
-            String jdbcUrl = dbUrl.replaceFirst("postgres(ql)?://", "jdbc:postgresql://")
-                    .replaceAll("//.*@", "//");
-
-            // 2. Fix the "Short Hostname" issue (The cause of UnknownHostException)
-            // If the host is just 'dpg-xxx-a', append the Render global suffix
-            if (jdbcUrl.contains("dpg-") && !jdbcUrl.contains(".render.com") && System.getenv("RENDER") == null) {
-                jdbcUrl = jdbcUrl.replaceFirst("(@|//)(dpg-[^:/]+)", "$1$2.ohio-postgres.render.com");
-            }
-
-            // 3. Force SSL
-            if (!jdbcUrl.contains("sslmode=")) {
-                jdbcUrl += (jdbcUrl.contains("?") ? "&" : "?") + "sslmode=require";
-            }
-
-            System.setProperty("spring.datasource.url", jdbcUrl);
-            System.out.println("🚀 Adapted JDBC URL: " + jdbcUrl.split("@")[0] + "@***");
+        if (dbUrl == null) {
+            dbUrl = System.getenv("DATABASE_URL");
         }
 
-        if (dbUser != null)
-            System.setProperty("spring.datasource.username", dbUser);
-        if (dbPass != null)
-            System.setProperty("spring.datasource.password", dbPass);
+        if (dbUrl != null) {
+            try {
+                // Parse standard URL: postgresql://username:password@hostname/database
+                String cleanUrl = dbUrl.replaceFirst("postgres(ql)?://", "");
+                String[] parts = cleanUrl.split("@");
+                if (parts.length == 2) {
+                    String credentials = parts[0];
+                    String hostAndDb = parts[1];
+                    
+                    String[] credParts = credentials.split(":", 2);
+                    String username = credParts[0];
+                    String password = credParts.length > 1 ? credParts[1] : "";
+                    
+                    String[] hostDbParts = hostAndDb.split("/", 2);
+                    String host = hostDbParts[0];
+                    String database = hostDbParts.length > 1 ? hostDbParts[1] : "";
+                    
+                    // If hostname is short and we are running locally, append Ohio Render suffix
+                    if (host.contains("dpg-") && !host.contains(".render.com") && System.getenv("RENDER") == null) {
+                        host += ".ohio-postgres.render.com";
+                    }
+                    
+                    String jdbcUrl = "jdbc:postgresql://" + host + "/" + database + 
+                                     "?user=" + username + 
+                                     "&password=" + password;
+                    
+                    if (!jdbcUrl.contains("sslmode=")) {
+                        jdbcUrl += "&sslmode=require";
+                    }
+                    
+                    System.setProperty("spring.datasource.url", jdbcUrl);
+                    System.setProperty("spring.datasource.username", username);
+                    System.setProperty("spring.datasource.password", password);
+                    System.out.println("🚀 Configured JDBC URL: jdbc:postgresql://" + host + "/" + database + "?sslmode=require");
+                } else {
+                    // Fallback to basic string replacements
+                    String jdbcUrl = dbUrl.replaceFirst("postgres(ql)?://", "jdbc:postgresql://");
+                    System.setProperty("spring.datasource.url", jdbcUrl);
+                }
+            } catch (Exception e) {
+                System.err.println("Error parsing database URL: " + e.getMessage());
+            }
+        }
 
         SpringApplication.run(Application.class, args);
     }

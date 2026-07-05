@@ -14,45 +14,59 @@ public class Application {
 
         if (dbUrl != null) {
             try {
-                // Parse standard URL: postgresql://username:password@hostname/database
-                String cleanUrl = dbUrl.replaceFirst("postgres(ql)?://", "");
-                String[] parts = cleanUrl.split("@");
-                if (parts.length == 2) {
-                    String credentials = parts[0];
-                    String hostAndDb = parts[1];
-                    
-                    String[] credParts = credentials.split(":", 2);
-                    String username = credParts[0];
-                    String password = credParts.length > 1 ? credParts[1] : "";
-                    
-                    String[] hostDbParts = hostAndDb.split("/", 2);
-                    String host = hostDbParts[0];
-                    String database = hostDbParts.length > 1 ? hostDbParts[1] : "";
-                    
-                    // If hostname is short and we are running locally, append Ohio Render suffix
-                    if (host.contains("dpg-") && !host.contains(".render.com") && System.getenv("RENDER") == null) {
-                        host += ".ohio-postgres.render.com";
+                // Parse database URL using java.net.URI by mapping the scheme to http
+                String httpUrl = dbUrl.replaceFirst("postgres(ql)?://", "http://");
+                java.net.URI uri = new java.net.URI(httpUrl);
+                
+                String userInfo = uri.getUserInfo();
+                String host = uri.getHost();
+                int port = uri.getPort();
+                String path = uri.getPath(); // starts with "/"
+                String query = uri.getQuery();
+                
+                String username = "";
+                String password = "";
+                if (userInfo != null) {
+                    String[] credParts = userInfo.split(":", 2);
+                    username = java.net.URLDecoder.decode(credParts[0], java.nio.charset.StandardCharsets.UTF_8.name());
+                    if (credParts.length > 1) {
+                        password = java.net.URLDecoder.decode(credParts[1], java.nio.charset.StandardCharsets.UTF_8.name());
                     }
-                    
-                    String jdbcUrl = "jdbc:postgresql://" + host + "/" + database + 
-                                     "?user=" + username + 
-                                     "&password=" + password;
-                    
-                    if (!jdbcUrl.contains("sslmode=")) {
-                        jdbcUrl += "&sslmode=require";
-                    }
-                    
-                    System.setProperty("spring.datasource.url", jdbcUrl);
-                    System.setProperty("spring.datasource.username", username);
-                    System.setProperty("spring.datasource.password", password);
-                    System.out.println("🚀 Configured JDBC URL: jdbc:postgresql://" + host + "/" + database + "?sslmode=require");
-                } else {
-                    // Fallback to basic string replacements
-                    String jdbcUrl = dbUrl.replaceFirst("postgres(ql)?://", "jdbc:postgresql://");
-                    System.setProperty("spring.datasource.url", jdbcUrl);
                 }
+                
+                // If host is internal and we are running locally, append Ohio Render suffix
+                if (host.contains("dpg-") && !host.contains(".render.com") && System.getenv("RENDER") == null) {
+                    host += ".ohio-postgres.render.com";
+                }
+                
+                String portStr = port != -1 ? ":" + port : "";
+                String jdbcUrl = "jdbc:postgresql://" + host + portStr + path;
+                
+                StringBuilder queryBuilder = new StringBuilder();
+                queryBuilder.append("?user=").append(username).append("&password=").append(password);
+                
+                if (query != null && !query.isEmpty()) {
+                    String[] params = query.split("&");
+                    for (String param : params) {
+                        if (!param.startsWith("user=") && !param.startsWith("password=")) {
+                            queryBuilder.append("&").append(param);
+                        }
+                    }
+                }
+                
+                String finalUrl = jdbcUrl + queryBuilder.toString();
+                if (!finalUrl.contains("sslmode=")) {
+                    finalUrl += "&sslmode=require";
+                }
+                
+                System.setProperty("spring.datasource.url", finalUrl);
+                System.setProperty("spring.datasource.username", username);
+                System.setProperty("spring.datasource.password", password);
+                System.out.println("🚀 Configured JDBC URL: jdbc:postgresql://" + host + portStr + path + "?sslmode=require");
             } catch (Exception e) {
                 System.err.println("Error parsing database URL: " + e.getMessage());
+                String jdbcUrl = dbUrl.replaceFirst("postgres(ql)?://", "jdbc:postgresql://");
+                System.setProperty("spring.datasource.url", jdbcUrl);
             }
         }
 

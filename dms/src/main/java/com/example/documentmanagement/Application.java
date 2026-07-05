@@ -14,6 +14,7 @@ public class Application {
 
         if (dbUrl != null) {
             try {
+                System.out.println("🚀 Raw DB URL: " + dbUrl.replaceAll(":([^@/]+)@", ":****@"));
                 // Remove prefix
                 String cleanUrl = dbUrl.replaceFirst("^postgres(ql)?://", "");
                 
@@ -70,13 +71,33 @@ public class Application {
                     portStr = hostPort.substring(colonIndex); // e.g. ":5432"
                 }
                 
-                // If host is internal (contains "dpg-") and missing the ".render.com" suffix, append it
+                // If host is internal (contains "dpg-") and missing the ".render.com" suffix, append the correct region suffix dynamically
                 if (host.contains("dpg-") && !host.contains(".render.com")) {
-                    String region = System.getenv("RENDER_REGION");
-                    if (region == null || region.isEmpty()) {
-                        region = "ohio"; // Default fallback
+                    String[] regions = {"oregon", "ohio", "frankfurt", "singapore"};
+                    String resolvedHost = null;
+                    for (String region : regions) {
+                        String candidate = host + "." + region + "-postgres.render.com";
+                        try {
+                            // Attempt DNS resolution to verify if this is the correct region
+                            java.net.InetAddress.getByName(candidate);
+                            resolvedHost = candidate;
+                            System.out.println("✅ Successfully resolved database host in region: " + region);
+                            break;
+                        } catch (java.net.UnknownHostException ex) {
+                            // Hostname does not exist in this region, try next
+                        }
                     }
-                    host += "." + region + "-postgres.render.com";
+                    if (resolvedHost != null) {
+                        host = resolvedHost;
+                    } else {
+                        // Fallback to RENDER_REGION or ohio if none resolved
+                        String region = System.getenv("RENDER_REGION");
+                        if (region == null || region.isEmpty()) {
+                            region = "ohio";
+                        }
+                        host += "." + region + "-postgres.render.com";
+                        System.out.println("⚠️ Could not resolve any regional suffix, falling back to: " + host);
+                    }
                 }
                 
                 String jdbcUrl = "jdbc:postgresql://" + host + portStr + path;

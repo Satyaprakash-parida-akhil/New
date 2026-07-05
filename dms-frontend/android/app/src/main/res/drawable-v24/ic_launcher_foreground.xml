@@ -22,15 +22,7 @@
             android:strokeLineJoin="round"
             android:fillColor="#00000000"/>
 
-        <!-- SM text -->
-        <text
-            android:x="0"
-            android:y="-18"
-            android:fontFamily="sans-serif-black"
-            android:textSize="12sp"
-            android:textColor="#FFFFFF"
-            android:textAlignment="center">SM</text>
-
+        <!-- SM text removed for compatibility -->
     </group>
 
     <!-- "Smart Bazar" label at bottom -->

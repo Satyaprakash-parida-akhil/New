@@ -65,7 +65,7 @@ export class DealerAreaAssignmentComponent implements OnInit {
         { key: 'area', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.AREA') },
         { key: 'state', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.STATE') },
         { key: 'district', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.DISTRICT') },
-        { key: 'active', label: 'Status', type: 'boolean_status' },
+        { key: 'active', label: this.translate.instant('COMMON.STATUS'), type: 'boolean_status' },
         { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'dealer_area_actions' }
       ];
     });
@@ -78,7 +78,7 @@ export class DealerAreaAssignmentComponent implements OnInit {
       { key: 'area', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.AREA') },
       { key: 'state', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.STATE') },
       { key: 'district', label: this.translate.instant('DEALER_AREA_ASSIGNMENT.DISTRICT') },
-      { key: 'active', label: 'Status', type: 'boolean_status' },
+      { key: 'active', label: this.translate.instant('COMMON.STATUS'), type: 'boolean_status' },
       { key: 'actions', label: this.translate.instant('COMMON.ACTION'), type: 'dealer_area_actions' }
     ];
 

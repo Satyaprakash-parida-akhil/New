@@ -1,4 +1,7 @@
 {
+  "Showing": "Showing",
+  "of": "of",
+  "No records found": "No records found",
   "COMMON": {
     "APP_NAME": "Bazaar Janakalyan",
     "BRAND_NAME": "Bazaar Janakalyan",
@@ -328,7 +331,8 @@
     "SUGAR": "Sugar",
     "PEAS": "Matar (Peas)",
     "SOAP": "Soap Bars",
-    "DAL": "Dal"
+    "DAL": "Dal",
+    "SALT": "Salt"
   },
   "UNITS": {
     "KG": "kg",
@@ -865,7 +869,13 @@
   },
   "ADMIN": {
     "COMMON": {
-      "ALL": "All"
+      "ALL": "All",
+      "SHOWING": "Showing",
+      "OF": "of",
+      "PER_PAGE": "Per Page",
+      "NO_RECORDS_FOUND": "No records found",
+      "SIZE": "Size",
+      "CANCEL": "Cancel"
     },
     "APPROVED_USERS": {
       "TITLE": "Approved System Users",

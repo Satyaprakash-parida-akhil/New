@@ -1,4 +1,7 @@
 {
+  "Showing": "दिखा रहे हैं",
+  "of": "में से",
+  "No records found": "कोई रिकॉर्ड नहीं मिला",
   "COMMON": {
     "APP_NAME": "बाजार जनकल्याण",
     "BRAND_NAME": "बाजार जनकल्याण",
@@ -226,7 +229,13 @@
   },
   "ADMIN": {
     "COMMON": {
-      "ALL": "सभी"
+      "ALL": "सभी",
+      "SHOWING": "दिखा रहे हैं",
+      "OF": "में से",
+      "PER_PAGE": "प्रति पृष्ठ",
+      "NO_RECORDS_FOUND": "कोई रिकॉर्ड नहीं मिला",
+      "SIZE": "आकार",
+      "CANCEL": "रद्द करें"
     },
     "REGISTRATION": {
       "TITLE": "पंजीकरण अनुरोध",
@@ -328,7 +337,8 @@
     "SUGAR": "चीनी",
     "PEAS": "मटर",
     "SOAP": "साबुन",
-    "DAL": "दाल"
+    "DAL": "दाल",
+    "SALT": "नमक"
   },
   "UNITS": {
     "KG": "किग्रा",
@@ -721,23 +731,23 @@
     "IDENTITY_VERIFICATION": "Identity Verification"
   },
   "DEALER_AREA_ASSIGNMENT": {
-    "SEARCH_PLACEHOLDER": "Search dealers by name, email, or area...",
-    "APPLY": "Apply",
-    "RESET": "Reset",
-    "TABLE_TITLE": "Dealers Territory",
-    "CLOSE_FILTERS": "Close Filters",
-    "SEARCH": "Search",
-    "STATE": "State",
-    "PLACEHOLDER_STATE": "e.g. Maharashtra",
-    "DISTRICT": "District",
-    "PLACEHOLDER_DISTRICT": "e.g. Pune",
-    "AREA": "Area",
-    "PLACEHOLDER_AREA": "e.g. Shivaji Nagar",
-    "BLOCK": "Block",
-    "PLACEHOLDER_BLOCK": "e.g. Haveli",
-    "PIN_CODE": "PIN Code",
-    "PLACEHOLDER_PIN_CODE": "e.g. 411005",
-    "SAVE": "Save Assignment",
-    "SAVING": "Saving..."
+    "SEARCH_PLACEHOLDER": "नाम, ईमेल या क्षेत्र द्वारा डीलर खोजें...",
+    "APPLY": "लागू करें",
+    "RESET": "रीसेट करें",
+    "TABLE_TITLE": "डीलर क्षेत्र",
+    "CLOSE_FILTERS": "फ़िल्टर बंद करें",
+    "SEARCH": "खोजें",
+    "STATE": "राज्य",
+    "PLACEHOLDER_STATE": "जैसे: महाराष्ट्र",
+    "DISTRICT": "जिला",
+    "PLACEHOLDER_DISTRICT": "जैसे: पुणे",
+    "AREA": "क्षेत्र",
+    "PLACEHOLDER_AREA": "जैसे: शिवाजी नगर",
+    "BLOCK": "ब्लॉक",
+    "PLACEHOLDER_BLOCK": "जैसे: हवेली",
+    "PIN_CODE": "पिन कोड",
+    "PLACEHOLDER_PIN_CODE": "जैसे: 411005",
+    "SAVE": "क्षेत्र असाइनमेंट सहेजें",
+    "SAVING": "सहेज रहा है..."
   }
 }

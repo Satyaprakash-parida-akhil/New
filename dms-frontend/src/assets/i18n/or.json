@@ -1,4 +1,7 @@
 {
+  "Showing": "ଦର୍ଶାଉଛି",
+  "of": "ରୁ",
+  "No records found": "କୌଣସି ରେକର୍ଡ ମିଳିଲା ନାହିଁ",
   "COMMON": {
     "APP_NAME": "ବଜାର ଜନକଲ୍ୟାଣ",
     "BRAND_NAME": "ବଜାର ଜନକଲ୍ୟାଣ",
@@ -226,7 +229,13 @@
   },
   "ADMIN": {
     "COMMON": {
-      "ALL": "ସମସ୍ତ"
+      "ALL": "ସମସ୍ତ",
+      "SHOWING": "ଦର୍ଶାଉଛି",
+      "OF": "ରୁ",
+      "PER_PAGE": "ପ୍ରତି ପୃଷ୍ଠା",
+      "NO_RECORDS_FOUND": "କୌଣସି ରେକର୍ଡ ମିଳିଲା ନାହିଁ",
+      "SIZE": "ଆକାର",
+      "CANCEL": "ବାତିଲ୍ କରନ୍ତୁ"
     },
     "REGISTRATION": {
       "TITLE": "ପଞ୍ଜୀକରଣ ଅନୁରୋଧ",
@@ -328,7 +337,8 @@
     "SUGAR": "ଚିନି",
     "PEAS": "ମଟର (Matar)",
     "SOAP": "ସାବୁନ (Soap)",
-    "DAL": "ଡାଲି (Dal)"
+    "DAL": "ଡାଲି (Dal)",
+    "SALT": "ଲୁଣ (Salt)"
   },
   "UNITS": {
     "KG": "କିଲୋଗ୍ରାମ",
@@ -721,23 +731,23 @@
     "IDENTITY_VERIFICATION": "Identity Verification"
   },
   "DEALER_AREA_ASSIGNMENT": {
-    "SEARCH_PLACEHOLDER": "Search dealers by name, email, or area...",
-    "APPLY": "Apply",
-    "RESET": "Reset",
-    "TABLE_TITLE": "Dealers Territory",
-    "CLOSE_FILTERS": "Close Filters",
-    "SEARCH": "Search",
-    "STATE": "State",
-    "PLACEHOLDER_STATE": "e.g. Maharashtra",
-    "DISTRICT": "District",
-    "PLACEHOLDER_DISTRICT": "e.g. Pune",
-    "AREA": "Area",
-    "PLACEHOLDER_AREA": "e.g. Shivaji Nagar",
-    "BLOCK": "Block",
-    "PLACEHOLDER_BLOCK": "e.g. Haveli",
-    "PIN_CODE": "PIN Code",
-    "PLACEHOLDER_PIN_CODE": "e.g. 411005",
-    "SAVE": "Save Assignment",
-    "SAVING": "Saving..."
+    "SEARCH_PLACEHOLDER": "ନାମ, ଇମେଲ୍ କିମ୍ବା ଅଞ୍ଚଳ ଦ୍ୱାରା ଡିଲର ଖୋଜନ୍ତୁ...",
+    "APPLY": "ପ୍ରୟୋଗ କରନ୍ତୁ",
+    "RESET": "ରିସେଟ୍ କରନ୍ତୁ",
+    "TABLE_TITLE": "ଡିଲର ଅଞ୍ଚଳ",
+    "CLOSE_FILTERS": "ଫିଲ୍ଟର୍ ବନ୍ଦ କରନ୍ତୁ",
+    "SEARCH": "ଖୋଜନ୍ତୁ",
+    "STATE": "ରାଜ୍ୟ",
+    "PLACEHOLDER_STATE": "ଯେପରିକି ଓଡ଼ିଶା",
+    "DISTRICT": "ଜିଲ୍ଲା",
+    "PLACEHOLDER_DISTRICT": "ଯେପରିକି ଖୋର୍ଦ୍ଧା",
+    "AREA": "ଅଞ୍ଚଳ",
+    "PLACEHOLDER_AREA": "ଯେପରିକି ପଟିଆ",
+    "BLOCK": "ବ୍ଲକ",
+    "PLACEHOLDER_BLOCK": "ଯେପରିକି ଭୁବନେଶ୍ୱର",
+    "PIN_CODE": "ପିନ୍ କୋଡ୍",
+    "PLACEHOLDER_PIN_CODE": "ଯେପରିକି ୭୫୧୦୨୪",
+    "SAVE": "ଅଞ୍ଚଳ ସଂରକ୍ଷଣ କରନ୍ତୁ",
+    "SAVING": "ସଂରକ୍ଷଣ ହେଉଛି..."
   }
 }

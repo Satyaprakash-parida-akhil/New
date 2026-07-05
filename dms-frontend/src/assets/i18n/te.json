@@ -1,4 +1,7 @@
 {
+  "Showing": "చూపిస్తోంది",
+  "of": "లో",
+  "No records found": "రికార్డులు ఏవీ కనుగొనబడలేదు",
   "COMMON": {
     "APP_NAME": "బజార్ జనకళ్యాణ్",
     "BRAND_NAME": "బజార్ జనకళ్యాణ్",
@@ -226,7 +229,13 @@
   },
   "ADMIN": {
     "COMMON": {
-      "ALL": "అన్ని"
+      "ALL": "అన్ని",
+      "SHOWING": "చూపిస్తోంది",
+      "OF": "లో",
+      "PER_PAGE": "పేజీ వారీగా",
+      "NO_RECORDS_FOUND": "రికార్డులు ఏవీ కనుగొనబడలేదు",
+      "SIZE": "పరిమాణం",
+      "CANCEL": "రద్దు చేయి"
     },
     "REGISTRATION": {
       "TITLE": "నమోదు అభ్యర్థనలు",
@@ -328,7 +337,8 @@
     "SUGAR": "చక్కెర",
     "PEAS": "బఠానీలు (Matar)",
     "SOAP": "సబ్బులు (Soap)",
-    "DAL": "పప్పు (Dal)"
+    "DAL": "పప్పు (Dal)",
+    "SALT": "ఉప్పు (Salt)"
   },
   "UNITS": {
     "KG": "కిలోలు",
@@ -721,23 +731,23 @@
     "IDENTITY_VERIFICATION": "Identity Verification"
   },
   "DEALER_AREA_ASSIGNMENT": {
-    "SEARCH_PLACEHOLDER": "Search dealers by name, email, or area...",
-    "APPLY": "Apply",
-    "RESET": "Reset",
-    "TABLE_TITLE": "Dealers Territory",
-    "CLOSE_FILTERS": "Close Filters",
-    "SEARCH": "Search",
-    "STATE": "State",
-    "PLACEHOLDER_STATE": "e.g. Maharashtra",
-    "DISTRICT": "District",
-    "PLACEHOLDER_DISTRICT": "e.g. Pune",
-    "AREA": "Area",
-    "PLACEHOLDER_AREA": "e.g. Shivaji Nagar",
-    "BLOCK": "Block",
-    "PLACEHOLDER_BLOCK": "e.g. Haveli",
-    "PIN_CODE": "PIN Code",
-    "PLACEHOLDER_PIN_CODE": "e.g. 411005",
-    "SAVE": "Save Assignment",
-    "SAVING": "Saving..."
+    "SEARCH_PLACEHOLDER": "పేరు, ఈమెయిల్ లేదా ప్రాంతం ద్వారా డీలర్ల కోసం శోధించండి...",
+    "APPLY": "వర్తింపజేయి",
+    "RESET": "రీసెట్ చేయి",
+    "TABLE_TITLE": "డీలర్ల భూభాగం",
+    "CLOSE_FILTERS": "ఫిల్టర్లను మూసివేయి",
+    "SEARCH": "శోధించు",
+    "STATE": "రాష్ట్రం",
+    "PLACEHOLDER_STATE": "ఉదా. ఆంధ్రప్రదేశ్",
+    "DISTRICT": "జిల్లా",
+    "PLACEHOLDER_DISTRICT": "ఉదా. గుంటూరు",
+    "AREA": "ప్రాంతం",
+    "PLACEHOLDER_AREA": "ఉదా. శివాజీ నగర్",
+    "BLOCK": "బ్లాక్",
+    "PLACEHOLDER_BLOCK": "ఉదా. హవేలీ",
+    "PIN_CODE": "పిన్ కోడ్",
+    "PLACEHOLDER_PIN_CODE": "ఉదా. 522001",
+    "SAVE": "అసైన్‌మెంట్ సేవ్‌ చేయి",
+    "SAVING": "సేవ్ అవుతోంది..."
   }
 }

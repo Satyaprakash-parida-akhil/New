@@ -201,7 +201,7 @@ public class MasterDataSeeder implements CommandLineRunner {
         List<String> villageNames = new ArrayList<>();
         List<Long> villageParentIds = new ArrayList<>();
 
-        int totalVillages = 676859;
+        int totalVillages = totalBlocks * 2;
         int villagesPerBlock = totalVillages / totalBlocks;
         int remainderVillages = totalVillages % totalBlocks;
 

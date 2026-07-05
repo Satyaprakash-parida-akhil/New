@@ -12,7 +12,7 @@ WORKDIR /app
 COPY dms/pom.xml .
 COPY dms/src ./src
 RUN mkdir -p src/main/resources/static
-COPY --from=frontend-build /app/dist/dms-frontend/browser/ src/main/resources/static/
+COPY --from=frontend-build /app/dist/smart-bazar/browser/ src/main/resources/static/
 RUN MAVEN_OPTS="-Xmx256m" mvn clean package -DskipTests
 
 # Stage 3: Final Production Image

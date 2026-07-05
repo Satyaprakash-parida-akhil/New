@@ -27,7 +27,7 @@ public class Application {
 
             // 2. Fix the "Short Hostname" issue (The cause of UnknownHostException)
             // If the host is just 'dpg-xxx-a', append the Render global suffix
-            if (jdbcUrl.contains("dpg-") && !jdbcUrl.contains(".render.com")) {
+            if (jdbcUrl.contains("dpg-") && !jdbcUrl.contains(".render.com") && System.getenv("RENDER") == null) {
                 jdbcUrl = jdbcUrl.replaceFirst("(@|//)(dpg-[^:/]+)", "$1$2.ohio-postgres.render.com");
             }
 

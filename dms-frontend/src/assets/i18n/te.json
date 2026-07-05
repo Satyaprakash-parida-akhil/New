@@ -60,7 +60,8 @@
       "BTN_PAY": "ఇప్పుడే చెల్లించండి"
     },
     "DEALER_MANAGEMENT": "డీలర్ నిర్వహణ",
-    "DEALER_AREA_ASSIGNMENT": "డీలర్ ఏరియా మ్యాప్"
+    "DEALER_AREA_ASSIGNMENT": "డీలర్ ఏరియా మ్యాప్",
+    "MASTER_DETAIL": "మాస్టర్ డేటా ఎంపికలు"
   },
   "HEADERS": {
     "DASHBOARD": "డాక్యుమెంట్ డ్యాష్‌బోర్డ్",

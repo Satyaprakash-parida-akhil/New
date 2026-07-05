@@ -60,7 +60,8 @@
       "BTN_PAY": "ଦେୟ ଦିଅନ୍ତୁ"
     },
     "DEALER_MANAGEMENT": "ଡିଲର ପ୍ରବନ୍ଧନ",
-    "DEALER_AREA_ASSIGNMENT": "ଡିଲର ଅଞ୍ଚଳ ନକ୍ଶା"
+    "DEALER_AREA_ASSIGNMENT": "ଡିଲର ଅଞ୍ଚଳ ନକ୍ଶା",
+    "MASTER_DETAIL": "ମାଷ୍ଟର ଡାଟା ବିକଳ୍ପ"
   },
   "HEADERS": {
     "DASHBOARD": "ଡକ୍ୟୁମେଣ୍ଟ ଡ୍ୟାସବୋର୍ଡ",

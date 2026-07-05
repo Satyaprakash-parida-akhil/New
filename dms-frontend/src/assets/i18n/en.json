@@ -60,7 +60,8 @@
       "BTN_PAY": "Pay Now"
     },
     "DEALER_MANAGEMENT": "Dealer Management",
-    "DEALER_AREA_ASSIGNMENT": "Dealer Area Map"
+    "DEALER_AREA_ASSIGNMENT": "Dealer Area Map",
+    "MASTER_DETAIL": "Master Data Options"
   },
   "HEADERS": {
     "DASHBOARD": "Document Dashboard",

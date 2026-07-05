@@ -60,7 +60,8 @@
       "BTN_PAY": "अभी भुगतान करें"
     },
     "DEALER_MANAGEMENT": "डीलर प्रबंधन",
-    "DEALER_AREA_ASSIGNMENT": "डीलर क्षेत्र नक्शा"
+    "DEALER_AREA_ASSIGNMENT": "डीलर क्षेत्र नक्शा",
+    "MASTER_DETAIL": "मास्टर डेटा विकल्प"
   },
   "HEADERS": {
     "DASHBOARD": "दस्तावेज़ डैशबोर्ड",

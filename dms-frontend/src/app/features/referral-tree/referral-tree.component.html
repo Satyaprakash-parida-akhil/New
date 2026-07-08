@@ -1,152 +1,283 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-4 md:p-8 font-['Outfit']">
+<div class="w-full flex flex-col relative" style="min-height: calc(100vh - 200px);">
 
-  <!-- Header -->
-  <div class="mb-8">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div>
-        <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-3">
-          <svg class="w-7 h-7 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+  <!-- ═══ TOP BAR ═══ -->
+  <div class="sticky top-0 bg-white/95 backdrop-blur-md border border-gray-200 rounded-2xl px-4 py-3 mb-4 flex flex-wrap items-center gap-3 shadow-sm z-30">
+    
+    <!-- Title -->
+    <div class="flex-1 min-w-0">
+      <h1 class="text-xl font-bold text-gray-800 truncate">{{ 'COMMON.REFERRAL_TREE' | translate }}</h1>
+      <p class="text-xs text-gray-400 hidden sm:block">
+        {{ isAdmin ? ('REFERRAL_TREE.SUBTITLE_ADMIN' | translate) : ('REFERRAL_TREE.SUBTITLE_USER' | translate) }}
+      </p>
+    </div>
+
+    <!-- Search Box with Dropdown -->
+    <div class="relative search-wrapper" style="min-width: 220px; max-width: 320px; flex: 1;">
+      <div class="flex items-center bg-gray-100 border border-gray-200 rounded-xl overflow-visible focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-200 transition-all">
+        <!-- Search Icon -->
+        <svg class="w-4 h-4 text-gray-400 ml-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchInput()"
+          (blur)="closeDropdown()"
+          (focus)="searchTerm && searchResults.length ? (showSearchDropdown = true) : null"
+          [placeholder]="'REFERRAL_TREE.SEARCH_PLACEHOLDER' | translate"
+          class="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 px-2 py-2 outline-none min-w-0"
+        />
+        <!-- Spinner or Clear -->
+        <div class="mr-2 shrink-0 flex items-center gap-1">
+          <svg *ngIf="isSearching" class="animate-spin w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
           </svg>
-          {{ isAdmin ? 'Full Referral Network' : 'My Referral Tree' }}
-        </h1>
-        <p class="text-slate-400 text-sm mt-1">{{ isAdmin ? 'Complete hierarchical view of all user chains' : 'Your downline referral network' }}</p>
-      </div>
-      <div class="flex flex-col gap-4 items-end">
-        <div class="flex gap-2 w-full md:w-auto relative">
-          <div class="relative w-full md:w-64">
-            <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Search tree..."
-              class="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-10 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors">
-            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <button *ngIf="searchTerm" (click)="clearSearch()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-          </div>
-          <button (click)="onSearch()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold transition-all shadow-lg flex-shrink-0">
-            Search
+          <button *ngIf="searchTerm && !isSearching" (click)="clearSearch()" class="text-gray-400 hover:text-gray-600 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
           </button>
         </div>
-        <div class="flex gap-2">
-          <button (click)="rootNode ? expandAll([rootNode]) : null"
-            class="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 rounded-xl text-sm font-semibold transition-all flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
-            Expand All
-          </button>
-          <button (click)="collapseAll()" class="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 rounded-xl text-sm font-semibold transition-all flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"/></svg>
-            Collapse All
+      </div>
+
+      <!-- ── Search Dropdown Results ── -->
+      <div *ngIf="showSearchDropdown"
+           class="search-dropdown absolute top-full left-0 right-0 mt-1.5 rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50"
+           style="background-color: #1e293b; min-width: 280px;">
+        
+        <!-- Header -->
+        <div class="px-4 py-2.5 border-b border-white/10 flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-300">{{ 'REFERRAL_TREE.SEARCH_RESULTS' | translate }}</span>
+          <span class="text-xs text-slate-500">{{ searchResults.length }} found</span>
+        </div>
+
+        <!-- Results List -->
+        <div class="max-h-64 overflow-y-auto">
+          <div *ngIf="searchResults.length === 0 && !isSearching"
+               class="px-4 py-6 text-center">
+            <p class="text-sm text-slate-400">{{ 'REFERRAL_TREE.NO_RESULTS' | translate }}</p>
+          </div>
+
+          <button *ngFor="let result of searchResults"
+                  (mousedown)="selectSearchResult(result)"
+                  class="w-full px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors text-left border-b border-white/5 last:border-none">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
+              {{ (result.fullName || result.username || '?').charAt(0).toUpperCase() }}
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-white truncate">{{ result.fullName || result.username }}</p>
+              <p class="text-xs text-slate-400 truncate">{{ '@' }}{{ result.username }} · {{ result.referralCode }}</p>
+            </div>
+            <span class="ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0"
+                  [class.bg-emerald-900]="result.isPaid" [class.text-emerald-300]="result.isPaid"
+                  [class.bg-red-900]="!result.isPaid" [class.text-red-300]="!result.isPaid">
+              {{ result.paymentStatus || 'UNPAID' }}
+            </span>
           </button>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Loading -->
-  <div *ngIf="isLoading" class="flex items-center justify-center py-24">
-    <div class="flex flex-col items-center gap-4">
-      <div class="flex gap-2">
-        <div class="w-3 h-3 rounded-full bg-emerald-400 animate-bounce" style="animation-delay:0s"></div>
-        <div class="w-3 h-3 rounded-full bg-emerald-400 animate-bounce" style="animation-delay:0.15s"></div>
-        <div class="w-3 h-3 rounded-full bg-emerald-400 animate-bounce" style="animation-delay:0.3s"></div>
-      </div>
-      <p class="text-slate-500 text-sm">Loading referral network...</p>
-    </div>
-  </div>
-
-  <!-- Tree Container -->
-  <div *ngIf="!isLoading" class="rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 p-5 shadow-2xl overflow-auto">
-
-    <!-- Search Results View -->
-    <div *ngIf="searchResults.length > 0" class="mb-6 space-y-3">
-      <div class="flex items-center justify-between border-b border-white/10 pb-2">
-        <h3 class="text-white font-bold text-lg">Search Results ({{searchResults.length}})</h3>
-        <button (click)="clearSearch()" class="text-xs text-indigo-400 hover:text-indigo-300">Clear Search</button>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div *ngFor="let res of searchResults" class="bg-indigo-900/20 border border-indigo-500/20 rounded-xl p-3 flex gap-3 items-center">
-          <div class="w-10 h-10 rounded-full bg-indigo-600/30 flex items-center justify-center text-indigo-300 font-bold">
-            {{ (res.fullName || res.username || '?').substring(0,1).toUpperCase() }}
-          </div>
-          <div>
-            <div class="text-sm font-bold text-white">{{ res.fullName || res.username }}</div>
-            <div class="text-xs text-slate-400">&#64;{{ res.username }} &bull; {{ res.referralCode || 'N/A' }}</div>
-            <div class="text-[10px] text-slate-500 mt-0.5">Joined: {{ res.createdAt | date }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- No data -->
-    <div *ngIf="!rootNode && searchResults.length === 0" class="text-center text-slate-500 py-12">No referral data available</div>
-
-    <!-- Tree root -->
-    <ng-container *ngIf="rootNode && searchResults.length === 0">
-      <ng-container *ngTemplateOutlet="treeNode; context: { node: rootNode, depth: 0 }"></ng-container>
-    </ng-container>
-
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════ -->
-<!-- RECURSIVE TREE NODE TEMPLATE -->
-<!-- ══════════════════════════════════════════ -->
-<ng-template #treeNode let-node="node" let-depth="depth">
-  <div class="tree-node" [style.padding-left.px]="depth * 28">
-
-    <!-- Connector line (not for root) -->
-    <div *ngIf="depth > 0" class="tree-connector"></div>
-
-    <!-- Node Card -->
-    <div class="flex items-start gap-3 mb-2">
-      <!-- Toggle button (only if has children) -->
-      <button *ngIf="node.children?.length > 0" (click)="toggleNode(node.userId)"
-        class="mt-1 w-5 h-5 flex-shrink-0 flex items-center justify-center rounded-md bg-white/10 hover:bg-white/20 text-slate-400 hover:text-white transition-all text-xs font-black">
-        {{ isExpanded(node.userId) ? '−' : '+' }}
+    <!-- Zoom Controls -->
+    <div class="flex items-center bg-gray-100 rounded-xl p-1 border border-gray-200 shrink-0">
+      <button (click)="zoomOut()" class="p-1.5 text-gray-600 hover:bg-white hover:shadow-sm rounded-lg transition-all" title="Zoom Out">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
       </button>
-      <div *ngIf="!node.children?.length" class="mt-1 w-5 h-5 flex-shrink-0 flex items-center justify-center">
-        <div class="w-1.5 h-1.5 rounded-full bg-slate-600"></div>
-      </div>
-
-      <!-- Node content -->
-      <div class="node-card" [class.node-active]="node.isActive" [class.node-inactive]="!node.isActive">
-        <!-- Avatar -->
-        <div class="node-avatar" [class.avatar-active]="node.isActive" [class.avatar-inactive]="!node.isActive">
-          {{ (node.fullName || node.username || '?').substring(0,1).toUpperCase() }}
-        </div>
-
-        <!-- Info -->
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-bold text-white text-sm truncate">{{ node.fullName || node.username }}</span>
-            <span *ngIf="node.isActive" class="badge badge-active">Active</span>
-            <span *ngIf="!node.isActive" class="badge badge-inactive">Inactive</span>
-            <span *ngIf="isPaid(node)" class="badge badge-paid">Paid</span>
-            <span *ngIf="!isPaid(node)" class="badge badge-unpaid">Unpaid</span>
-          </div>
-          <div class="flex items-center gap-3 mt-1.5 flex-wrap bg-black/20 p-2 rounded-lg border border-white/5 w-fit">
-            <span class="text-xs text-slate-400 font-medium">&#64;{{ node.username }}</span>
-            <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-            <span class="text-xs font-semibold text-emerald-400">Code: {{ node.referralCode || 'N/A' }}</span>
-            <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-            <span class="text-xs text-indigo-300 font-medium">Direct: {{ node.referralCount || node.children?.length || 0 }}</span>
-            <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-            <span class="text-xs text-fuchsia-300 font-medium">Network: {{ node.totalDownlineCount || 0 }}</span>
-            <ng-container *ngIf="node.joinedDate">
-              <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-              <span class="text-[10px] text-slate-500">Joined: {{ node.joinedDate | date:'mediumDate' }}</span>
-            </ng-container>
-          </div>
-        </div>
-      </div>
+      <button (click)="resetZoom()" class="px-2 py-1 text-xs font-bold text-gray-700 hover:bg-white hover:shadow-sm rounded-lg transition-all min-w-[3rem] text-center">
+        {{ zoomPercent }}%
+      </button>
+      <button (click)="zoomIn()" class="p-1.5 text-gray-600 hover:bg-white hover:shadow-sm rounded-lg transition-all" title="Zoom In">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      </button>
     </div>
 
-    <!-- Children (recursive) -->
-    <div *ngIf="node.children?.length > 0 && isExpanded(node.userId)" class="relative children-container">
-      <div class="vertical-line" [style.left.px]="14"></div>
-      <div *ngFor="let child of node.children">
-        <ng-container *ngTemplateOutlet="treeNode; context: { node: child, depth: depth + 1 }"></ng-container>
-      </div>
+    <!-- Node count badge -->
+    <div class="hidden sm:flex items-center gap-1.5 bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-xl shrink-0">
+      <svg class="w-3.5 h-3.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+      </svg>
+      <span class="text-xs font-bold text-indigo-700">{{ totalElements }}</span>
     </div>
-
   </div>
-</ng-template>
+
+  <!-- ═══ TREE LIST ═══ -->
+  <div #treeContainer
+       (scroll)="onScroll($event)"
+       class="bg-white border border-gray-200 rounded-2xl overflow-auto shadow-sm mb-4"
+       style="height: 600px; position: relative;">
+
+    <!-- Loading Overlay -->
+    <div *ngIf="isLoading && flatNodes.length === 0"
+         class="flex flex-col justify-center items-center py-24">
+      <div class="relative">
+        <div class="w-14 h-14 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-6 h-6 bg-indigo-500 rounded-full animate-pulse"></div>
+        </div>
+      </div>
+      <p class="mt-4 text-sm font-semibold text-indigo-600">{{ 'REFERRAL_TREE.LOADING' | translate }}</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && flatNodes.length === 0"
+         class="flex flex-col items-center justify-center py-24 text-gray-400">
+      <svg class="w-20 h-20 text-gray-200 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+      </svg>
+      <p class="text-lg font-semibold text-gray-500">{{ 'REFERRAL_TREE.NO_DATA' | translate }}</p>
+    </div>
+
+    <!-- Scalable Scroll Height Container -->
+    <div *ngIf="!isLoading && flatNodes.length > 0" 
+         class="relative w-full"
+         [style.height.px]="totalHeight * zoomLevel">
+      
+      <!-- Scalable Canvas -->
+      <div class="absolute top-0 left-0 flex flex-col divide-y divide-gray-50 transition-transform duration-200 origin-top-left"
+           [style.transform]="'scale(' + zoomLevel + ')'"
+           [style.width]="(100 / zoomLevel) + '%'"
+           [style.paddingTop.px]="paddingTop">
+           
+        <div *ngFor="let node of visibleNodes; trackBy: trackNode"
+             class="relative flex items-center px-4 sm:px-6 py-3 hover:bg-gray-50 transition-colors group"
+             [style.paddingLeft.px]="24 + getIndent(node)">
+
+          <!-- Hierarchy Connectors -->
+          <div *ngIf="hasParentConnector(node)"
+               class="absolute top-0 bottom-1/2 w-0.5 bg-indigo-100"
+               [style.left.px]="getIndent(node) + 12"></div>
+          <div *ngIf="hasParentConnector(node)"
+               class="absolute top-1/2 h-0.5 bg-indigo-100"
+               [style.left.px]="getIndent(node) + 12"
+               [style.width.px]="20"></div>
+
+          <!-- Level Dot -->
+          <div class="w-2 h-2 rounded-full shrink-0 mr-3"
+               [ngClass]="{
+                 'bg-indigo-500': node.level === 0,
+                 'bg-purple-400': node.level === 1,
+                 'bg-blue-400': node.level === 2,
+                 'bg-teal-400': node.level === 3,
+                 'bg-emerald-400': node.level >= 4
+               }"></div>
+
+          <!-- Avatar -->
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0 shadow-sm bg-gradient-to-br"
+               [ngClass]="node.data.isActive ? getAvatarGradient(node) : 'from-slate-400 to-slate-500'">
+            {{ getInitial(node) }}
+          </div>
+
+          <!-- User Info -->
+          <div class="ml-3 flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800 truncate">{{ node.data.fullName || node.data.username }}</span>
+              <span class="text-[9px] font-black px-2 py-0.5 rounded-full shrink-0 uppercase tracking-wider"
+                    [ngClass]="isPaid(node) ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'">
+                {{ node.data.paymentStatus || 'UNPAID' }}
+              </span>
+            </div>
+
+            <div class="flex items-center text-xs text-gray-500 gap-1.5 truncate">
+              <span class="font-semibold text-indigo-600">{{'@'}}{{ node.data.username }}</span>
+              <span class="text-gray-300">·</span>
+              <span class="font-mono text-gray-500">{{ node.data.referralCode || '—' }}</span>
+              <span class="ml-auto bg-gray-100 text-gray-500 text-[9px] font-bold px-1.5 py-0.5 rounded-full shrink-0">
+                L{{ node.level }}
+              </span>
+            </div>
+
+            <!-- Referred By -->
+            <div *ngIf="node.data.referredByName || node.data.referredByCode"
+                 class="flex items-center gap-1 text-[10px] text-gray-400 truncate mt-0.5">
+              <svg class="w-3 h-3 text-indigo-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"/>
+              </svg>
+              <span>{{ 'REFERRAL_TREE.REFERRED_BY' | translate }}:</span>
+              <span class="font-semibold text-indigo-400 truncate">{{ node.data.referredByName || node.data.referredByCode }}</span>
+            </div>
+          </div>
+
+          <!-- Expand/Collapse Toggle -->
+          <div class="ml-2 shrink-0">
+            <button *ngIf="node.hasChildren"
+                    (click)="toggleNode(node)"
+                    class="relative w-9 h-9 rounded-xl flex items-center justify-center border transition-all duration-200 active:scale-90"
+                    [ngClass]="node.isExpanded
+                      ? 'bg-indigo-500 border-indigo-400 text-white shadow-lg shadow-indigo-200'
+                      : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-indigo-50 hover:border-indigo-200'">
+              <svg *ngIf="node.isLoading" class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+              </svg>
+              <svg *ngIf="!node.isLoading" class="w-4 h-4 transition-transform duration-200"
+                   [class.rotate-180]="node.isExpanded"
+                   fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+              </svg>
+              <span *ngIf="!node.isExpanded && !node.isLoading && node.data.referralCount"
+                    class="absolute -top-1.5 -right-1.5 bg-indigo-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white min-w-[18px] text-center leading-none">
+                {{ node.data.referralCount }}
+              </span>
+            </button>
+            <div *ngIf="!node.hasChildren"
+                 class="w-9 h-9 rounded-xl flex items-center justify-center bg-gray-50 border border-dashed border-gray-200">
+              <svg class="w-3.5 h-3.5 text-gray-300" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PAGINATION CONTROLS ═══ -->
+  <div class="bg-white border border-gray-200 rounded-2xl px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+    <!-- Info & Page Size -->
+    <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto text-center sm:text-left justify-center sm:justify-start">
+      <p class="text-xs font-semibold text-gray-500">
+        <ng-container *ngIf="totalElements > 0">
+          Showing <span class="font-bold text-gray-800">{{ (currentPage * pageSize + 1) }}-{{ ((currentPage + 1) * pageSize > totalElements ? totalElements : (currentPage + 1) * pageSize) }}</span>
+          of <span class="font-bold text-gray-800">{{ totalElements }}</span> users
+        </ng-container>
+        <ng-container *ngIf="totalElements === 0">
+          No records found
+        </ng-container>
+      </p>
+      
+      <!-- Page Size Select -->
+      <div class="flex items-center gap-1.5 justify-center">
+        <label class="text-[10px] font-black text-gray-400 uppercase tracking-wider">Page Size</label>
+        <div class="w-20">
+          <app-select
+            [options]="pageSizeSelectOptions"
+            [value]="pageSize"
+            (valueChange)="onPageSizeChange($event)"
+            [searchable]="false"
+            [clearable]="false"
+            [placeholder]="'Size'"
+          ></app-select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prev/Next buttons (centered on mobile, right-aligned on desktop) -->
+    <div class="flex items-center gap-2 justify-center w-full sm:w-auto">
+      <button (click)="onPrevPage()" [disabled]="currentPage === 0"
+              class="flex-1 sm:flex-none flex items-center justify-center p-2.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 active:scale-95 disabled:opacity-30 disabled:pointer-events-none transition-all">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <div class="px-5 py-2 bg-indigo-600 text-white font-bold text-xs rounded-xl shadow-md shadow-indigo-150 min-w-[70px] text-center">
+        {{ currentPage + 1 }} / {{ totalPages || 1 }}
+      </div>
+      <button (click)="onNextPage()" [disabled]="isLast"
+              class="flex-1 sm:flex-none flex items-center justify-center p-2.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 active:scale-95 disabled:opacity-30 disabled:pointer-events-none transition-all">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+</div>

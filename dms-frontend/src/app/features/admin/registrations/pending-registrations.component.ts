@@ -50,11 +50,11 @@ export class PendingRegistrationsComponent implements OnInit {
         if (cfg) {
             this.headers = Object.keys(cfg.desktopColumns).map((key: string) => {
                 let label = cfg.desktopColumns[key];
-                if (key === 'username') label = this.translate.instant('ADMIN.REGISTRATION.COL_USER_DETAILS') || label;
-                if (key === 'requestedRole') label = this.translate.instant('ADMIN.REGISTRATION.COL_REQUESTED_ROLE') || label;
-                if (key === 'createdAt') label = this.translate.instant('ADMIN.REGISTRATION.COL_APPLIED_ON') || label;
-                if (key === 'registrationStatus') label = this.translate.instant('ADMIN.REGISTRATION.COL_STATUS') || label;
-                if (key === 'actions') label = this.translate.instant('ADMIN.REGISTRATION.COL_ACTIONS') || label;
+                if (key === 'username') label = this.translate.instant('ADMIN.REGISTRATION.TABLE.USER_DETAILS') || label;
+                if (key === 'requestedRole') label = this.translate.instant('ADMIN.REGISTRATION.TABLE.REQUESTED_ROLE') || label;
+                if (key === 'createdAt') label = this.translate.instant('ADMIN.REGISTRATION.TABLE.APPLIED_ON') || label;
+                if (key === 'registrationStatus') label = this.translate.instant('ADMIN.REGISTRATION.TABLE.STATUS') || label;
+                if (key === 'actions') label = this.translate.instant('ADMIN.REGISTRATION.TABLE.ACTIONS') || label;
 
                 return {
                     key,

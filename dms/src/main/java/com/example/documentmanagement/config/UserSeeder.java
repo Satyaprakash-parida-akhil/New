@@ -12,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -32,6 +33,7 @@ public class UserSeeder implements CommandLineRunner {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JdbcTemplate jdbcTemplate;
 
     @Value("${app.default.admin.password:admin_Sec#2026}")
     private String adminPassword;
@@ -78,9 +80,11 @@ public class UserSeeder implements CommandLineRunner {
 
             userRepository.save(admin);
             log.info("✅ Default admin user created: username=admin, password={}", adminPassword);
-        } else {
-            log.info("Admin user already exists, skipping seed.");
         }
+        
+        // 3. Sync database integrity: ensure any users with APPROVED/COMPLETED/PAID status are set to active
+        log.info("Syncing user activation status based on payment status...");
+        jdbcTemplate.execute("UPDATE users SET is_active = true WHERE payment_status IN ('COMPLETED', 'PAID', 'APPROVED') AND is_active = false");
 
         log.info("=== UserSeeder DONE ===");
     }

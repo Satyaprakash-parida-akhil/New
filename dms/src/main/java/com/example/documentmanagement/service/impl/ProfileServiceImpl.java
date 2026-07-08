@@ -126,6 +126,7 @@ public class ProfileServiceImpl implements ProfileService {
                 .orElseThrow(() -> new BusinessException(MessageConstants.Error.USER_NOT_FOUND));
 
         user.setPaymentStatus("COMPLETED");
+        user.setActive(true);
         user.setUpdatedAt(LocalDateTime.now());
         user.setUpdatedBy(username);
         userRepository.save(user);
@@ -136,7 +137,14 @@ public class ProfileServiceImpl implements ProfileService {
     private ProfileResponse toProfileResponse(User user) {
         String photoUrl = null;
         if (user.getProfilePhotoPath() != null) {
-            photoUrl = baseUrl + "/api/profile/photo/" + user.getProfilePhotoPath();
+            String path = user.getProfilePhotoPath();
+            if (path.startsWith("http://") || path.startsWith("https://")) {
+                photoUrl = path;
+            } else if (path.startsWith("/uploads/") || path.startsWith("uploads/")) {
+                photoUrl = path.startsWith("/") ? path : "/" + path;
+            } else {
+                photoUrl = "/api/profile/photo/" + path;
+            }
         }
 
         // profileStatus is driven by the real isActive flag (set only on admin approval)

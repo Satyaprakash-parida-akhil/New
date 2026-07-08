@@ -20,6 +20,11 @@
     "ACTION": "Action",
     "STATUS": "Status",
     "NOT_FOUND": "No entries found.",
+    "REFERRAL_TREE": "Referral Tree",
+    "SEARCH": "Search...",
+    "NO_DATA": "No data available",
+    "FOUND": "found",
+    "PRESS_BACK_AGAIN_EXIT": "Press back again to exit",
     "ROLES": {
       "ADMIN": "Admin",
       "ADMINISTRATOR": "Administrator",
@@ -35,6 +40,17 @@
   },
   "BREADCRUMB": {
     "HOME": "Home"
+  },
+  "REFERRAL_TREE": {
+    "SUBTITLE_ADMIN": "Complete network hierarchy visible to administrators",
+    "SUBTITLE_USER": "Your personal referral network",
+    "SEARCH_PLACEHOLDER": "Search by name, username or code...",
+    "SEARCH_RESULTS": "Search Results",
+    "NO_RESULTS": "No matching users found",
+    "LOADING": "Loading referral tree...",
+    "NO_DATA": "No referral data available",
+    "REFERRED_BY": "Referred by",
+    "LEVEL": "Level"
   },
   "NAV": {
     "HOME": "Home",
@@ -900,7 +916,17 @@
       "COL_REQUESTED_ROLE": "Requested Role",
       "COL_APPLIED_ON": "Applied On",
       "COL_STATUS": "Status",
-      "COL_ACTIONS": "Actions"
+      "COL_ACTIONS": "Actions",
+      "ACTIONS": {
+        "APPROVE": "Approve",
+        "REJECT": "Reject",
+        "CONFIRM_REJECT": "Are you sure you want to reject this registration request?"
+      },
+      "MESSAGES": {
+        "APPROVE_SUCCESS": "User approved successfully",
+        "REJECT_SUCCESS": "User request rejected",
+        "LOAD_ERROR": "Failed to load pending requests"
+      }
     },
     "DEALER_MGMT": {
       "TITLE": "Dealer Management",
@@ -1073,6 +1099,168 @@
       "CONFIRM_RESTORE_OPT": "Restore option",
       "SUCCESS_OPT_RESTORED": "Option restored",
       "SUCCESS_OPT_DELETED": "Option permanently deleted"
+    }
+  },
+  "REFERRAL_TREE": {
+    "FULL_NETWORK": "Full Referral Network",
+    "MY_TREE": "My Referral Tree",
+    "SUBTITLE_ADMIN": "Complete hierarchical view of all user chains",
+    "SUBTITLE_USER": "Your downline referral network",
+    "SEARCH_PLACEHOLDER": "Search user...",
+    "BTN_SEARCH": "Search",
+    "BTN_EXPAND": "Expand All",
+    "BTN_COLLAPSE": "Collapse All",
+    "LEGEND_TITLE": "Legend:",
+    "LEGEND_ACTIVE": "Active User",
+    "LEGEND_INACTIVE": "Inactive User",
+    "LEGEND_PAID": "Paid Status",
+    "LEGEND_UNPAID": "Unpaid Status",
+    "DIRECT_BRANCHES": "Direct Branches",
+    "TOTAL_NETWORK": "Total Network",
+    "JOINED": "Joined",
+    "REFERRED_BY": "Referred by",
+    "SYSTEM_DIRECTORY": "System Directory",
+    "NO_DATA": "No referral data available",
+    "LOADING": "Loading referral network...",
+    "PAGE": "Page",
+    "OF": "of",
+    "PREV": "Previous",
+    "NEXT": "Next",
+    "SELECT_USER": "Select User to View",
+    "SEARCH_RESULTS": "Search Results",
+    "NO_RESULTS": "No users found",
+    "SEARCHING": "Searching...",
+    "VIEW_TREE": "View Tree"
+  },
+  "ADMIN": {
+    "COMMON": {
+      "SHOWING": "Showing",
+      "OF": "of",
+      "NO_RECORDS_FOUND": "No records found",
+      "PER_PAGE": "Per Page",
+      "SIZE": "Size",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "CONFIRM": "Confirm",
+      "LOADING": "Loading..."
+    },
+    "REGISTRATION": {
+      "TITLE": "User Registration Ledger",
+      "SUBTITLE": "Digital Ledger Control",
+      "TABLE_TITLE": "User Registration Ledger",
+      "PENDING_APPROVALS": "Pending Approvals",
+      "INACTIVE_REJECTED": "Inactive / Rejected",
+      "ACTIVE_REQUESTS": "Active Requests",
+      "TABLE": {
+        "USER_DETAILS": "User Details",
+        "REQUESTED_ROLE": "Requested Role",
+        "APPLIED_ON": "Applied On",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "MESSAGES": {
+        "APPROVE_SUCCESS": "User approved successfully",
+        "REJECT_SUCCESS": "User rejected successfully",
+        "DELETE_SUCCESS": "User deleted successfully",
+        "RESTORE_SUCCESS": "User restored successfully"
+      },
+      "ACTIONS": {
+        "APPROVE": "Approve",
+        "REJECT": "Reject",
+        "DELETE": "Delete",
+        "RESTORE": "Restore",
+        "CONFIRM_REJECT": "Are you sure you want to reject this registration?",
+        "CONFIRM_DELETE": "Are you sure you want to permanently delete this user?",
+        "CONFIRM_RESTORE": "Restore this registration to pending?"
+      }
+    },
+    "APPROVED_USERS": {
+      "TITLE": "System User Access Ledger",
+      "SUBTITLE": "Digital Ledger Control",
+      "TABLE_TITLE": "System User Access Ledger",
+      "ACTIVE_USERS": "Active Users",
+      "INACTIVE_USERS": "Inactive Users",
+      "COL_USER_DETAILS": "User Details",
+      "COL_ROLES": "Roles",
+      "TABLE": {
+        "USER_DETAILS": "User Details",
+        "EMAIL": "Email",
+        "ROLE": "Role",
+        "JOINED": "Joined",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "MESSAGES": {
+        "BLOCK_SUCCESS": "User blocked successfully",
+        "UNBLOCK_SUCCESS": "User restored successfully",
+        "DELETE_SUCCESS": "User permanently deleted",
+        "UPDATE_SUCCESS": "User updated successfully"
+      },
+      "ACTIONS": {
+        "BLOCK": "Block",
+        "UNBLOCK": "Unblock",
+        "DELETE": "Delete",
+        "EDIT": "Edit",
+        "CONFIRM_BLOCK": "Are you sure you want to block this user?",
+        "CONFIRM_DELETE": "Permanently delete this user? This cannot be undone."
+      }
+    },
+    "PAYMENTS": {
+      "TITLE": "Payment Review",
+      "SUBTITLE": "Review and approve member payments",
+      "TABLE_TITLE": "Payment Ledger",
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "TABLE": {
+        "USER": "User",
+        "AMOUNT": "Amount",
+        "METHOD": "Method",
+        "DATE": "Date",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "APPROVE": "Approve",
+        "REJECT": "Reject",
+        "CONFIRM_APPROVE": "Approve this payment?",
+        "CONFIRM_REJECT": "Reject this payment?"
+      },
+      "MESSAGES": {
+        "APPROVE_SUCCESS": "Payment approved. Member is now active.",
+        "REJECT_SUCCESS": "Payment rejected successfully."
+      }
+    },
+    "SCREEN_ASSIGNMENT": {
+      "TITLE": "Screen Assignment",
+      "SUBTITLE": "Manage user access and role permissions",
+      "USERS_VIEW": "Users View",
+      "ROLES_VIEW": "Roles View",
+      "SEARCH_USERS": "Search users...",
+      "ALL_ROLES": "All Roles",
+      "CLEAR": "Clear",
+      "USERS_COUNT": "users",
+      "LOADING_USERS": "Loading users...",
+      "LOADING_ROLES": "Loading roles...",
+      "NO_ROLE": "No role",
+      "NO_SCREENS_ASSIGNED": "No screens assigned",
+      "ASSIGN_ROLE": "Assign Role",
+      "REMOVE_ROLES": "Remove Roles",
+      "REMOVE": "Remove",
+      "NO_USERS_FOUND": "No users found",
+      "SCREENS_ASSIGNED": "screens assigned",
+      "EDIT_SCREENS": "Edit Screens",
+      "ROLE": "Role",
+      "USER": "User",
+      "EDIT_SCREEN_ACCESS": "Edit Screen Access",
+      "ASSIGN_ROLE_TO_USER": "Assign Role to User",
+      "SELECT_SCREENS_HINT": "Select the screens this role can access",
+      "SELECT_ROLES_HINT": "Select the roles to assign to this user",
+      "SAVE_PERMISSIONS": "Save Permissions",
+      "SAVE_ROLES": "Save Roles",
+      "SAVING": "Saving...",
+      "TH_ACTIONS": "Actions",
+      "NO_SCREENS": "No screens configured"
     }
   }
 }

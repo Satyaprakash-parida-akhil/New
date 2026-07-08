@@ -48,8 +48,7 @@
           </div>
         </div>
 
-        <div class="flex justify-between items-center text-slate-500 text-xs font-semibold">
-          <span>Page 1 of 5</span>
+        <div class="flex justify-end items-center text-slate-500 text-xs font-semibold">
           <button (click)="!isUserPaid && selectSinglePlan()" 
                   [disabled]="isUserPaid"
                   [ngClass]="isUserPaid ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'"

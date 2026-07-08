@@ -146,7 +146,7 @@ export class AppSelectComponent implements OnDestroy, OnChanges {
     this.dropdownWidth = rect.width;
     this.dropdownLeft = rect.left + window.scrollX;
 
-    // User requested to always open dropdowns downward
+    // Enforce strictly downward opening of the dropdown
     this.dropdownOpenAbove = false;
     this.dropdownTop = rect.bottom + window.scrollY + 4;
 
@@ -158,13 +158,12 @@ export class AppSelectComponent implements OnDestroy, OnChanges {
       this.dropdownEl.style.minWidth = this.dropdownWidth + 'px';
 
       const optionsContainer = this.dropdownEl.querySelector('.app-select-options') as HTMLElement;
+      if (optionsContainer) {
+        optionsContainer.style.maxHeight = '180px';
+      }
 
       this.dropdownEl.style.bottom = 'auto';
       this.dropdownEl.style.top = this.dropdownTop + 'px';
-      
-      if (optionsContainer) {
-        optionsContainer.style.maxHeight = '240px';
-      }
     }
   }
 

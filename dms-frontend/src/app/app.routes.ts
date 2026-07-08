@@ -21,14 +21,14 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'reset-password', component: ResetPasswordComponent },
-    { path: 'home', component: HomeComponent, data: { breadcrumb: 'NAV.HOME' } },
-    { path: 'profile', component: ProfileComponent, data: { breadcrumb: 'NAV.PROFILE' } },
-    { path: 'payment', component: PaymentComponent, data: { breadcrumb: 'NAV.PAYMENT' } },
+    { path: 'home', component: HomeComponent, canActivate: [ActiveGuard], data: { breadcrumb: 'NAV.HOME' } },
+    { path: 'profile', component: ProfileComponent, canActivate: [ActiveGuard], data: { breadcrumb: 'NAV.PROFILE' } },
+    { path: 'payment', component: PaymentComponent, canActivate: [ActiveGuard], data: { breadcrumb: 'NAV.PAYMENT' } },
     {
         path: 'facilities', component: FacilitiesComponent,
         canActivate: [ActiveGuard], data: { breadcrumb: 'NAV.FACILITIES' }
     },
-    { path: 'description', loadComponent: () => import('./features/description/description.component').then(m => m.DescriptionComponent), data: { breadcrumb: 'NAV.GROWTH_PLAN' } },
+    { path: 'description', loadComponent: () => import('./features/description/description.component').then(m => m.DescriptionComponent), canActivate: [ActiveGuard], data: { breadcrumb: 'NAV.GROWTH_PLAN' } },
     { path: '', redirectTo: '/welcome', pathMatch: 'full' },
     {
         path: 'dashboard', component: DashboardComponent,
@@ -73,11 +73,11 @@ export const routes: Routes = [
     },
     {
         path: 'referral-tree', loadComponent: () => import('./features/referral-tree/referral-tree.component').then(m => m.ReferralTreeComponent),
-        data: { breadcrumb: 'NAV.REFERRAL_TREE' }
+        canActivate: [ActiveGuard], data: { breadcrumb: 'NAV.REFERRAL_TREE' }
     },
     {
         path: 'offer', loadComponent: () => import('./features/user/offer/offer.component').then(m => m.OfferComponent),
-        data: { breadcrumb: 'NAV.OFFER' }
+        canActivate: [ActiveGuard], data: { breadcrumb: 'NAV.OFFER' }
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

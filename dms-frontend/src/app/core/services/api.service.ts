@@ -134,6 +134,12 @@ export class ApiService {
     return this.http.get<ApiResponse<PagedResponse<UserResponse>>>(url);
   }
 
+  getAllUsers(page: number = 0, size: number = 10, search?: string): Observable<ApiResponse<PagedResponse<UserResponse>>> {
+    let url = `${this.baseUrl}/users?page=${page}&size=${size}`;
+    if (search && search.trim()) url += `&search=${encodeURIComponent(search.trim())}`;
+    return this.http.get<ApiResponse<PagedResponse<UserResponse>>>(url);
+  }
+
   getUserById(userId: number): Observable<ApiResponse<UserResponse>> {
     return this.http.get<ApiResponse<UserResponse>>(`${this.baseUrl}/users/${userId}`);
   }
@@ -160,12 +166,13 @@ export class ApiService {
 
   // ─── REFERRAL TREE API ───────────────────────────────────────────────────────
 
-  getMyReferralTree(): Observable<ApiResponse<ReferralNode>> {
-    return this.http.get<ApiResponse<ReferralNode>>(`${this.baseUrl}/users/referral-tree`);
+  getMyReferralTree(page = 0, size = 5): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(`${this.baseUrl}/users/referral-tree?page=${page}&size=${size}`);
   }
 
-  getFullReferralTree(): Observable<ApiResponse<ReferralNode>> {
-    return this.http.get<ApiResponse<ReferralNode>>(`${this.baseUrl}/users/referral-tree`);
+  getFullReferralTree(userId?: number): Observable<ApiResponse<ReferralNode>> {
+    const url = userId ? `${this.baseUrl}/users/referral-tree/${userId}` : `${this.baseUrl}/users/referral-tree`;
+    return this.http.get<ApiResponse<ReferralNode>>(url);
   }
 
   searchReferralTree(searchTerm: string): Observable<ApiResponse<UserResponse[]>> {
@@ -248,7 +255,11 @@ export class ApiService {
     return this.http.get<ApiResponse<any[]>>(`${this.baseUrl}/subscription-plans`);
   }
 
-  // --- Screen/Menu APIs ---
+  getReferralChildren(userId: number): Observable<ApiResponse<ReferralNode[]>> {
+    return this.http.get<ApiResponse<ReferralNode[]>>(`${this.baseUrl}/users/referral-children/${userId}`);
+  }
+
+  // --- Common Helper APIs ---
   getScreenAssignments(role: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/admin/screen-assignments?role=${role}`);
   }

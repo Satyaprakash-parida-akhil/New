@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../shared/models/api-response.model';
 import { ApiService } from './api.service';
+import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export interface ProfileData {
   id: number;
@@ -41,11 +43,33 @@ export class ProfileService {
   constructor(private readonly apiService: ApiService) {}
 
   getMyProfile(): Observable<ApiResponse<ProfileData>> {
-    return this.apiService.getMyProfile();
+    return this.apiService.getMyProfile().pipe(
+      map(res => {
+        if (res.success && res.data && res.data.profilePhotoUrl) {
+          if (res.data.profilePhotoUrl.startsWith('/api/')) {
+            res.data.profilePhotoUrl = environment.apiUrl.replace('/api', '') + res.data.profilePhotoUrl;
+          } else if (res.data.profilePhotoUrl.startsWith('/uploads/')) {
+            res.data.profilePhotoUrl = environment.apiUrl.replace('/api', '') + res.data.profilePhotoUrl;
+          }
+        }
+        return res;
+      })
+    );
   }
 
   updateProfile(formData: FormData): Observable<ApiResponse<ProfileData>> {
-    return this.apiService.updateProfile(formData);
+    return this.apiService.updateProfile(formData).pipe(
+      map(res => {
+        if (res.success && res.data && res.data.profilePhotoUrl) {
+          if (res.data.profilePhotoUrl.startsWith('/api/')) {
+            res.data.profilePhotoUrl = environment.apiUrl.replace('/api', '') + res.data.profilePhotoUrl;
+          } else if (res.data.profilePhotoUrl.startsWith('/uploads/')) {
+            res.data.profilePhotoUrl = environment.apiUrl.replace('/api', '') + res.data.profilePhotoUrl;
+          }
+        }
+        return res;
+      })
+    );
   }
 
   generateReferralCode(): Observable<ApiResponse<ProfileData>> {

@@ -23,8 +23,16 @@ public interface UserService {
     void permanentDeleteUser(Long id);
 
     DashboardStats getDashboardStats();
-    ReferralNode getReferralTree(Long userId);
+    ReferralNode getReferralTree(Long userId, boolean isAdminView);
+    Page<ReferralNode> getReferralTreePage(Long userId, boolean isAdminView, Pageable pageable);
+    List<ReferralNode> getDirectChildren(Long targetId, Long requesterId, boolean isAdmin);
     List<UserResponse> searchReferralTree(Long requesterId, String searchTerm, boolean isAdmin);
     Page<User> getPagedUsers(String search, Boolean isActive, String registrationStatus, String paymentStatus, String zone, String country, String state, String district, String block, String town, String village, String createdAt, Pageable pageable, Long requesterId, boolean isAdmin);
     java.util.Map<String, java.util.List<String>> getUserFilterOptions();
+    List<Long> getDownlineUserIds(Long userId);
+    List<String> getDistinctStates();
+    List<String> getDistinctDistrictsByState(String state);
+    List<String> getDistinctBlocksByDistrict(String district);
+    List<String> getDistinctPinCodesByBlock(String block);
+    List<User> getUsersByPinCode(String pinCode);
 }

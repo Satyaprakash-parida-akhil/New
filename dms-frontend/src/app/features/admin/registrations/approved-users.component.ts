@@ -43,10 +43,10 @@ export class ApprovedUsersComponent implements OnInit {
         if (cfg) {
             this.headers = Object.keys(cfg.desktopColumns).map((key: string) => {
                 let label = cfg.desktopColumns[key];
-                if (key === 'username') label = this.translate.instant('ADMIN.APPROVED_USERS.COL_USER_DETAILS') || label;
-                if (key === 'email') label = this.translate.instant('ADMIN.APPROVED_USERS.COL_EMAIL') || label;
-                if (key === 'roles') label = this.translate.instant('ADMIN.APPROVED_USERS.COL_ROLES') || label;
-                if (key === 'createdAt') label = this.translate.instant('ADMIN.APPROVED_USERS.COL_CREATED_AT') || label;
+                if (key === 'username') label = this.translate.instant('ADMIN.APPROVED_USERS.TABLE.USER_DETAILS') || label;
+                if (key === 'email') label = this.translate.instant('ADMIN.APPROVED_USERS.TABLE.EMAIL') || label;
+                if (key === 'roles') label = this.translate.instant('ADMIN.APPROVED_USERS.TABLE.ROLE') || label;
+                if (key === 'createdAt') label = this.translate.instant('ADMIN.APPROVED_USERS.TABLE.JOINED') || label;
                 return {
                     key,
                     label,

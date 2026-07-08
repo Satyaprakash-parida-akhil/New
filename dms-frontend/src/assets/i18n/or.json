@@ -36,6 +36,17 @@
   "BREADCRUMB": {
     "HOME": "ମୁଖ୍ୟ ପୃଷ୍ଠା"
   },
+  "REFERRAL_TREE": {
+    "SUBTITLE_ADMIN": "ପ୍ରଶାସକମାନଙ୍କ ପାଇଁ ସମ୍ପୂର୍ଣ ନେଟ୍ୟ୊ର୍କ କ୍ରମବିନ୍ୟାସ",
+    "SUBTITLE_USER": "ଆପଣଙ୍କର ବ୍ୟକ୍ତିଗତ ରେଫରଲ ନେଟ୍ୟୋର୍କ",
+    "SEARCH_PLACEHOLDER": "ନାମ, ଉପଭୋକ୍ତା ନାମ ବା କୋଡ ଦ୍ୟାରା ଖୋଜନ୍ତୁ...",
+    "SEARCH_RESULTS": "ଖୋଜ ଫଳାଫଳ",
+    "NO_RESULTS": "କୌଣସି ମିଳାନ ଉପଭୋକ୍ତା ମିଳିଲା ନାହିଁ",
+    "LOADING": "ରେଫରଲ ଟ୍ରି ଲୋଡ ହେଉଛି...",
+    "NO_DATA": "କୌଣସି ରେଫରଲ ତଥ୍ୟ ଉପଲବ୍ଧ ନାହିଁ",
+    "REFERRED_BY": "ଦ୍ୟାରା ନିର୍ଦେଶିତ",
+    "LEVEL": "ସ୍ତର"
+  },
   "NAV": {
     "HOME": "ମୁଖ୍ୟ ପୃଷ୍ଠା",
     "DASHBOARD": "ଡ୍ୟାସବୋର୍ଡ",
@@ -750,5 +761,167 @@
     "PLACEHOLDER_PIN_CODE": "ଯେପରିକି ୭୫୧୦୨୪",
     "SAVE": "ଅଞ୍ଚଳ ସଂରକ୍ଷଣ କରନ୍ତୁ",
     "SAVING": "ସଂରକ୍ଷଣ ହେଉଛି..."
+  },
+  "REFERRAL_TREE": {
+    "FULL_NETWORK": "ପୂର୍ଣ୍ଣ ରେଫରାଲ୍ ନେଟୱର୍କ",
+    "MY_TREE": "ମୋର ରେଫରାଲ୍ ଗଛ",
+    "SUBTITLE_ADMIN": "ସମସ୍ତ ଉପଭୋକ୍ତା ଚେନର ସମ୍ପୂର୍ଣ୍ଣ କ୍ରମିକ ଦୃଶ୍ୟ",
+    "SUBTITLE_USER": "ଆପଣଙ୍କର ଡାଉନଲାଇନ୍ ରେଫରାଲ୍ ନେଟୱର୍କ",
+    "SEARCH_PLACEHOLDER": "ଡାଟାବେସରେ ଉପଭୋକ୍ତା ଖୋଜନ୍ତୁ...",
+    "BTN_SEARCH": "ଖୋଜନ୍ତୁ",
+    "BTN_EXPAND": "ସବୁ ବିସ୍ତାର କରନ୍ତୁ",
+    "BTN_COLLAPSE": "ସବୁ ସଙ୍କୁଚିତ କରନ୍ତୁ",
+    "LEGEND_TITLE": "ସୂଚକ:",
+    "LEGEND_ACTIVE": "ସକ୍ରିୟ ସଦସ୍ୟ",
+    "LEGEND_INACTIVE": "ଅସକ୍ରିୟ ସଦସ୍ୟ",
+    "LEGEND_PAID": "ପେଡ୍ ସ୍ଥିତି",
+    "LEGEND_UNPAID": "ଅନପେଡ୍ ସ୍ଥିତି",
+    "DIRECT_BRANCHES": "ପ୍ରତ୍ୟକ୍ଷ ଶାଖା",
+    "TOTAL_NETWORK": "ମୋଟ ନେଟୱର୍କ",
+    "JOINED": "ଯୋଗ ଦେଇଛନ୍ତି",
+    "REFERRED_BY": "ଦ୍ୱାରା ରେଫର୍ ହୋଇଛି",
+    "SYSTEM_DIRECTORY": "ସିଷ୍ଟମ୍ ଡିରେକ୍ଟୋରୀ",
+    "NO_DATA": "କୌଣସି ରେଫରାଲ୍ ଡାଟା ଉପଲବ୍ଧ ନାହିଁ",
+    "LOADING": "ରେଫରାଲ୍ ନେଟୱର୍କ ଲୋଡ୍ ହେଉଛି...",
+    "PAGE": "ପୃଷ୍ଠା",
+    "OF": "ରୁ",
+    "PREV": "ପୂର୍ବବର୍ତ୍ତୀ",
+    "NEXT": "ପରବର୍ତ୍ତୀ",
+    "SELECT_USER": "ଦେଖିବା ପାଇଁ ଉପଭୋକ୍ତା ଚୟନ କରନ୍ତୁ",
+    "SEARCH_RESULTS": "Search Results",
+    "NO_RESULTS": "No users found",
+    "SEARCHING": "Searching...",
+    "VIEW_TREE": "View Tree"
+  },
+  "ADMIN": {
+    "COMMON": {
+      "SHOWING": "Showing",
+      "OF": "of",
+      "NO_RECORDS_FOUND": "No records found",
+      "PER_PAGE": "Per Page",
+      "SIZE": "Size",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "CONFIRM": "Confirm",
+      "LOADING": "Loading..."
+    },
+    "REGISTRATION": {
+      "TITLE": "User Registration Ledger",
+      "SUBTITLE": "Digital Ledger Control",
+      "TABLE_TITLE": "User Registration Ledger",
+      "PENDING_APPROVALS": "Pending Approvals",
+      "INACTIVE_REJECTED": "Inactive / Rejected",
+      "ACTIVE_REQUESTS": "Active Requests",
+      "TABLE": {
+        "USER_DETAILS": "User Details",
+        "REQUESTED_ROLE": "Requested Role",
+        "APPLIED_ON": "Applied On",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "MESSAGES": {
+        "APPROVE_SUCCESS": "User approved successfully",
+        "REJECT_SUCCESS": "User rejected successfully",
+        "DELETE_SUCCESS": "User deleted successfully",
+        "RESTORE_SUCCESS": "User restored successfully"
+      },
+      "ACTIONS": {
+        "APPROVE": "Approve",
+        "REJECT": "Reject",
+        "DELETE": "Delete",
+        "RESTORE": "Restore",
+        "CONFIRM_REJECT": "Are you sure you want to reject this registration?",
+        "CONFIRM_DELETE": "Are you sure you want to permanently delete this user?",
+        "CONFIRM_RESTORE": "Restore this registration to pending?"
+      }
+    },
+    "APPROVED_USERS": {
+      "TITLE": "System User Access Ledger",
+      "SUBTITLE": "Digital Ledger Control",
+      "TABLE_TITLE": "System User Access Ledger",
+      "ACTIVE_USERS": "Active Users",
+      "INACTIVE_USERS": "Inactive Users",
+      "COL_USER_DETAILS": "User Details",
+      "COL_ROLES": "Roles",
+      "TABLE": {
+        "USER_DETAILS": "User Details",
+        "EMAIL": "Email",
+        "ROLE": "Role",
+        "JOINED": "Joined",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "MESSAGES": {
+        "BLOCK_SUCCESS": "User blocked successfully",
+        "UNBLOCK_SUCCESS": "User restored successfully",
+        "DELETE_SUCCESS": "User permanently deleted",
+        "UPDATE_SUCCESS": "User updated successfully"
+      },
+      "ACTIONS": {
+        "BLOCK": "Block",
+        "UNBLOCK": "Unblock",
+        "DELETE": "Delete",
+        "EDIT": "Edit",
+        "CONFIRM_BLOCK": "Are you sure you want to block this user?",
+        "CONFIRM_DELETE": "Permanently delete this user? This cannot be undone."
+      }
+    },
+    "PAYMENTS": {
+      "TITLE": "Payment Review",
+      "SUBTITLE": "Review and approve member payments",
+      "TABLE_TITLE": "Payment Ledger",
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "TABLE": {
+        "USER": "User",
+        "AMOUNT": "Amount",
+        "METHOD": "Method",
+        "DATE": "Date",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "ACTIONS": {
+        "APPROVE": "Approve",
+        "REJECT": "Reject",
+        "CONFIRM_APPROVE": "Approve this payment?",
+        "CONFIRM_REJECT": "Reject this payment?"
+      },
+      "MESSAGES": {
+        "APPROVE_SUCCESS": "Payment approved. Member is now active.",
+        "REJECT_SUCCESS": "Payment rejected successfully."
+      }
+    },
+    "SCREEN_ASSIGNMENT": {
+      "TITLE": "Screen Assignment",
+      "SUBTITLE": "Manage user access and role permissions",
+      "USERS_VIEW": "Users View",
+      "ROLES_VIEW": "Roles View",
+      "SEARCH_USERS": "Search users...",
+      "ALL_ROLES": "All Roles",
+      "CLEAR": "Clear",
+      "USERS_COUNT": "users",
+      "LOADING_USERS": "Loading users...",
+      "LOADING_ROLES": "Loading roles...",
+      "NO_ROLE": "No role",
+      "NO_SCREENS_ASSIGNED": "No screens assigned",
+      "ASSIGN_ROLE": "Assign Role",
+      "REMOVE_ROLES": "Remove Roles",
+      "REMOVE": "Remove",
+      "NO_USERS_FOUND": "No users found",
+      "SCREENS_ASSIGNED": "screens assigned",
+      "EDIT_SCREENS": "Edit Screens",
+      "ROLE": "Role",
+      "USER": "User",
+      "EDIT_SCREEN_ACCESS": "Edit Screen Access",
+      "ASSIGN_ROLE_TO_USER": "Assign Role to User",
+      "SELECT_SCREENS_HINT": "Select the screens this role can access",
+      "SELECT_ROLES_HINT": "Select the roles to assign to this user",
+      "SAVE_PERMISSIONS": "Save Permissions",
+      "SAVE_ROLES": "Save Roles",
+      "SAVING": "Saving...",
+      "TH_ACTIONS": "Actions",
+      "NO_SCREENS": "No screens configured"
+    }
   }
 }

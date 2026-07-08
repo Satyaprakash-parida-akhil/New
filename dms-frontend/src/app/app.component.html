@@ -29,7 +29,8 @@
 
     <!-- Sidebar -->
     <app-sidebar [class.translate-x-0]="sidebarOpen"
-      class="fixed inset-y-0 left-0 z-50 transform -translate-x-full lg:translate-x-0 lg:static transition-all duration-500 cubic-bezier(0.4, 0, 0.2, 1)"></app-sidebar>
+      class="fixed inset-y-0 left-0 z-50 transform -translate-x-full lg:translate-x-0 lg:static transition-all duration-500 cubic-bezier(0.4, 0, 0.2, 1)"
+      style="width: min(260px, 82vw); flex-shrink: 0;"></app-sidebar>
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col overflow-hidden relative">
@@ -99,7 +100,7 @@
       <main
         class="flex-1 overflow-x-hidden overflow-y-auto bg-[radial-gradient(circle_at_50%_50%,_#0a0c12_0%,_#05070a_100%)]"
         style="display:flex; flex-direction:column;">
-        <div class="flex-1 p-4 md:p-10">
+        <div class="flex-1 p-2 sm:p-4 md:p-10">
           <div class="max-w-7xl mx-auto animate-fade-in">
             <app-breadcrumb></app-breadcrumb>
             <router-outlet></router-outlet>
@@ -129,6 +130,17 @@
 
     </div>
   </div>
+
+  <!-- Double back to exit toast for PWA -->
+  <div *ngIf="showExitNotification" 
+       class="fixed bottom-16 left-1/2 transform -translate-x-1/2 z-50 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg text-sm font-medium animate-fade-in-up">
+    {{ 'COMMON.PRESS_BACK_AGAIN_EXIT' | translate }}
+  </div>
+</ng-container>
+
+<!-- ══ Public Route Outlet — for login / welcome / register pages ══ -->
+<ng-container *ngIf="isLoginPage">
+  <router-outlet></router-outlet>
 </ng-container>
 
 <!-- ══ Global Language Dropdown — rendered at body root level ══ -->
@@ -136,7 +148,8 @@
 <div *ngIf="isLangDropdownOpen"
      [ngStyle]="dropdownStyle"
      (click)="$event.stopPropagation()"
-     class="fixed w-48 bg-slate-950 border border-white/10 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.7)] overflow-hidden z-[99999] py-1.5 lang-dropdown-anim">
+     class="fixed w-48 bg-slate-950 border border-white/10 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.7)] overflow-hidden z-[99999] py-1.5 lang-dropdown-anim"
+     style="position:fixed;">
   <button (click)="selectLanguage('en')"
           [ngClass]="{'bg-indigo-500/10': translate.currentLang === 'en'}"
           class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-indigo-500/10 font-semibold transition-all text-left">
@@ -166,5 +179,4 @@
     <span *ngIf="translate.currentLang === 'te'" class="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>
   </button>
 </div>
-
-<router-outlet *ngIf="isLoginPage"></router-outlet>
+

@@ -17,7 +17,13 @@ export class LocalizePipe implements PipeTransform {
     // 1. Try to translate the string
     let translated = this.translate.instant(str);
     
-    // 2. Translate digits based on the current language
+    // 2. Guard: if the result is not a plain string (e.g. key maps to a JSON object),
+    //    fall back to the original string so we never call .replace() on an object.
+    if (typeof translated !== 'string') {
+      translated = str;
+    }
+    
+    // 3. Translate digits based on the current language
     const currentLang = this.translate.currentLang || 'en';
     
     if (currentLang === 'or') {

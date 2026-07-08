@@ -1,94 +1,96 @@
-.tree-node {
-  position: relative;
+/* ─── Custom Scrollbar ─────────────────────────────────────────────────────── */
+.tree-viewport::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-
-.tree-connector {
-  position: absolute;
-  left: -14px;
-  top: 12px;
-  width: 12px;
-  height: 1px;
-  background: rgba(255,255,255,0.1);
+.tree-viewport::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-.children-container {
-  position: relative;
-}
-
-.vertical-line {
-  position: absolute;
-  top: 0;
-  bottom: 8px;
-  width: 1px;
-  background: rgba(255,255,255,0.08);
-}
-
-/* Node Cards */
-.node-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  border-width: 1px;
-  border-style: solid;
-  transition: all 0.2s ease;
-  flex: 1;
-  min-width: 0;
-  cursor: default;
-}
-
-.node-active {
-  background: rgba(255,255,255,0.04);
-  border-color: rgba(255,255,255,0.08);
-}
-.node-active:hover {
-  background: rgba(255,255,255,0.07);
-  border-color: rgba(99,102,241,0.3);
-}
-
-.node-inactive {
-  background: rgba(255,255,255,0.02);
-  border-color: rgba(255,255,255,0.04);
-  opacity: 0.65;
-}
-
-/* Avatars */
-.node-avatar {
-  width: 34px;
-  height: 34px;
+.tree-viewport::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 14px;
-  flex-shrink: 0;
-  border: 1px solid;
 }
-.avatar-active {
-  background: rgba(99,102,241,0.2);
-  border-color: rgba(99,102,241,0.3);
-  color: rgb(165,180,252);
-}
-.avatar-inactive {
-  background: rgba(100,116,139,0.15);
-  border-color: rgba(100,116,139,0.2);
-  color: rgb(148,163,184);
+.tree-viewport::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
 }
 
-/* Badges */
-.badge {
-  display: inline-block;
-  padding: 1px 7px;
-  border-radius: 99px;
-  font-size: 10px;
-  font-weight: 700;
-  border: 1px solid;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+/* ─── Canvas transitions ────────────────────────────────────────────────────── */
+.tree-canvas {
+  transition: transform 0.08s ease-out;
+  will-change: transform;
 }
-.badge-active   { color: #34d399; background: rgba(52,211,153,0.1);  border-color: rgba(52,211,153,0.25); }
-.badge-inactive { color: #f87171; background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.25); }
-.badge-paid     { color: #60a5fa; background: rgba(96,165,250,0.1);  border-color: rgba(96,165,250,0.25); }
-.badge-unpaid   { color: #fbbf24; background: rgba(251,191,36,0.1);  border-color: rgba(251,191,36,0.25); }
+
+/* ─── Search Dropdown ───────────────────────────────────────────────────────── */
+.search-wrapper {
+  position: relative;
+  isolation: isolate;
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background-color: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  min-width: 280px;
+  overflow: hidden;
+  animation: dropdownIn 0.15s ease-out forwards;
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Node card animations ──────────────────────────────────────────────────── */
+.node-card-wrapper {
+  animation: nodeIn 0.2s ease-out forwards;
+}
+
+@keyframes nodeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.node-card {
+  cursor: default;
+  transform: translateY(0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.node-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.12);
+}
+
+/* ─── Hierarchy connector lines ─────────────────────────────────────────────── */
+.connector-vertical,
+.connector-horizontal {
+  pointer-events: none;
+  position: absolute;
+}
+
+/* ─── Fade in up animation for toast ───────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px) translateX(-50%); }
+  to   { opacity: 1; transform: translateY(0)    translateX(-50%); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.3s ease-out forwards;
+}

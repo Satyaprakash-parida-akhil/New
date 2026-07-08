@@ -16,10 +16,10 @@
     <div class="profile-hero">
       <!-- Avatar -->
       <div class="avatar-wrap">
-        <div class="avatar" [class.has-photo]="profile.profilePhotoUrl && !photoPreviewUrl">
-          <img *ngIf="profile.profilePhotoUrl && !photoPreviewUrl && !isEditing" [src]="profile.profilePhotoUrl"
+        <div class="avatar" [class.has-photo]="profile.profilePhotoUrl || photoPreviewUrl">
+          <img *ngIf="profile.profilePhotoUrl && !photoPreviewUrl" [src]="profile.profilePhotoUrl"
             alt="Profile photo" class="avatar-img">
-          <img *ngIf="photoPreviewUrl && isEditing" [src]="photoPreviewUrl" alt="Preview" class="avatar-img">
+          <img *ngIf="photoPreviewUrl" [src]="photoPreviewUrl" alt="Preview" class="avatar-img">
           <span *ngIf="!profile.profilePhotoUrl && !photoPreviewUrl" class="avatar-initials">{{ initials }}</span>
         </div>
 

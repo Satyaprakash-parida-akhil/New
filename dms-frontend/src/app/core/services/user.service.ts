@@ -33,6 +33,10 @@ export class UserService {
         return this.apiService.getInactiveUsers(page, size, search, filters);
     }
 
+    getAllUsers(page = 0, size = 10, search?: string): Observable<ApiResponse<PagedResponse<UserResponse>>> {
+        return this.apiService.getAllUsers(page, size, search);
+    }
+
     getUserFilterOptions(): Observable<ApiResponse<Record<string, string[]>>> {
         return this.apiService.getUserFilterOptions();
     }
@@ -59,12 +63,16 @@ export class UserService {
 
     // ─── Referral Tree ────────────────────────────────────────────────────────
 
-    getMyReferralTree(): Observable<ApiResponse<ReferralNode>> {
-        return this.apiService.getMyReferralTree();
+    getMyReferralTree(page = 0, size = 5): Observable<ApiResponse<any>> {
+        return this.apiService.getMyReferralTree(page, size);
     }
 
-    getFullReferralTree(): Observable<ApiResponse<ReferralNode>> {
-        return this.apiService.getFullReferralTree();
+    getFullReferralTree(userId?: number): Observable<ApiResponse<ReferralNode>> {
+        return this.apiService.getFullReferralTree(userId);
+    }
+
+    getReferralChildren(userId: number): Observable<ApiResponse<ReferralNode[]>> {
+        return this.apiService.getReferralChildren(userId);
     }
 
     searchReferralTree(searchTerm: string): Observable<ApiResponse<UserResponse[]>> {

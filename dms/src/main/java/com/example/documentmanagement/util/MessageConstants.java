@@ -101,6 +101,15 @@ public final class MessageConstants {
         public static final String FILE_RECOVERED = "File recovered successfully";
         public static final String FILE_REPLACED = "File replaced successfully";
         public static final String EXCEL_EXPORT_SUCCESS = "Excel exported successfully";
+
+        // Location & Search Success
+        public static final String STATES_FETCHED = "States fetched successfully";
+        public static final String DISTRICTS_FETCHED = "Districts fetched successfully";
+        public static final String BLOCKS_FETCHED = "Blocks fetched successfully";
+        public static final String PIN_CODES_FETCHED = "PIN Codes fetched successfully";
+        public static final String FILTER_OPTIONS_RETRIEVED = "Filter options retrieved successfully";
+        public static final String SEARCH_COMPLETED = "Search completed";
+        public static final String FILE_RETRIEVED = "File retrieved successfully";
     }
 
     public static final class Error {

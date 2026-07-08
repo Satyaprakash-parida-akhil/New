@@ -33,6 +33,9 @@ public class ProfileController {
     @Value("${app.upload.dir:uploads/profile-photos}")
     private String uploadDir;
 
+    @Value("${app.file.storage.location:./uploads}")
+    private String fileStorageLocation;
+
     @GetMapping("/me")
     @Operation(summary = "Get current user's profile")
     public ResponseEntity<ApiResponse<ProfileResponse>> getMyProfile(
@@ -85,8 +88,14 @@ public class ProfileController {
     @Operation(summary = "Serve profile photo")
     public ResponseEntity<Resource> getPhoto(@PathVariable String filename) {
         try {
+            // First look in profile photos upload directory
             Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
             Resource resource = new UrlResource(filePath.toUri());
+            if (!resource.exists()) {
+                // Fallback to general files storage uploads directory
+                filePath = Paths.get(fileStorageLocation).resolve(filename).normalize();
+                resource = new UrlResource(filePath.toUri());
+            }
             if (!resource.exists()) {
                 return ResponseEntity.notFound().build();
             }

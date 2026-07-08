@@ -42,7 +42,7 @@ public class FileController {
     @Operation(summary = "Get file details by ID")
     public ResponseEntity<ApiResponse<FileRecordDto>> getFile(@PathVariable Long id) {
         FileRecordDto fileRecord = fileStorageService.getFile(id);
-        return ResponseEntity.ok(ApiResponse.success("File retrieved successfully", fileRecord));
+        return ResponseEntity.ok(ApiResponse.success(MessageConstants.Success.FILE_RETRIEVED, fileRecord));
     }
 
     @PutMapping("/{id}")

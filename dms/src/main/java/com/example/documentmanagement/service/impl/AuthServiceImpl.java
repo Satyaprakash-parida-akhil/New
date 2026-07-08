@@ -167,7 +167,12 @@ public class AuthServiceImpl implements AuthService {
         if (photo != null && !photo.isEmpty()) {
             photoPath = saveProfilePhoto(photo, request.getUsername());
         } else if (request.getPhotoUrl() != null && !request.getPhotoUrl().isBlank()) {
-            photoPath = request.getPhotoUrl();
+            String url = request.getPhotoUrl();
+            if (url.contains("/")) {
+                photoPath = url.substring(url.lastIndexOf("/") + 1);
+            } else {
+                photoPath = url;
+            }
         }
 
         // Parse date of birth

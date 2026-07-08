@@ -59,7 +59,7 @@
       *ngFor="let opt of filteredOptions" 
       class="app-select-option"
       [class.selected]="String(opt.id) === String(value)"
-      (click)="selectOption(opt)">
+      (mousedown)="selectOption(opt)">
       {{ opt.name }}
     </div>
 
@@ -67,7 +67,7 @@
     <div 
       *ngIf="searchable && searchTerm.trim() && !hasExactMatch(searchTerm)"
       class="app-select-option app-select-add-new text-blue-600 font-semibold border-t border-slate-100"
-      (click)="selectOption({ id: searchTerm.trim(), name: searchTerm.trim() })">
+      (mousedown)="selectOption({ id: searchTerm.trim(), name: searchTerm.trim() })">
       + Add "{{ searchTerm.trim() }}"
     </div>
 

@@ -42,12 +42,16 @@ export interface ReferralNode {
     phoneNumber?: string;
     paymentStatus?: string;
     isActive: boolean;
+    role?: string;
     level?: number;
     children: ReferralNode[];
     totalDownlineCount?: number;
     referralCount?: number;
     referralCode?: string;
     joinedDate?: string;
+    createdAt?: string;
+    referredByName?: string;
+    referredByCode?: string;
 }
 
 export interface MasterHeader {

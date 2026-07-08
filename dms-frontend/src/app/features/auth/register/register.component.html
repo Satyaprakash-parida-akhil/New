@@ -441,7 +441,7 @@
 
         <button id="btnCompleteReg" class="btn-primary" (click)="completeRegistration()" [disabled]="isLoading">
           <span *ngIf="isLoading" class="btn-spinner"></span>
-          {{ 'AUTH.REGISTER.BTN_COMPLETE' | translate }}
+          {{ paymentChoice === 'NOW' ? ('AUTH.REGISTER.PAY_NOW' | translate) : ('AUTH.REGISTER.BTN_COMPLETE' | translate) }}
         </button>
         <button type="button" class="btn-ghost" (click)="goBack()">{{ 'AUTH.REGISTER.BTN_BACK_PROFILE' | translate }}</button>
       </div>

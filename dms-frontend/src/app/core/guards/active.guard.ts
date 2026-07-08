@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,17 @@ export class ActiveGuard implements CanActivate {
 
   constructor(private readonly router: Router) {}
 
-  canActivate(): boolean {
+  canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    // Always allow access to /payment so inactive users can complete payment
+    if (state.url.startsWith('/payment')) {
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        this.router.navigate(['/welcome']);
+        return false;
+      }
+      return true;
+    }
+
     const token = localStorage.getItem('access_token');
 
     if (!token) {

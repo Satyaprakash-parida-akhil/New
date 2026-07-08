@@ -9,7 +9,10 @@ import com.example.documentmanagement.dto.response.ReferralNode;
 import com.example.documentmanagement.entity.User;
 import com.example.documentmanagement.repository.UserRepository;
 import com.example.documentmanagement.service.UserService;
+import com.example.documentmanagement.service.CustomUserDetailsService;
 import com.example.documentmanagement.exception.BusinessException;
+import com.example.documentmanagement.security.JwtUtil;
+import com.example.documentmanagement.dto.response.TokenResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,6 +38,8 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+    private final CustomUserDetailsService userDetailsService;
 
     @GetMapping("/reviewers")
     @PreAuthorize("hasRole('ADMIN')")
@@ -113,6 +118,20 @@ public class UserController {
     public ResponseEntity<ApiResponse<java.util.Map<String, java.util.List<String>>>> getUserFilterOptions() {
         java.util.Map<String, java.util.List<String>> options = userService.getUserFilterOptions();
         return ResponseEntity.ok(ApiResponse.success(MessageConstants.Success.FILTER_OPTIONS_RETRIEVED, options));
+    }
+
+    @GetMapping("/refresh-token")
+    @Operation(summary = "Get a fresh JWT token with updated claims (e.g. isActive) for the authenticated user")
+    public ResponseEntity<ApiResponse<TokenResponse>> refreshToken(Principal principal) {
+        User user = userRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new BusinessException(MessageConstants.Error.USER_NOT_FOUND));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        String newToken = jwtUtil.generateToken(userDetails, user.isActive());
+        TokenResponse tokenResponse = TokenResponse.builder()
+                .accessToken(newToken)
+                .username(principal.getName())
+                .build();
+        return ResponseEntity.ok(ApiResponse.success("Token refreshed successfully", tokenResponse));
     }
 
     @GetMapping("/{id}")

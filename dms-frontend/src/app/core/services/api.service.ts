@@ -164,6 +164,10 @@ export class ApiService {
     return this.http.get<ApiResponse<Record<string, string[]>>>(`${this.baseUrl}/users/filter-options`);
   }
 
+  refreshToken(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(`${this.baseUrl}/users/refresh-token`);
+  }
+
   // ─── REFERRAL TREE API ───────────────────────────────────────────────────────
 
   getMyReferralTree(page = 0, size = 5): Observable<ApiResponse<any>> {

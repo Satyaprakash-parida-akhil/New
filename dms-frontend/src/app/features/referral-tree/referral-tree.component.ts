@@ -284,14 +284,25 @@ export class ReferralTreeComponent implements OnInit, AfterViewInit, OnDestroy {
   onSearchInput() {
     const term = this.searchTerm.trim();
     if (!term) {
-      this.searchResults = [];
-      this.showSearchDropdown = false;
-      this.isSearching = false;
+      this.isSearching = true;
+      this.showSearchDropdown = true;
+      this.searchSubject.next('');
       return;
     }
     this.isSearching = true;
     this.showSearchDropdown = true;
     this.searchSubject.next(term);
+  }
+
+  onSearchFocus() {
+    // Show dropdown immediately on focus/click — triggers a blank search to load defaults
+    this.showSearchDropdown = true;
+    if (!this.searchTerm.trim() && this.searchResults.length === 0) {
+      this.isSearching = true;
+      this.searchSubject.next('');
+    } else if (this.searchResults.length > 0) {
+      this.showSearchDropdown = true;
+    }
   }
 
   performSearch(term: string) {

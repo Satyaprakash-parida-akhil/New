@@ -23,7 +23,8 @@
           [(ngModel)]="searchTerm"
           (input)="onSearchInput()"
           (blur)="closeDropdown()"
-          (focus)="searchTerm && searchResults.length ? (showSearchDropdown = true) : null"
+          (focus)="onSearchFocus()"
+          (click)="onSearchFocus()"
           [placeholder]="'REFERRAL_TREE.SEARCH_PLACEHOLDER' | translate"
           class="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 px-2 py-2 outline-none min-w-0"
         />

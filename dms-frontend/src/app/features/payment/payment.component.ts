@@ -11,6 +11,7 @@ import {
 import { ToastService } from '../../core/services/toast.service';
 import { ApiResponse } from '../../shared/models/api-response.model';
 import { ProfileService } from '../../core/services/profile.service';
+import { AuthService } from '../../core/auth/auth.service';
 
 /** Razorpay JS SDK is loaded via script tag; declare globally */
 declare const Razorpay: any;
@@ -61,7 +62,8 @@ export class PaymentComponent implements OnInit {
     private readonly paymentService: PaymentService,
     private readonly toastService: ToastService,
     private readonly router: Router,
-    private readonly profileService: ProfileService
+    private readonly profileService: ProfileService,
+    private readonly authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -259,7 +261,18 @@ export class PaymentComponent implements OnInit {
         if (res.success) {
           this.existingPayment = res.data!;
           this.step = 'status';
-          this.toastService.showSuccess('🎉 Payment successful! Awaiting admin approval.');
+          this.toastService.showSuccess('🎉 Payment successful! Your account is now active.');
+          // Refresh token so isActive claim reflects the newly activated account,
+          // then redirect the user to the home/dashboard page.
+          this.authService.refreshToken().subscribe({
+            next: () => {
+              setTimeout(() => this.router.navigate(['/home']), 1500);
+            },
+            error: () => {
+              // Even if token refresh fails, still navigate to home after a short delay
+              setTimeout(() => this.router.navigate(['/home']), 1500);
+            }
+          });
         }
       },
       error: (err: any) => {

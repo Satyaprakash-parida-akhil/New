@@ -434,10 +434,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponse> searchReferralTree(Long requesterId, String searchTerm, boolean isAdmin) {
         String search = (searchTerm == null || searchTerm.isBlank()) ? "" : searchTerm.trim().toLowerCase();
-        if (search.isEmpty())
-            return Collections.emptyList();
 
         List<User> matchingUsers;
+        Pageable limitPageable = search.isEmpty()
+                ? org.springframework.data.domain.PageRequest.of(0, 20, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC, "fullName"))
+                : Pageable.unpaged();
+
         if (!isAdmin) {
             List<Long> downlineIds = getDownlineUserIds(requesterId);
             List<Long> searchIds = new ArrayList<>();
@@ -445,11 +447,11 @@ public class UserServiceImpl implements UserService {
                 searchIds.addAll(downlineIds);
             }
             searchIds.add(requesterId);
-            matchingUsers = searchUsersServiceLogic(searchIds, search, null, "APPROVED", null, null, null, null, null,
-                    null, null, null, null, Pageable.unpaged()).getContent();
+            matchingUsers = searchUsersServiceLogic(searchIds, search.isEmpty() ? null : search, null, "APPROVED", null, null, null, null, null,
+                    null, null, null, null, limitPageable).getContent();
         } else {
-            matchingUsers = searchUsersServiceLogic(null, search, null, "APPROVED", null, null, null, null, null, null,
-                    null, null, null, Pageable.unpaged()).getContent();
+            matchingUsers = searchUsersServiceLogic(null, search.isEmpty() ? null : search, null, "APPROVED", null, null, null, null, null, null,
+                    null, null, null, limitPageable).getContent();
         }
 
         return matchingUsers.stream().map(user -> {
@@ -639,6 +641,16 @@ public class UserServiceImpl implements UserService {
             }
         }
         options.put("createdAt", dateStrings);
+
+        List<String> requestedRoles = entityManager.createQuery(
+                "SELECT DISTINCT u.requestedRole FROM User u WHERE u.requestedRole IS NOT NULL AND u.requestedRole != '' ORDER BY u.requestedRole",
+                String.class).getResultList();
+        options.put("requestedRole", requestedRoles);
+
+        List<String> registrationStatuses = entityManager.createQuery(
+                "SELECT DISTINCT u.registrationStatus FROM User u WHERE u.registrationStatus IS NOT NULL AND u.registrationStatus != '' ORDER BY u.registrationStatus",
+                String.class).getResultList();
+        options.put("registrationStatus", registrationStatuses);
 
         return options;
     }

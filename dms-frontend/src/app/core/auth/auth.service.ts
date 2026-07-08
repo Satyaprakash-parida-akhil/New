@@ -106,5 +106,15 @@ export class AuthService {
   restoreRegistration(userId: number): Observable<ApiResponse<any>> {
     return this.apiService.restoreRegistration(userId);
   }
+
+  refreshToken(): Observable<ApiResponse<any>> {
+    return this.apiService.refreshToken().pipe(
+      tap(res => {
+        if (res.success && res.data?.accessToken) {
+          localStorage.setItem('access_token', res.data.accessToken);
+        }
+      })
+    );
+  }
 }
 
